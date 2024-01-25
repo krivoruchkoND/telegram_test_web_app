@@ -5,8 +5,6 @@ import { useEffect } from "react";
 import { useTelegramWebAppStore } from "@/stores/TelegramWebAppStore";
 import UserData from "@components/UserData";
 
-import "./App.css";
-
 function App() {
   const webApp = useTelegramWebAppStore((state) => state.webApp);
   const setWebApp = useTelegramWebAppStore((state) => state.setWebApp);
@@ -26,10 +24,10 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <main>
       {`WebApp is ${webApp ? "" : "not "}initialized 🎉!`}
       {webApp && <UserData />}
-    </div>
+    </main>
   );
 }
 
