@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div>
-      {`WebApp is ${webApp ? "" : "not "}initialized 🎉`}
+      {`WebApp is ${webApp ? "" : "not "}initialized 🎉!`}
       {webApp && <UserData />}
     </div>
   );
