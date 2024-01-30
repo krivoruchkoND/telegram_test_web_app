@@ -1,5 +1,3 @@
-import { Link } from "wouter";
-
 import ActiveLink from "@components/ActiveLink";
 
 import classes from "./styles.module.css";
