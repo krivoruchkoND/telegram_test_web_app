@@ -2,8 +2,10 @@ import { useEffect } from "react";
 
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
-import { useTelegramWebAppStore } from "@/stores/TelegramWebAppStore";
+import { useTelegramWebAppStore } from "@stores/TelegramWebAppStore";
 import UserData from "@components/UserData";
+
+import classes from "./App.module.css";
 
 function App() {
   const webApp = useTelegramWebAppStore((state) => state.webApp);
@@ -24,7 +26,7 @@ function App() {
   }, []);
 
   return (
-    <main>
+    <main className={classes.foo}>
       {`WebApp is ${webApp ? "" : "not "}initialized 🎉!`}
       {webApp && <UserData />}
     </main>
