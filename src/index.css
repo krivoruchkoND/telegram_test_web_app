@@ -22,12 +22,13 @@
   --rb-gradient-color-3: linear-gradient(180deg, #1B1B1B 0%, #111111 100%);
   --rb-background-color-1: #191919;
   --rb-background-color-2: #000;
+  --rb-text-color-1: #fff;
 }
 
 body {
   margin: 0;
   background-color: var(--rb-background-color-2);
-  color: var(--tg-theme-text-color)
+  color: var(--rb-text-color-1)
 }
 
 * {
