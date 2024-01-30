@@ -16,9 +16,22 @@
   --tg-theme-text-color: #ffffff;
   --tg-viewport-height: 100vh;
   --tg-viewport-stable-height: 100vh; */
+
+  --rb-gradient-color-1: linear-gradient(180deg, #828282 0%, #454545 100%);
+  --rb-gradient-color-2: linear-gradient(180deg, #F0F0F0 0%, #949494 100%);
+  --rb-gradient-color-3: linear-gradient(180deg, #1B1B1B 0%, #111111 100%);
+  --rb-background-color-1: #191919;
+  --rb-background-color-2: #000;
 }
 
 body {
-  background-color: var(--tg-theme-bg-color);
+  margin: 0;
+  background-color: var(--rb-background-color-2);
   color: var(--tg-theme-text-color)
+}
+
+* {
+  box-sizing: border-box;
+
+  font-family: "Inter", sans-serif
 }

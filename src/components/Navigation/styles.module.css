@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  padding: 12px;
+
+  border-radius: 20px;
+  background: var(--rb-gradient-color-3);
+}

@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 22px;
+  gap: 8px;
+}
+
+.walletId {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 0;
+  background-color: transparent;
+  border: none;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
+
+  background: var(--rb-gradient-color-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  .icon {
+    display: grid;
+    width: 18px;
+    height: 18px;
+
+    img {
+      place-self: center;
+    }
+  }
+}
+
+.walletBalance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+
+  font-size: 43px;
+  font-weight: 600;
+  line-height: 52px;
+
+  background: var(--rb-gradient-color-2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  .icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+
+    img {
+      place-self: center;
+    }
+  }
+}
+
+.referButton {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 7px 11px;
+  background-color: var(--rb-background-color-1);
+  border: none;
+  border-radius: 19px;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
+
+  .text {
+    background: var(--rb-gradient-color-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .icon {
+    display: grid;
+    width: 18px;
+    height: 18px;
+
+    img {
+      place-self: center;
+    }
+  }
+}
