@@ -13,15 +13,15 @@ const USER_BALANCE = getRandomArbitrary(0, 1000);
 
 const AccountBalance = () => {
   return (
-    <section className={classes.container}>
-      <button className={classes.walletId}>
+    <section className={classes.account}>
+      <button className={classes.id}>
         {middleTrim(USER_ID, 4, 4)}
         <div className={classes.icon}>
           <img src={copyIcon} />
         </div>
       </button>
 
-      <div className={classes.walletBalance}>
+      <div className={classes.balance}>
         {USER_BALANCE}
         <div className={classes.icon}>
           <img src={coinIcon} />
