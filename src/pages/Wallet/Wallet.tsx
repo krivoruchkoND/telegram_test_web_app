@@ -5,11 +5,11 @@ import classes from "./styles.module.css";
 
 const Wallet = () => {
   return (
-    <div className={classes.container}>
+    <section className={classes.container}>
       <AccountBalance />
 
       <WalletTransactionList />
-    </div>
+    </section>
   );
 };
 

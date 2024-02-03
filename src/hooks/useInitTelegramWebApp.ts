@@ -10,11 +10,12 @@ const useInitTelegramWebApp = () => {
     const timer = setInterval(() => {
       console.log("Checking if WebApp is initialized...");
       if (Telegram?.WebApp) {
-        Telegram?.WebApp.expand();
+        Telegram.WebApp.expand();
+        Telegram.WebApp.setHeaderColor("#000000");
         setWebApp(Telegram.WebApp);
         clearInterval(timer);
       }
-    }, 500);
+    }, 100);
 
     return () => {
       clearInterval(timer);
