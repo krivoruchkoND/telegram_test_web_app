@@ -5,7 +5,7 @@ import classes from "./styles.module.css";
 
 const Wallet = () => {
   return (
-    <section className={classes.container}>
+    <section className={classes.wallet}>
       <AccountBalance />
 
       <WalletTransactionList />

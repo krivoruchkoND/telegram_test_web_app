@@ -1,8 +1,10 @@
 import UserData from "@components/UserData";
 
+import classes from "./styles.module.css";
+
 const Settings = () => {
   return (
-    <section>
+    <section className={classes.settings}>
       <UserData />
     </section>
   );
