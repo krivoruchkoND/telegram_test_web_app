@@ -4,7 +4,7 @@ import getRandomArbitrary from "./getRandomInRange";
 import randomNameGenerator from "./randomNameGenerator";
 
 const walletTransactionsGenerator = () => {
-  const count = Number(getRandomArbitrary(10, 50, 0));
+  const count = Number(getRandomArbitrary(4, 5, 0));
 
   const transactions = Array.from({ length: count }, (_, i) => i).map(() => {
     const initial = Number(getRandomArbitrary(10, 100));

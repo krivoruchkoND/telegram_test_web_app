@@ -1,3 +1,32 @@
 .container {
+	display: flex;
+	flex-direction: column;
+
 	max-width: 430px;
+	max-height: 100dvh;
+
+	padding-bottom: 32px;
+
+	> .header {
+		padding: 0 28px;
+	}
+
+	> .content {
+		flex: auto;
+		overflow: auto;
+		
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
+	@media screen and (max-width: 430px) {
+		.header {
+			padding: 0 8px;
+		}
+		
+		.content {
+			padding: 0 12px;
+		}
+	}
 }

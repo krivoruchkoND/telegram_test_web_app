@@ -12,6 +12,7 @@ const useInitTelegramWebApp = () => {
       if (Telegram?.WebApp) {
         Telegram.WebApp.expand();
         Telegram.WebApp.setHeaderColor("#000000");
+        Telegram.WebApp.ready();
         setWebApp(Telegram.WebApp);
         clearInterval(timer);
       }

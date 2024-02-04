@@ -15,12 +15,16 @@ function App() {
   return (
     <WRouter base="/telegram_test_web_app">
       <main className={classes.container}>
-        <Navigation />
-        <Route path="/wallet" component={Wallet} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/swaps">Swaps</Route>
-        <Route path="/trades">Trades</Route>
-        <Route>404</Route>
+        <div className={classes.header}>
+          <Navigation />
+        </div>
+        <div className={classes.content}>
+          <Route path="/wallet" component={Wallet} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/swaps">Swaps</Route>
+          <Route path="/trades">Trades</Route>
+          <Route>404</Route>
+        </div>
       </main>
     </WRouter>
   );

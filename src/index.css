@@ -31,7 +31,7 @@
 }
 
 html {
-  overscroll-behavior-x: none;
+  overflow: hidden;
 }
 
 body {
@@ -42,8 +42,7 @@ body {
 
 * {
   box-sizing: border-box;
-
-  font-family: "Inter", sans-serif
+  font-family: "Inter", sans-serif;
 }
 
 pre {
