@@ -1,9 +1,9 @@
 import { nanoid } from "nanoid";
 
 import middleTrim from "@utils/middleTrim";
-import copyIcon from "@assets/copy.svg";
-import coinIcon from "@assets/coin.svg";
-import referIcon from "@assets/referArrow.svg";
+import copyIcon from "@assets/Copy.svg";
+import coinIcon from "@assets/Coin.svg";
+import referIcon from "@assets/ReferArrow.svg";
 
 import classes from "./styles.module.css";
 import getRandomArbitrary from "@/utils/getRandomInRange";

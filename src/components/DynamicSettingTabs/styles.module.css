@@ -1,0 +1,69 @@
+.settings {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  margin-top: 37px;
+
+  > .setting {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid var(--rb-background-color-3);
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+
+
+    > .button {
+      width: 100%;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      color: var(--rb-text-color-3);
+
+      > .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        > .titleContainer {
+          display: flex;
+          align-items: center;
+          gap: 11px;
+
+          > .text {
+            user-select: none;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19px;
+            
+            background: var(--rb-gradient-color-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+
+          > img {
+            width: 26px;
+            height: 26px;
+            user-select: none;
+            user-drag: none;
+          }
+        }
+
+        > .arrow {
+          > img {
+            user-select: none;
+            user-drag: none;
+          }
+        }
+      }
+
+      > .description {
+        user-select: none;
+        text-align: left;
+      }
+    }
+  }
+}

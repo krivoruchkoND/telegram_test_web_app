@@ -5,6 +5,7 @@ import { Router as WRouter, Route } from "wouter";
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
 import Wallet from "@pages/Wallet";
 import Settings from "@pages/Settings";
+import Swaps from "@pages/Swaps";
 
 import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
@@ -21,7 +22,7 @@ function App() {
         <div className={classes.content}>
           <Route path="/wallet" component={Wallet} />
           <Route path="/settings" component={Settings} />
-          <Route path="/swaps">Swaps</Route>
+          <Route path="/swaps" component={Swaps} />
           <Route path="/trades">Trades</Route>
           <Route>404</Route>
         </div>

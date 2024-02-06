@@ -1,12 +1,12 @@
-import homeIcon from "@assets/home.svg";
-import homeActiveIcon from "@assets/homeActive.svg";
-import cogIcon from "@assets/cog.svg";
-import cogActiveIcon from "@assets/cogActive.svg";
-import arrowsIcon from "@assets/arrows.svg";
-import arrowsActiveIcon from "@assets/arrowsActive.svg";
-import dollarIcon from "@assets/dollar.svg";
-import dollarActiveIcon from "@assets/dollarActive.svg";
-import rockIcon from "@assets/rock.svg";
+import homeIcon from "@assets/Home.svg";
+import homeActiveIcon from "@assets/HomeActive.svg";
+import cogIcon from "@assets/Cog.svg";
+import cogActiveIcon from "@assets/CogActive.svg";
+import arrowsIcon from "@assets/Arrows.svg";
+import arrowsActiveIcon from "@assets/ArrowsActive.svg";
+import dollarIcon from "@assets/Dollar.svg";
+import dollarActiveIcon from "@assets/DollarActive.svg";
+import rockIcon from "@assets/RockGray.svg";
 
 import NavigationItem from "./components/NavigationItem";
 
