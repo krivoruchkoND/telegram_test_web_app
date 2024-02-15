@@ -1,9 +1,10 @@
-import UserData from "@components/UserData";
+import SwapList from "@/components/SwapList";
+import classes from "./styles.module.css";
 
 const Swaps = () => {
   return (
-    <section>
-      <UserData />
+    <section className={classes.swaps}>
+      <SwapList />
     </section>
   );
 };
