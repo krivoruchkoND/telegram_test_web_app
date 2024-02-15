@@ -1,0 +1,55 @@
+.splash {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: calc(var(--tg-viewport-height, 100dvh) - 10vh);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--rb-background-color-2);
+
+  > .title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29px;
+
+    background: var(--rb-gradient-color-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  > .icon {
+    margin-bottom: 5px;
+    height: 83px;
+    width: 83px;
+  }
+
+  > .spinner {
+    position: absolute;
+
+    max-width: 230px;
+    max-height: 230px;
+    width: 100%;
+    height: 100%;
+
+    border: 11px solid var(--rb-background-color-3);
+    border-radius: 100%;
+    border-bottom-color: transparent;
+    
+    animation: rotation 1s linear infinite;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 

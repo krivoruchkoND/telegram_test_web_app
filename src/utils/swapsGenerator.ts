@@ -69,13 +69,15 @@ export const swapsGenerator = () => {
   return swaps;
 };
 
+const addLeadingZero = (value: number) => (value < 10 ? `0${value}` : value);
+
 export const combineSwapsByDay = (swaps: ReturnType<typeof swapsGenerator>) => {
   return swaps.reduce(
     (acc, swap) => {
       const date = new Date(swap.date);
       const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
+      const month = addLeadingZero(date.getMonth() + 1);
+      const day = addLeadingZero(date.getDate());
       const formattedDate = `${year}-${month}-${day}`;
       if (!acc[formattedDate]) {
         acc[formattedDate] = [];

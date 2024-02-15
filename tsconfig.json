@@ -30,6 +30,7 @@
       "@pages/*": ["src/pages/*"],
       "@utils/*": ["src/utils/*"],
       "@assets/*": ["src/assets/*"],
+      "@apis/*": ["src/apis/*"],
     },
 
     "types": ["vite/client", "vite-plugin-svgr/client"],
