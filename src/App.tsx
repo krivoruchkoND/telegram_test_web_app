@@ -1,4 +1,5 @@
 import { Switch, Router, Route } from "wouter";
+import { useHashLocation } from "wouter/use-hash-location";
 
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
 import useAuthHandler from "./hooks/useAuthHandler";
@@ -24,7 +25,7 @@ function App() {
         <Switch>
           <Route path="/" component={Splash} />
           <Route path="/wallet" component={Wallet} />
-          <Route path="/settings/:any*" component={Settings} />
+          <Route path="/settings" component={Settings} nest />
           <Route path="/swaps" component={Swaps} />
           <Route path="/trades" component={Trades} />
           <Route>Unknown Route</Route>
@@ -36,7 +37,7 @@ function App() {
 
 // hook useAuthHandler needs to be called inside a Router
 const AppWithRouter = () => (
-  <Router base="/telegram_test_web_app">
+  <Router hook={useHashLocation}>
     <App />
   </Router>
 );

@@ -23,7 +23,7 @@
     "react-switch": "^7.0.0",
     "react-window": "^1.8.10",
     "react-window-infinite-loader": "^1.0.9",
-    "wouter": "^2.12.1",
+    "wouter": "^3.0.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
