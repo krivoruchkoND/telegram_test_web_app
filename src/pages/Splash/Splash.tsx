@@ -6,7 +6,7 @@ import { useAuthStore } from "@/stores/AuthStore";
 import classes from "./styles.module.css";
 import { useEffect } from "react";
 
-const SPLASH_TIMEOUT = 500;
+const SPLASH_TIMEOUT = 1000;
 
 const Splash = () => {
   const [, setLocation] = useLocation();

@@ -1,0 +1,12 @@
+.pageTitle {
+  user-select: none;
+  margin: 0;
+  
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 51px;
+
+  background: var(--rb-gradient-color-2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

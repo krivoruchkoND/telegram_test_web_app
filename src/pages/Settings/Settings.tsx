@@ -21,6 +21,8 @@ const Settings = () => {
           <Route path="/profile" component={Profile} />
           <Route path="/autobuy" component={Autobuy} />
           <Route path="/snipper" component={Snipper} />
+          <Route path="/profile/private_key">Private key</Route>
+          <Route>Unknown Route</Route>
         </Switch>
       </NestedRoutes>
     </section>

@@ -37,30 +37,24 @@ function App() {
   // useAuthHandler();
 
   return (
-    <main className={classes.container}>
-      <div className={classes.header}>
-        <Navigation />
-      </div>
-      <Switch>
-        <Route path="/" component={Splash} />
-        <div className={classes.content}>
-          <Route path="/wallet" component={Wallet} />
-          <Route path="/settings/:any*" component={Settings} />
-          <Route path="/swaps" component={Swaps} />
-          <Route path="/trades" component={Trades} />
-          <Route>404</Route>
+    <Router base="/telegram_test_web_app">
+      <main className={classes.container}>
+        <div className={classes.header}>
+          <Navigation />
         </div>
-      </Switch>
-    </main>
+        <div className={classes.content}>
+          <Switch>
+            <Route path="/" component={Splash} />
+            <Route path="/wallet" component={Wallet} />
+            <Route path="/settings/:any*" component={Settings} />
+            <Route path="/swaps" component={Swaps} />
+            <Route path="/trades" component={Trades} />
+            <Route>Unknown Route</Route>
+          </Switch>
+        </div>
+      </main>
+    </Router>
   );
 }
 
-const AppInsideRouter = () => {
-  return (
-    <Router base="/telegram_test_web_app">
-      <App />
-    </Router>
-  );
-};
-
-export default AppInsideRouter;
+export default App;

@@ -1,0 +1,88 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+
+  width: 100%;
+  margin-top: 20px;
+
+  padding-bottom: 32px;
+
+  > .userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+
+    > .infoContainer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 19px;
+
+      > .title {
+        background: var(--rb-gradient-color-2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      > .value {
+        background: var(--rb-gradient-color-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      > .copyButton {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0;
+
+        background-color: transparent;
+        border: none;
+
+        > .icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  > .button {
+    padding: 19px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--rb-background-color-1);
+    border-radius: 20px;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    text-decoration: none;
+
+    > .text {
+      background: var(--rb-gradient-color-2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    > .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

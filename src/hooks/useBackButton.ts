@@ -32,7 +32,7 @@ const useBackButton = (onBack: () => void) => {
   }, [webApp, isSupported]);
 
   useEffect(() => {
-    setIsSupported(Number(webApp?.version) >= 6.1);
+    setIsSupported(webApp?.isVersionAtLeast("6.1") || false);
   }, [webApp]);
 
   return isSupported;
