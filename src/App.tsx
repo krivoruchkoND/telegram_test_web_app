@@ -16,24 +16,29 @@ function App() {
   useAuthHandler();
 
   return (
-    <Router base="/telegram_test_web_app">
-      <main className={classes.container}>
-        <div className={classes.header}>
-          <Navigation />
-        </div>
-        <div className={classes.content}>
-          <Switch>
-            <Route path="/" component={Splash} />
-            <Route path="/wallet" component={Wallet} />
-            <Route path="/settings/:any*" component={Settings} />
-            <Route path="/swaps" component={Swaps} />
-            <Route path="/trades" component={Trades} />
-            <Route>Unknown Route</Route>
-          </Switch>
-        </div>
-      </main>
-    </Router>
+    <main className={classes.container}>
+      <div className={classes.header}>
+        <Navigation />
+      </div>
+      <div className={classes.content}>
+        <Switch>
+          <Route path="/" component={Splash} />
+          <Route path="/wallet" component={Wallet} />
+          <Route path="/settings/:any*" component={Settings} />
+          <Route path="/swaps" component={Swaps} />
+          <Route path="/trades" component={Trades} />
+          <Route>Unknown Route</Route>
+        </Switch>
+      </div>
+    </main>
   );
 }
 
-export default App;
+// hook useAuthHandler needs to be called inside a Router
+const AppWithRouter = () => (
+  <Router base="/telegram_test_web_app">
+    <App />
+  </Router>
+);
+
+export default AppWithRouter;
