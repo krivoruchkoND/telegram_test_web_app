@@ -1,7 +1,7 @@
 import { Switch, Router, Route } from "wouter";
 
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
-// import useAuthHandler from "./hooks/useAuthHandler";
+import useAuthHandler from "./hooks/useAuthHandler";
 import Wallet from "@pages/Wallet";
 import Settings from "@pages/Settings";
 import Swaps from "@pages/Swaps";
@@ -13,7 +13,7 @@ import classes from "./App.module.css";
 
 function App() {
   useInitTelegramWebApp();
-  // useAuthHandler();
+  useAuthHandler();
 
   return (
     <Router base="/telegram_test_web_app">

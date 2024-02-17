@@ -14,7 +14,7 @@ const Splash = () => {
 
   useEffect(() => {
     const redirect = () => {
-      if (true || initialLoggedIn) {
+      if (initialLoggedIn) {
         setLocation("/wallet");
       }
     };
