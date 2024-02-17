@@ -60,6 +60,7 @@ const Profile = () => {
         </div>
       </div>
       <Link href="/profile/private_key" className={classes.button}>
+        {/* extra div for easier positioning */}
         <div></div>
         <div className={classes.text}>SHOW MY PRIVATE KEY</div>
         <div className={classes.icon}>

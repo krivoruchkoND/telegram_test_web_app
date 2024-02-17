@@ -29,6 +29,9 @@
   --rb-text-color-3: #808088;
   --rb-text-color-4: #7AFF90;
   --rb-text-color-5: #FF7A7A;
+  --rb-text-color-6: #C4C4C4;
+  --rb-text-color-7: #616161;
+  --rb-box-shadow-1: 0px 3px 1px 0px #0000000F, 0px 3px 8px 0px #00000026;
 }
 
 html {

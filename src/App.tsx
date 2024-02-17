@@ -1,9 +1,7 @@
-import { useEffect } from "react";
-import { Switch, Router, Route, useLocation } from "wouter";
+import { Switch, Router, Route } from "wouter";
 
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
-import { useTelegramWebAppStore } from "@stores/TelegramWebAppStore";
-import { useAuthStore } from "@stores/AuthStore";
+// import useAuthHandler from "./hooks/useAuthHandler";
 import Wallet from "@pages/Wallet";
 import Settings from "@pages/Settings";
 import Swaps from "@pages/Swaps";
@@ -12,25 +10,6 @@ import Splash from "@pages/Splash";
 
 import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
-
-const useAuthHandler = () => {
-  const [, setLocation] = useLocation();
-  const webApp = useTelegramWebAppStore((store) => store.webApp);
-  const auth = useAuthStore((store) => store.auth);
-  const initialLoggedIn = useAuthStore((store) => store.initialLoggedIn);
-
-  useEffect(() => {
-    if (!initialLoggedIn) {
-      setLocation("/");
-    }
-  }, [initialLoggedIn]);
-
-  useEffect(() => {
-    if (webApp) {
-      auth(webApp.initData);
-    }
-  }, [webApp, auth]);
-};
 
 function App() {
   useInitTelegramWebApp();

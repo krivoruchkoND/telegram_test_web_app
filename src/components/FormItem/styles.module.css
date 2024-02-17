@@ -1,0 +1,55 @@
+.formItem {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+  > .label {
+    user-select: none;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+
+    background: var(--rb-gradient-color-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  > .inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+
+    > .input {
+      padding: 20px 16px;
+
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 19px;
+
+      background-color: var(--rb-background-color-1);
+      border-radius: 20px;
+      border: none;
+
+      color: var(--rb-text-color-6);
+
+      &:focus {
+        outline: 1px solid var(--rb-text-color-3);
+      }
+
+      &:disabled {
+        color: var(--rb-text-color-7);
+      }
+    }
+
+    > .description {
+      user-select: none;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      color: var(--rb-text-color-3)
+    }
+  }
+}

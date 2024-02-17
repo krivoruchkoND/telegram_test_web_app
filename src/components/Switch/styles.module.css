@@ -15,4 +15,17 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  > .wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    > .subLabel {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      color: var(--rb-text-color-3);
+    }
+  }
 }
