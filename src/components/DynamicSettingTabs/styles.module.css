@@ -15,12 +15,11 @@
     line-height: 17px;
 
 
-    > .button {
+    > .wrapper {
       width: 100%;
       padding: 0;
-      border: none;
-      background-color: transparent;
       color: var(--rb-text-color-3);
+      text-decoration: none;
 
       > .title {
         display: flex;

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Switch, Router as WRouter, Route, useLocation } from "wouter";
+import { Switch, Router, Route, useLocation } from "wouter";
 
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
 import { useTelegramWebAppStore } from "@stores/TelegramWebAppStore";
@@ -34,7 +34,7 @@ const useAuthHandler = () => {
 
 function App() {
   useInitTelegramWebApp();
-  useAuthHandler();
+  // useAuthHandler();
 
   return (
     <main className={classes.container}>
@@ -45,7 +45,7 @@ function App() {
         <Route path="/" component={Splash} />
         <div className={classes.content}>
           <Route path="/wallet" component={Wallet} />
-          <Route path="/settings" component={Settings} />
+          <Route path="/settings/:any*" component={Settings} />
           <Route path="/swaps" component={Swaps} />
           <Route path="/trades" component={Trades} />
           <Route>404</Route>
@@ -57,9 +57,9 @@ function App() {
 
 const AppInsideRouter = () => {
   return (
-    <WRouter base="/telegram_test_web_app">
+    <Router base="/telegram_test_web_app">
       <App />
-    </WRouter>
+    </Router>
   );
 };
 

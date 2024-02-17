@@ -1,62 +1,28 @@
-import { useCallback, useEffect } from "react";
+import { Switch, Route } from "wouter";
 
+import NestedRoutes from "@components/NestedRoutes";
 import DynamicSettingTabs from "@components/DynamicSettingTabs";
-import ReferralBlock from "@components/ReferralBlock";
-import { useSettingsStore } from "@stores/SettingsStore";
-import { useTelegramWebAppStore } from "@stores/TelegramWebAppStore";
+import NotificationSwitch from "@components/NotificationSwitch";
+import Profile from "@pages/Profile";
+import Autobuy from "@pages/Autobuy";
+import Snipper from "@pages/Snipper";
 
 import classes from "./styles.module.css";
 
-const useBackButtonHandler = (onBack: () => void, callOnUnmount = true) => {
-  const webApp = useTelegramWebAppStore((store) => store.webApp);
-
-  const handler = useCallback(onBack, [onBack]);
-
-  useEffect(() => {
-    webApp?.BackButton.onClick(handler);
-
-    return () => {
-      if (callOnUnmount) {
-        handler();
-      }
-      webApp?.BackButton.offClick(handler);
-    };
-  }, [webApp, callOnUnmount]);
-};
-
-const useShowBackButton = (shouldShow: boolean, hideOnUnmount = true) => {
-  const webApp = useTelegramWebAppStore((store) => store.webApp);
-
-  useEffect(() => {
-    if (shouldShow) {
-      webApp?.BackButton.show();
-    } else {
-      webApp?.BackButton.hide();
-    }
-
-    return () => {
-      if (hideOnUnmount) {
-        webApp?.BackButton.hide();
-      }
-    };
-  }, [shouldShow, webApp, hideOnUnmount]);
-};
-
 const Settings = () => {
-  const setCurrentTab = useSettingsStore((store) => store.setCurrentTab);
-  const currentTab = useSettingsStore((store) => store.currentTab);
-
-  useBackButtonHandler(() => setCurrentTab(null));
-  useShowBackButton(currentTab !== null);
-
   return (
     <section className={classes.settings}>
-      {currentTab === null && (
-        <>
-          <DynamicSettingTabs />
-          <ReferralBlock />
-        </>
-      )}
+      <NestedRoutes base="/settings">
+        <Switch>
+          <Route path="/">
+            <DynamicSettingTabs />
+            <NotificationSwitch />
+          </Route>
+          <Route path="/profile" component={Profile} />
+          <Route path="/autobuy" component={Autobuy} />
+          <Route path="/snipper" component={Snipper} />
+        </Switch>
+      </NestedRoutes>
     </section>
   );
 };

@@ -16,7 +16,7 @@ const NavigationItem: React.FC<ItemProps> = ({
   activeIcon,
   href,
 }) => {
-  const [isActive] = useRoute(href);
+  const [isActive] = useRoute(`${href}/:any*`);
   const iconSrc = isActive ? activeIcon : icon;
 
   return (

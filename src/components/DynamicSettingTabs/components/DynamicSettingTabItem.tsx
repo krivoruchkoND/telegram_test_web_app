@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "wouter";
 
-import { Tab, useSettingsStore } from "@stores/SettingsStore";
+import { Tab } from "@stores/SettingsStore";
 import rockGrayIcon from "@assets/RockGray.svg";
 import rockBlueIcon from "@assets/RockBlue.svg";
 import rockGreenIcon from "@assets/RockGreen.svg";
@@ -24,11 +25,9 @@ const DynamicSettingTabItem: React.FC<Props & Tab> = ({
   iconColor,
   description,
 }) => {
-  const setCurrentTab = useSettingsStore((store) => store.setCurrentTab);
-
   return (
     <li className={classes.setting}>
-      <button className={classes.button} onClick={() => setCurrentTab(id)}>
+      <Link href={`/${id}`} className={classes.wrapper}>
         <div className={classes.title}>
           <div className={classes.titleContainer}>
             <img src={icons[iconColor] || rockGrayIcon} />
@@ -39,7 +38,7 @@ const DynamicSettingTabItem: React.FC<Props & Tab> = ({
           </div>
         </div>
         <div className={classes.description}>{description}</div>
-      </button>
+      </Link>
     </li>
   );
 };

@@ -1,0 +1,18 @@
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  > .label {
+    user-select: none;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+
+    background: var(--rb-gradient-color-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

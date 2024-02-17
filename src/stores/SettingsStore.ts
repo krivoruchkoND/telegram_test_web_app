@@ -3,8 +3,8 @@ import { immer } from "zustand/middleware/immer";
 
 const tabsMock = [
   {
-    id: "general",
-    label: "General settings",
+    id: "profile",
+    label: "Profile",
     description: "Main bot configurable parameters",
     iconColor: "gray",
   },
