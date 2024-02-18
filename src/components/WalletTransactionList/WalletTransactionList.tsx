@@ -1,11 +1,11 @@
-import walletTransactionsGenerator from "@utils/walletTransactionsGenerator";
-import WalletTransactionListItem from "./components/WalletTransactionItem";
+import { useWalletStore } from "@stores/WalletStore";
 
+import WalletTransactionListItem from "./components/WalletTransactionItem";
 import classes from "./styles.module.css";
 
-const transactions = walletTransactionsGenerator();
-
 const WalletTransactionList = () => {
+  const transactions = useWalletStore((state) => state.transactions);
+
   return (
     <ul className={classes.transactions}>
       {transactions.map((transaction) => (

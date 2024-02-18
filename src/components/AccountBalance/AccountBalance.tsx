@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 
+import { useWalletStore } from "@stores/WalletStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import middleTrim from "@utils/middleTrim";
 import copyIcon from "@assets/Copy.svg";
@@ -7,12 +8,12 @@ import coinIcon from "@assets/Coin.svg";
 import referIcon from "@assets/ReferArrow.svg";
 
 import classes from "./styles.module.css";
-import getRandomArbitrary from "@/utils/getRandomInRange";
 
 const USER_ID = nanoid(24);
-const USER_BALANCE = getRandomArbitrary(0, 1000);
 
 const AccountBalance = () => {
+  const totalValue = useWalletStore((state) => state.totalValue);
+
   const [, copy] = useCopyToClipboard();
 
   const handleCopy = () => {
@@ -35,7 +36,7 @@ const AccountBalance = () => {
       </button>
 
       <div className={classes.balance}>
-        {USER_BALANCE}
+        {totalValue.toFixed(5)}
         <div className={classes.icon}>
           <img src={coinIcon} />
         </div>

@@ -1,47 +1,76 @@
 import React from "react";
 import { clsx } from "clsx";
 
-import walletTransactionsGenerator from "@utils/walletTransactionsGenerator";
+import { Transaction } from "@stores/WalletStore";
 
 import classes from "../styles.module.css";
 
 type Props = {
-  transaction: ReturnType<typeof walletTransactionsGenerator>[number];
+  transaction: Transaction;
+};
+
+const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
+  pnl,
+  initial,
+}) => {
+  if (pnl === null || initial === null) {
+    return (
+      <div className={clsx(classes.column, classes.alignCenter)}>
+        <div className={classes.title}>Trade PNL</div>
+        <span>Unknown</span>
+      </div>
+    );
+  }
+
+  const PNLPercent = (pnl / initial) * 100;
+  const isNegative = pnl < 0;
+  const prefix = isNegative ? "-" : "+";
+
+  return (
+    <div className={clsx(classes.column, classes.alignCenter)}>
+      <div className={classes.title}>Trade PNL</div>
+      <span
+        className={clsx(
+          classes.preventWrap,
+          isNegative ? classes.negative : classes.positive,
+        )}
+      >
+        {prefix}
+        {pnl.toFixed(3)} SOL ({prefix}
+        {PNLPercent.toFixed(3)}%)
+      </span>
+    </div>
+  );
 };
 
 const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
-  const { name, value, coinCap, PNL, PNLPercent, initial } = transaction;
-
-  const isNegative = PNL < 0;
+  const { value, marketCap, pnl, initial, metadata } = transaction;
+  const { name, imageUrl } = metadata;
 
   return (
     <li className={classes.transaction}>
       <div className={classes.title}>
         <div className={classes.nameContainer}>
-          <div className={classes.avatar}>{name[0].toUpperCase()}</div>
+          <div className={classes.avatar}>
+            {imageUrl ? (
+              <img src={imageUrl} alt={name} />
+            ) : (
+              name[0].toUpperCase()
+            )}
+          </div>
           <span className={classes.name}>{name}</span>
         </div>
-        <span className={classes.cap}>${coinCap}</span>
+        <span className={classes.cap}>${marketCap.toFixed(3)}</span>
       </div>
       <div className={classes.info}>
         <div className={classes.column}>
           <div className={classes.title}>Value</div>
-          <span>{value} SOL</span>
+          <span>{value.toFixed(5)} SOL</span>
         </div>
-        <div className={clsx(classes.column, classes.alignCenter)}>
-          <div className={classes.title}>Trade PNL</div>
-          <span
-            className={clsx(
-              classes.preventWrap,
-              isNegative ? classes.negative : classes.positive,
-            )}
-          >
-            {PNL} SOL ({PNLPercent}%)
-          </span>
-        </div>
+        <PNL pnl={pnl} initial={initial} />
         <div className={clsx(classes.column, classes.alignRight)}>
           <div className={classes.title}>Initial</div>
-          <span>{initial} SOL</span>
+          <span>{initial ? `${initial.toFixed(5)} SOL` : "Unknown"}</span>
         </div>
       </div>
     </li>

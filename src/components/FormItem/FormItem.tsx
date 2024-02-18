@@ -71,7 +71,7 @@ const FormItem: React.FC<Props> = ({
           ref={ref}
           inputRef={inputRef}
           value={value}
-          onAccept={(value, mask) => onChange(value)}
+          onAccept={(value, _mask) => onChange(value)}
           inputMode={inputMode}
           className={classes.input}
           disabled={switchValue === undefined ? false : switchValue}
