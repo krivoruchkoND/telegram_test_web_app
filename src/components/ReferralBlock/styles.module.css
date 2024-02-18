@@ -1,10 +1,13 @@
 .referral {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
   > .title {
     user-select: none;
     display: flex;
     align-items: center;
     gap: 11px;
-    margin-bottom: 18px;
 
     font-size: 16px;
     font-weight: 600;
@@ -29,7 +32,6 @@
   }
 
   > .counter {
-    margin-bottom: 10px;
     font-size: 16px;
     font-weight: 600;
     line-height: 19px;
@@ -48,8 +50,6 @@
   }
 
   > .description {
-    margin-top: 16px;
-  
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
@@ -58,41 +58,9 @@
     > p {
       margin: 0;
       margin-bottom: 17px;
-    }
-  }
 
-  > .referralButton {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
-    padding: 19px 16px;
-    margin-top: 22px;
-    width: 100%;
-    background-color: var(--rb-background-color-1);
-    border: none;
-    border-radius: 20px;
-
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 17px;
-
-    > .text {
-      background: var(--rb-gradient-color-2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    > .icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 18px;
-      width: 18px;
-
-      > img {
-        
+      &:last-child {
+        margin-bottom: 0;
       }
     }
   }

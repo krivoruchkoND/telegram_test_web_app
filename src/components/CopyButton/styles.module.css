@@ -1,0 +1,39 @@
+.copyButton {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 16px;
+  padding-right: 23px;
+  width: 100%;
+  background-color: var(--rb-background-color-1);
+  border: none;
+  border-radius: 20px;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: left;
+
+  word-break: break-all;
+
+  > .text {
+    background: var(--rb-gradient-color-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  > .icon {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;
+    width: 18px;
+
+    > img {
+      
+    }
+  }
+}

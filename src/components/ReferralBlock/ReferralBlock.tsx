@@ -1,5 +1,5 @@
 import rockVioletIcon from "@assets/RockViolet.svg";
-import copyActiveIcon from "@assets/CopyActive.svg";
+import CopyButton from "@components/CopyButton";
 
 import classes from "./styles.module.css";
 
@@ -39,12 +39,7 @@ const ReferralBlock = () => {
           in the second and 10% forever!
         </p>
       </div>
-      <button className={classes.referralButton}>
-        <div className={classes.text}>{mock.referralLink}</div>
-        <div className={classes.icon}>
-          <img src={copyActiveIcon} />
-        </div>
-      </button>
+      <CopyButton value={mock.referralLink} />
     </div>
   );
 };
