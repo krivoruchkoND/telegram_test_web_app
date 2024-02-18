@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-const tabsMock = [
+const tabs = [
   {
     id: "profile",
     label: "Profile",
@@ -40,18 +40,95 @@ export type Tab = {
 
 export type SettingsStore = {
   tabs: Tab[];
-  currentTab: string | null;
-  setCurrentTab: (currentTab: string | null) => void;
+
+  isNotificationsEnabled: boolean;
+  setIsNotificationsEnabled: (value: boolean) => void;
+
+  slipage: string;
+  setSlipage: (value: string) => void;
+
+  amount: string;
+  setAmount: (value: string) => void;
+
+  computeLimit: string;
+  allowCustomComputeLimit: boolean;
+  setComputeLimit: (value: string) => void;
+  setAllowCustomComputeLimit: (value: boolean) => void;
+
+  computePrice: string;
+  allowCustomComputePrice: boolean;
+  setComputePrice: (value: string) => void;
+  setAllowCustomComputePrice: (value: boolean) => void;
+
+  retryValue: string;
+  setRetryValue: (value: string) => void;
 };
+
+export type SettingKeys =
+  | "slipage"
+  | "amount"
+  | "computeLimit"
+  | "computePrice"
+  | "retryValue";
+
+export type SettingEnablerKeys =
+  `allowCustom${Capitalize<"computeLimit" | "computePrice">}`;
+
+export type SettingOnChangeKeys = `set${Capitalize<SettingKeys>}`;
+
+export type SettingEnablerOnChangeKeys = `set${Capitalize<SettingEnablerKeys>}`;
 
 export const useSettingsStore = create<SettingsStore>()(
   immer((set) => ({
-    currentTab: null,
-    tabs: tabsMock,
+    tabs,
+    isNotificationsEnabled: true,
+    slipage: "0.5",
+    amount: "0.1",
+    computeLimit: "140000",
+    allowCustomComputeLimit: false,
+    computePrice: "0.005",
+    allowCustomComputePrice: false,
+    retryValue: "0",
 
-    setCurrentTab: (currentTab) =>
+    setIsNotificationsEnabled: (value) => {
       set((state) => {
-        state.currentTab = currentTab;
-      }),
+        state.isNotificationsEnabled = value;
+      });
+    },
+    setSlipage: (value) => {
+      set((state) => {
+        state.slipage = value;
+      });
+    },
+    setAmount: (value) => {
+      set((state) => {
+        state.amount = value;
+      });
+    },
+    setComputeLimit: (value) => {
+      set((state) => {
+        state.computeLimit = value;
+      });
+    },
+    setAllowCustomComputeLimit: (value) => {
+      set((state) => {
+        state.allowCustomComputeLimit = value;
+      });
+    },
+    setComputePrice: (value) => {
+      set((state) => {
+        state.computePrice = value;
+      });
+    },
+    setAllowCustomComputePrice: (value) => {
+      set((state) => {
+        state.allowCustomComputePrice = value;
+      });
+    },
+    setRetryValue: (value) => {
+      set((state) => {
+        state.retryValue = value;
+      });
+    },
   })),
 );

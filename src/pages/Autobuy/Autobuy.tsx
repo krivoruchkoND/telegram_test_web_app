@@ -11,8 +11,12 @@ const Autobuy = () => {
   const [, setLocation] = useLocation();
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
-    <form className={classes.autobuy}>
+    <form className={classes.autobuy} onSubmit={onSubmit}>
       <PageTitle title="Autobuy" />
 
       {/* <SwapPlatforms /> */}
@@ -21,12 +25,18 @@ const Autobuy = () => {
         id="slipage"
         label="Slipage"
         description="Difference between expected and actual results amounts of token"
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["empty", "percent"]}
       />
 
       <FormItem
         id="amount"
         label="Amount"
         description="Number of tokens for purchase"
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["empty", "float"]}
       />
 
       <FormItem
@@ -35,9 +45,10 @@ const Autobuy = () => {
         description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
         switchProps={{
           subLabel: "Auto",
-          checked: true,
-          onChange: () => null,
         }}
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["empty", "decimal"]}
       />
 
       <FormItem
@@ -46,15 +57,19 @@ const Autobuy = () => {
         description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
         switchProps={{
           subLabel: "Auto",
-          checked: true,
-          onChange: () => null,
         }}
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["empty", "sol"]}
       />
 
       <FormItem
         id="retryValue"
         label="Retry value"
         description="Number of retry transaction in node if transaction fail"
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["empty", "decimal"]}
       />
 
       {!isBackButtonSupported && <Link href="/">Go back</Link>}
