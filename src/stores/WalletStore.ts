@@ -28,7 +28,7 @@ export const useWalletStore = create<WalletStore>()(
       try {
         const { totalValue, tokens } = await getTokens({
           page: 1,
-          size: 10,
+          size: 100, // TODO: implement pagination
         });
 
         set((state) => {
