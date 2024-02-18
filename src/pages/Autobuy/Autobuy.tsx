@@ -1,15 +1,24 @@
 import { useLocation, Link } from "wouter";
 
+import { useSettingsStore } from "@stores/SettingsStore";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
+import FormItem from "@components/FormItem";
 // import SwapPlatforms from "@components/SwapPlatforms";
 
 import classes from "./styles.module.css";
-import FormItem from "@/components/FormItem";
 
 const Autobuy = () => {
   const [, setLocation] = useLocation();
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
+
+  const setComputeLimitToDefault = useSettingsStore(
+    (state) => state.setComputeLimitToDefault,
+  );
+
+  const setComputePriceToDefault = useSettingsStore(
+    (state) => state.setComputePriceToDefault,
+  );
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,6 +54,7 @@ const Autobuy = () => {
         description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
         switchProps={{
           subLabel: "Auto",
+          onChange: setComputeLimitToDefault,
         }}
         inputMode="decimal"
         placeholder="Enter value"
@@ -57,6 +67,7 @@ const Autobuy = () => {
         description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
         switchProps={{
           subLabel: "Auto",
+          onChange: setComputePriceToDefault,
         }}
         inputMode="decimal"
         placeholder="Enter value"

@@ -22,7 +22,7 @@ type Props = {
   placeholder?: string;
   switchProps?: Omit<
     React.ComponentProps<typeof Switch>,
-    "id" | "label" | "checked" | "onChange"
+    "id" | "label" | "checked"
   >;
 };
 
@@ -44,11 +44,19 @@ const FormItem: React.FC<Props> = ({
   const onChange = useSettingsStore((state) => state[valueChangeFnKey]);
 
   const switchKey =
-    `allowCustom${id[0].toUpperCase() + id.slice(1)}` as SettingEnablerKeys;
+    `allowAuto${id[0].toUpperCase() + id.slice(1)}` as SettingEnablerKeys;
   const switchChangeFnKey =
     `set${switchKey[0].toUpperCase() + switchKey.slice(1)}` as SettingEnablerOnChangeKeys;
-  const switchValue = useSettingsStore((state) => state[switchKey]);
-  const switchOnChange = useSettingsStore((state) => state[switchChangeFnKey]);
+  const switchStoreValue = useSettingsStore((state) => state[switchKey]);
+  const switchStoreOnChange = useSettingsStore(
+    (state) => state[switchChangeFnKey],
+  );
+
+  const { onChange: onSwitchChange, ...restSwitchProps } = switchProps || {};
+  const handleSwitchChange = (checked: boolean) => {
+    onSwitchChange?.(checked);
+    switchStoreOnChange(checked);
+  };
 
   return (
     <div className={classes.formItem}>
@@ -56,9 +64,9 @@ const FormItem: React.FC<Props> = ({
         <Switch
           id={switchKey}
           label={label}
-          checked={switchValue}
-          onChange={switchOnChange}
-          {...switchProps}
+          checked={switchStoreValue}
+          onChange={handleSwitchChange}
+          {...restSwitchProps}
         />
       ) : (
         <div className={classes.label}>{label}</div>
@@ -74,7 +82,7 @@ const FormItem: React.FC<Props> = ({
           onAccept={(value, _mask) => onChange(value)}
           inputMode={inputMode}
           className={classes.input}
-          disabled={switchValue === undefined ? false : switchValue}
+          disabled={switchStoreValue === undefined ? false : switchStoreValue}
         />
         <div className={classes.description}>{description}</div>
       </div>

@@ -27,7 +27,7 @@ export const getTokens = async (params: { page: number; size: number }) => {
     params,
   });
 
-  // const response = await mockResponse;
+  // const responseMock = await mockResponse;
 
   return camelcaseKeys(response.data, { deep: true });
 };

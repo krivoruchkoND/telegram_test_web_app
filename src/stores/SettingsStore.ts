@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
+import { getSettings } from "@apis/settings";
+
+const computeLimitAutoValue = "1400000";
+const computePriceAutoValue = "0.005";
+
 const tabs = [
   {
     id: "profile",
@@ -51,17 +56,21 @@ export type SettingsStore = {
   setAmount: (value: string) => void;
 
   computeLimit: string;
-  allowCustomComputeLimit: boolean;
+  allowAutoComputeLimit: boolean;
   setComputeLimit: (value: string) => void;
-  setAllowCustomComputeLimit: (value: boolean) => void;
+  setAllowAutoComputeLimit: (value: boolean) => void;
+  setComputeLimitToDefault: (value: boolean) => void;
 
   computePrice: string;
-  allowCustomComputePrice: boolean;
+  allowAutoComputePrice: boolean;
   setComputePrice: (value: string) => void;
-  setAllowCustomComputePrice: (value: boolean) => void;
+  setAllowAutoComputePrice: (value: boolean) => void;
+  setComputePriceToDefault: (value: boolean) => void;
 
   retryValue: string;
   setRetryValue: (value: string) => void;
+
+  getSettings: () => Promise<void>;
 };
 
 export type SettingKeys =
@@ -72,7 +81,7 @@ export type SettingKeys =
   | "retryValue";
 
 export type SettingEnablerKeys =
-  `allowCustom${Capitalize<"computeLimit" | "computePrice">}`;
+  `allowAuto${Capitalize<"computeLimit" | "computePrice">}`;
 
 export type SettingOnChangeKeys = `set${Capitalize<SettingKeys>}`;
 
@@ -84,11 +93,40 @@ export const useSettingsStore = create<SettingsStore>()(
     isNotificationsEnabled: true,
     slipage: "0.5",
     amount: "0.1",
-    computeLimit: "140000",
-    allowCustomComputeLimit: false,
-    computePrice: "0.005",
-    allowCustomComputePrice: false,
+    computeLimit: computeLimitAutoValue,
+    allowAutoComputeLimit: false,
+    computePrice: computePriceAutoValue,
+    allowAutoComputePrice: false,
     retryValue: "0",
+
+    getSettings: async () => {
+      try {
+        const { notification, buyingInfoAuto } = await getSettings();
+        const {
+          slippage,
+          amount,
+          computeUnitLimit,
+          computeUnitPrice,
+          repeatTransaction,
+        } = buyingInfoAuto;
+
+        set((state) => {
+          state.isNotificationsEnabled = notification;
+          state.slipage = slippage.toString();
+          state.amount = amount.toString();
+          state.computeLimit = computeUnitLimit.toString();
+          state.computePrice = computeUnitPrice.toString();
+          state.retryValue = repeatTransaction.toString();
+
+          state.allowAutoComputeLimit =
+            computeUnitLimit === Number(computeLimitAutoValue);
+          state.allowAutoComputePrice =
+            computeUnitPrice === Number(computePriceAutoValue);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
     setIsNotificationsEnabled: (value) => {
       set((state) => {
@@ -110,20 +148,36 @@ export const useSettingsStore = create<SettingsStore>()(
         state.computeLimit = value;
       });
     },
-    setAllowCustomComputeLimit: (value) => {
+    setAllowAutoComputeLimit: (value) => {
       set((state) => {
-        state.allowCustomComputeLimit = value;
+        state.allowAutoComputeLimit = value;
       });
+    },
+    setComputeLimitToDefault: (value) => {
+      if (value) {
+        set((state) => {
+          state.computeLimit = computeLimitAutoValue;
+          state.allowAutoComputeLimit = false;
+        });
+      }
     },
     setComputePrice: (value) => {
       set((state) => {
         state.computePrice = value;
       });
     },
-    setAllowCustomComputePrice: (value) => {
+    setAllowAutoComputePrice: (value) => {
       set((state) => {
-        state.allowCustomComputePrice = value;
+        state.allowAutoComputePrice = value;
       });
+    },
+    setComputePriceToDefault: (value) => {
+      if (value) {
+        set((state) => {
+          state.computePrice = computePriceAutoValue;
+          state.allowAutoComputePrice = false;
+        });
+      }
     },
     setRetryValue: (value) => {
       set((state) => {
