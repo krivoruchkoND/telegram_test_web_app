@@ -1,6 +1,6 @@
-import { nanoid } from "nanoid";
-
 import { useWalletStore } from "@stores/WalletStore";
+import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
+
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import middleTrim from "@utils/middleTrim";
 import copyIcon from "@assets/Copy.svg";
@@ -9,17 +9,17 @@ import referIcon from "@assets/ReferArrow.svg";
 
 import classes from "./styles.module.css";
 
-const USER_ID = nanoid(24);
-
 const AccountBalance = () => {
+  const publicAddress = useProfileSettingsStore((state) => state.publicAddress);
+  const referralUrl = useProfileSettingsStore((state) => state.referral.url);
   const totalValue = useWalletStore((state) => state.totalValue);
 
   const [, copy] = useCopyToClipboard();
 
-  const handleCopy = () => {
-    copy(USER_ID)
+  const handleCopy = (value: string) => {
+    copy(value)
       .then(() => {
-        console.log("Copied!", { USER_ID });
+        console.log("Copied!", value);
       })
       .catch((error) => {
         console.error("Failed to copy!", error);
@@ -28,26 +28,36 @@ const AccountBalance = () => {
 
   return (
     <section className={classes.account}>
-      <button className={classes.id} onClick={handleCopy}>
-        {middleTrim(USER_ID, 4, 4)}
-        <div className={classes.icon}>
-          <img src={copyIcon} />
-        </div>
-      </button>
+      {publicAddress && (
+        <button
+          className={classes.id}
+          onClick={() => handleCopy(publicAddress)}
+        >
+          {middleTrim(publicAddress, 4, 4)}
+          <div className={classes.icon}>
+            <img src={copyIcon} alt="copy" />
+          </div>
+        </button>
+      )}
 
       <div className={classes.balance}>
         {totalValue.toFixed(5)}
         <div className={classes.icon}>
-          <img src={coinIcon} />
+          <img src={coinIcon} alt="sol_coin" />
         </div>
       </div>
 
-      <button className={classes.referButton}>
-        <span className={classes.text}>Refer friends</span>
-        <div className={classes.icon}>
-          <img src={referIcon} />
-        </div>
-      </button>
+      {referralUrl && (
+        <button
+          className={classes.referButton}
+          onClick={() => handleCopy(referralUrl)}
+        >
+          <span className={classes.text}>Refer friends</span>
+          <div className={classes.icon}>
+            <img src={referIcon} alt="referral" />
+          </div>
+        </button>
+      )}
     </section>
   );
 };

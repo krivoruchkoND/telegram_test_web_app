@@ -10,11 +10,11 @@ const SPLASH_TIMEOUT = 1000;
 
 const Splash = () => {
   const [, setLocation] = useLocation();
-  const initialLoggedIn = useAuthStore((store) => store.initialLoggedIn);
+  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
 
   useEffect(() => {
     const redirect = () => {
-      if (initialLoggedIn) {
+      if (isAuthSucceed) {
         setLocation("/wallet");
       }
     };
@@ -22,7 +22,7 @@ const Splash = () => {
     const timeout = setInterval(redirect, SPLASH_TIMEOUT);
 
     return () => clearInterval(timeout);
-  }, [initialLoggedIn]);
+  }, [isAuthSucceed]);
 
   return (
     <div className={classes.splash}>

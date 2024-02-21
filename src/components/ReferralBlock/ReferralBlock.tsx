@@ -1,16 +1,12 @@
 import rockVioletIcon from "@assets/RockViolet.svg";
 import CopyButton from "@components/CopyButton";
+import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
 
 import classes from "./styles.module.css";
 
-const mock = {
-  referralsCount: 2,
-  rockEarned: "13.37K",
-  dollarEarned: "0.12",
-  referralLink: "https://t.me/rockbot?start=ref_mrct",
-};
-
 const ReferralBlock = () => {
+  const referral = useProfileSettingsStore((state) => state.referral);
+
   return (
     <div className={classes.referral}>
       <div className={classes.title}>
@@ -21,12 +17,13 @@ const ReferralBlock = () => {
       </div>
       <div className={classes.counter}>
         <span className={classes.title}>Referrals: </span>
-        <span className={classes.value}>{mock.referralsCount}</span>
+        <span className={classes.value}>{referral.inviteesCount}</span>
       </div>
       <div className={classes.counter}>
         <span className={classes.title}>$ROCK earned: </span>
         <span className={classes.value}>
-          {mock.rockEarned} (${mock.dollarEarned})
+          {referral.reward}
+          {/* (${referral.dollarReward}) */}
         </span>
       </div>
       <div className={classes.description}>
@@ -39,7 +36,7 @@ const ReferralBlock = () => {
           in the second and 10% forever!
         </p>
       </div>
-      <CopyButton value={mock.referralLink} />
+      {referral?.url && <CopyButton value={referral.url} />}
     </div>
   );
 };

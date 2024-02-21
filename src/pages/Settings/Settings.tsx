@@ -2,21 +2,25 @@ import { useEffect } from "react";
 import { Switch, Route } from "wouter";
 
 import { useSettingsStore } from "@stores/SettingsStore";
+import { useAuthStore } from "@stores/AuthStore";
 import DynamicSettingTabs from "@components/DynamicSettingTabs";
 import NotificationSwitch from "@components/NotificationSwitch";
 import PrivateKey from "@pages/PrivateKey";
 import Profile from "@pages/Profile";
 import Autobuy from "@pages/Autobuy";
-import Snipper from "@pages/Snipper";
+import Snipper from "@pages/Sniper";
 
 import classes from "./styles.module.css";
 
 const Settings = () => {
   const getSettings = useSettingsStore((state) => state.getSettings);
+  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
 
   useEffect(() => {
-    getSettings();
-  }, []);
+    if (isAuthSucceed) {
+      getSettings();
+    }
+  }, [isAuthSucceed]);
 
   return (
     <section className={classes.settings}>

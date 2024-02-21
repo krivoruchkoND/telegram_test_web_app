@@ -1,7 +1,7 @@
 import { useLocation, Link } from "wouter";
-import { nanoid } from "nanoid";
 import { clsx } from "clsx";
 
+import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import useShowBackButton from "@hooks/useBackButton";
 import middleTrim from "@utils/middleTrim";
@@ -12,15 +12,16 @@ import arrowIcon from "@assets/ArrowRightLight.svg";
 
 import classes from "./styles.module.css";
 
-const USER_ID = nanoid(24);
-
-const UserIdButton = () => {
+const InfoWithCopyButton: React.FC<{ title: string; value: string }> = ({
+  title,
+  value,
+}) => {
   const [, copy] = useCopyToClipboard();
 
-  const handleCopy = () => {
-    copy(USER_ID)
+  const handleCopy = (value: string) => {
+    copy(value)
       .then(() => {
-        console.log("Copied!", { USER_ID });
+        console.log("Copied!", value);
       })
       .catch((error) => {
         console.error("Failed to copy!", error);
@@ -28,15 +29,18 @@ const UserIdButton = () => {
   };
 
   return (
-    <button
-      className={clsx(classes.value, classes.copyButton)}
-      onClick={handleCopy}
-    >
-      {middleTrim(USER_ID, 4, 4)}
-      <div className={classes.icon}>
-        <img src={copyIcon} />
-      </div>
-    </button>
+    <>
+      <div className={classes.title}>{title}</div>
+      <button
+        className={clsx(classes.value, classes.copyButton)}
+        onClick={() => handleCopy(value)}
+      >
+        {middleTrim(value, 4, 4)}
+        <div className={classes.icon}>
+          <img src={copyIcon} />
+        </div>
+      </button>
+    </>
   );
 };
 
@@ -44,20 +48,26 @@ const Profile = () => {
   const [, setLocation] = useLocation();
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
+  const publicAddress = useProfileSettingsStore((state) => state.publicAddress);
+  const createAt = useProfileSettingsStore((state) => state.createAt);
+
   return (
     <div className={classes.profile}>
       <PageTitle title="Profile" />
       <div className={classes.userInfo}>
-        <div className={classes.infoContainer}>
-          <div className={classes.title}>Address</div>
-          <UserIdButton />
-        </div>
-        <div className={classes.infoContainer}>
-          <div className={classes.title}>Registration Date</div>
-          <div className={classes.value}>
-            {new Intl.DateTimeFormat("en-US").format(new Date())}
+        {publicAddress && (
+          <div className={classes.infoContainer}>
+            <InfoWithCopyButton title="Address" value={publicAddress} />
           </div>
-        </div>
+        )}
+        {createAt && (
+          <div className={classes.infoContainer}>
+            <div className={classes.title}>Registration Date</div>
+            <div className={classes.value}>
+              {new Intl.DateTimeFormat("en-US").format(new Date(createAt))}
+            </div>
+          </div>
+        )}
       </div>
       <Link href="/profile/private_key" className={classes.button}>
         {/* extra div for easier positioning */}

@@ -1,6 +1,10 @@
 import camelcaseKeys from "camelcase-keys";
 
-// import { mockResponse } from "@mocks/settings";
+// import {
+//   buildMockResponse,
+//   mockSettingsValue,
+//   mockProfileSettingsValue,
+// } from "@mocks/settings";
 
 import baseInstance from "./baseInstance";
 
@@ -24,10 +28,28 @@ export type Settings = {
   };
 };
 
+export type ProfileSettings = {
+  public_address: string;
+  create_at: string;
+  referral: {
+    url: string;
+    invitees_count: number;
+    reward: number;
+  };
+};
+
 export const getSettings = async () => {
   const response = await baseInstance.get<Settings>(`/settings`);
 
-  // const responseMock = await mockResponse;
+  // const responseMock = await buildMockResponse(mockSettingsValue);
+
+  return camelcaseKeys(response.data, { deep: true });
+};
+
+export const getProfileSettings = async () => {
+  const response = await baseInstance.get<ProfileSettings>(`/settings/profile`);
+
+  // const responseMock = await buildMockResponse(mockProfileSettingsValue);
 
   return camelcaseKeys(response.data, { deep: true });
 };

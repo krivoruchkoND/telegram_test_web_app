@@ -2,33 +2,28 @@ import React, { useRef } from "react";
 import { IMaskInput } from "react-imask";
 
 import Switch from "@components/Switch";
-import {
-  useSettingsStore,
-  SettingKeys,
-  SettingEnablerKeys,
-  SettingOnChangeKeys,
-  SettingEnablerOnChangeKeys,
-} from "@stores/SettingsStore";
+import { SettingKeys } from "@utils/commonSettingsSectionStores";
 
 import maskMap from "./masks";
 import classes from "./styles.module.css";
 
 type Props = {
   id: SettingKeys;
+  value: string;
+  onChange: (value: string) => void;
   label: string;
   description: string;
   inputMode: "decimal" | "numeric";
   masks: (keyof typeof maskMap)[];
   placeholder?: string;
-  switchProps?: Omit<
-    React.ComponentProps<typeof Switch>,
-    "id" | "label" | "checked"
-  >;
+  switchProps?: Omit<React.ComponentProps<typeof Switch>, "id" | "label">;
 };
 
 const FormItem: React.FC<Props> = ({
   id,
   label,
+  value,
+  onChange,
   inputMode,
   description,
   placeholder,
@@ -38,33 +33,24 @@ const FormItem: React.FC<Props> = ({
   const ref = useRef(null);
   const inputRef = useRef(null);
 
-  const value = useSettingsStore((state) => state[id]);
-  const valueChangeFnKey =
-    `set${id[0].toUpperCase() + id.slice(1)}` as SettingOnChangeKeys;
-  const onChange = useSettingsStore((state) => state[valueChangeFnKey]);
+  const switchKey = `allowAuto${id[0].toUpperCase() + id.slice(1)}`;
 
-  const switchKey =
-    `allowAuto${id[0].toUpperCase() + id.slice(1)}` as SettingEnablerKeys;
-  const switchChangeFnKey =
-    `set${switchKey[0].toUpperCase() + switchKey.slice(1)}` as SettingEnablerOnChangeKeys;
-  const switchStoreValue = useSettingsStore((state) => state[switchKey]);
-  const switchStoreOnChange = useSettingsStore(
-    (state) => state[switchChangeFnKey],
-  );
-
-  const { onChange: onSwitchChange, ...restSwitchProps } = switchProps || {};
+  const {
+    onChange: onSwitchChange,
+    checked,
+    ...restSwitchProps
+  } = switchProps ?? {};
   const handleSwitchChange = (checked: boolean) => {
     onSwitchChange?.(checked);
-    switchStoreOnChange(checked);
   };
 
   return (
     <div className={classes.formItem}>
-      {switchProps ? (
+      {switchProps && checked !== undefined ? (
         <Switch
           id={switchKey}
           label={label}
-          checked={switchStoreValue}
+          checked={checked}
           onChange={handleSwitchChange}
           {...restSwitchProps}
         />
@@ -79,10 +65,10 @@ const FormItem: React.FC<Props> = ({
           ref={ref}
           inputRef={inputRef}
           value={value}
-          onAccept={(value, _mask) => onChange(value)}
+          onAccept={(value, _mask) => onChange?.(value)}
           inputMode={inputMode}
           className={classes.input}
-          disabled={switchStoreValue === undefined ? false : switchStoreValue}
+          disabled={checked === undefined ? false : checked}
         />
         <div className={classes.description}>{description}</div>
       </div>

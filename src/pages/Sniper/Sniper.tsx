@@ -1,6 +1,6 @@
 import { useLocation, Link } from "wouter";
 
-import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
+import { useSniperSettingsStore } from "@stores/SniperSettingsStore";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
 import FormItem from "@components/FormItem";
@@ -8,7 +8,7 @@ import FormItem from "@components/FormItem";
 
 import classes from "./styles.module.css";
 
-const Autobuy = () => {
+const Snipper = () => {
   const [, setLocation] = useLocation();
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
@@ -30,7 +30,7 @@ const Autobuy = () => {
 
     setComputeLimitToDefault,
     setComputePriceToDefault,
-  } = useAutobuySettingsStore();
+  } = useSniperSettingsStore();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -118,4 +118,4 @@ const Autobuy = () => {
   );
 };
 
-export default Autobuy;
+export default Snipper;

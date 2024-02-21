@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { Switch, Router, Route } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 
+import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
+import { useAuthStore } from "@stores/AuthStore";
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
-import useAuthHandler from "./hooks/useAuthHandler";
+import useAuthHandler from "@hooks/useAuthHandler";
 import Wallet from "@pages/Wallet";
 import Settings from "@pages/Settings";
 import Swaps from "@pages/Swaps";
@@ -13,8 +16,19 @@ import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
 
 function App() {
+  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
+  const getProfileSettings = useProfileSettingsStore(
+    (store) => store.getProfileSettings,
+  );
+
   useInitTelegramWebApp();
   useAuthHandler();
+
+  useEffect(() => {
+    if (isAuthSucceed) {
+      getProfileSettings();
+    }
+  }, [isAuthSucceed]);
 
   return (
     <main className={classes.container}>

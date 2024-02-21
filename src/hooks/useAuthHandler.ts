@@ -8,13 +8,13 @@ const useAuthHandler = () => {
   const [, setLocation] = useLocation();
   const webApp = useTelegramWebAppStore((store) => store.webApp);
   const auth = useAuthStore((store) => store.auth);
-  const initialLoggedIn = useAuthStore((store) => store.initialLoggedIn);
+  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
 
   useEffect(() => {
-    if (!initialLoggedIn) {
+    if (!isAuthSucceed) {
       setLocation("/");
     }
-  }, [initialLoggedIn]);
+  }, [isAuthSucceed]);
 
   useEffect(() => {
     if (webApp) {

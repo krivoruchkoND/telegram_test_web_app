@@ -1,6 +1,6 @@
-import { type Settings } from "@apis/settings";
+import { type Settings, type ProfileSettings } from "@apis/settings";
 
-const mockValue: Settings = {
+export const mockSettingsValue: Settings = {
   notification: true,
   buying_info_auto: {
     repeat_transaction: 0,
@@ -20,10 +20,19 @@ const mockValue: Settings = {
   },
 };
 
-export const mockResponse = new Promise<{ data: typeof mockValue }>(
-  (resolve) => {
-    setTimeout(() => {
-      resolve({ data: mockValue });
-    }, 1000);
+export const mockProfileSettingsValue: ProfileSettings = {
+  public_address: "GKZ78dy5ahtw9DknA8V5XnqELQogexq2Pt9W1YQoCR3f",
+  create_at: "2024-02-18T18:13:57.557000",
+  referral: {
+    url: "https://rockbotstaging.com/",
+    invitees_count: 0,
+    reward: 0,
   },
-);
+};
+
+export const buildMockResponse = <T>(returnValue: T) =>
+  new Promise<{ data: T }>((resolve) => {
+    setTimeout(() => {
+      resolve({ data: returnValue });
+    }, 1000);
+  });
