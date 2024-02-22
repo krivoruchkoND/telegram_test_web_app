@@ -66,12 +66,14 @@ const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
       <div className={classes.info}>
         <div className={classes.column}>
           <div className={classes.title}>Value</div>
-          <span>{value.toFixed(5)} SOL</span>
+          <span>{formatBugNumbers(value)} SOL</span>
         </div>
         <PNL pnl={pnl} initial={initial} />
         <div className={clsx(classes.column, classes.alignRight)}>
           <div className={classes.title}>Initial</div>
-          <span>{initial ? `${initial.toFixed(5)} SOL` : "Unknown"}</span>
+          <span>
+            {initial ? `${formatBugNumbers(initial)} ${symbol}` : "Unknown"}
+          </span>
         </div>
       </div>
     </li>
