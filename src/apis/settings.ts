@@ -39,7 +39,7 @@ export type ProfileSettings = {
 };
 
 export const getSettings = async () => {
-  const response = await baseInstance.get<Settings>(`/settings`);
+  const response = await baseInstance.get<Settings>(`/settings/all`);
 
   // const responseMock = await buildMockResponse(mockSettingsValue);
 
