@@ -1,11 +1,11 @@
-import camelcaseKeys from "camelcase-keys";
+import camelcaseKeys, { CamelCaseKeys } from "camelcase-keys";
+import snakecaseKeys from "snakecase-keys";
 
 // import {
 //   buildMockResponse,
 //   mockSettingsValue,
 //   mockProfileSettingsValue,
 // } from "@mocks/settings";
-
 import baseInstance from "./baseInstance";
 
 export type Settings = {
@@ -46,10 +46,25 @@ export const getSettings = async () => {
   return camelcaseKeys(response.data, { deep: true });
 };
 
+export const updateSettings = async (
+  settings: CamelCaseKeys<Settings, true>,
+) => {
+  await baseInstance.post<void>(
+    "/settings/update",
+    snakecaseKeys(settings, { deep: true }),
+  );
+  return true;
+};
+
 export const getProfileSettings = async () => {
   const response = await baseInstance.get<ProfileSettings>(`/settings/profile`);
 
   // const responseMock = await buildMockResponse(mockProfileSettingsValue);
 
   return camelcaseKeys(response.data, { deep: true });
+};
+
+export const getPrivateKey = async () => {
+  const response = await baseInstance.get<string>(`/settings/private_key`);
+  return response.data;
 };

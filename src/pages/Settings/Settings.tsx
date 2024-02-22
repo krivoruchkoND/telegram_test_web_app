@@ -14,11 +14,13 @@ import classes from "./styles.module.css";
 
 const Settings = () => {
   const getSettings = useSettingsStore((state) => state.getSettings);
+  const getPrivateKey = useSettingsStore((state) => state.getPrivateKey);
   const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
 
   useEffect(() => {
     if (isAuthSucceed) {
       getSettings();
+      getPrivateKey();
     }
   }, [isAuthSucceed]);
 

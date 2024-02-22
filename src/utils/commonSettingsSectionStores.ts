@@ -29,6 +29,8 @@ export type CommonSettingsSectionStore = {
   retryValue: string;
   setRetryValue: (value: string) => void;
 
+  fromToken: string;
+
   setValues: (values: SettingValues) => void;
 };
 
@@ -54,6 +56,7 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
   computePrice: computePriceAutoValue,
   allowAutoComputePrice: true,
   retryValue: "0",
+  fromToken: "",
 
   setValues: (values) => {
     const {
@@ -62,6 +65,7 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       computeUnitLimit,
       computeUnitPrice,
       repeatTransaction,
+      fromToken,
     } = values;
     set((state) => {
       state.slippage = slippage.toString();
@@ -69,6 +73,7 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       state.computeLimit = computeUnitLimit.toString();
       state.computePrice = computeUnitPrice.toString();
       state.retryValue = repeatTransaction.toString();
+      state.fromToken = fromToken;
 
       state.allowAutoComputeLimit =
         computeUnitLimit === Number(computeLimitAutoValue);

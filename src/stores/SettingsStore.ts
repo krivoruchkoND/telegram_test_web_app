@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { getSettings } from "@apis/settings";
+import { getSettings, updateSettings, getPrivateKey } from "@apis/settings";
 import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
 import { useSniperSettingsStore } from "@stores/SniperSettingsStore";
 
@@ -49,23 +49,79 @@ export type SettingsStore = {
   setIsNotificationsEnabled: (value: boolean) => void;
 
   getSettings: () => Promise<void>;
+  updateSettings: () => Promise<void>;
+
+  privateKey: string | null;
+  getPrivateKey: () => Promise<void>;
+
+  isFetched: boolean;
 };
 
 export const useSettingsStore = create<SettingsStore>()(
-  immer((set) => ({
+  immer((set, get) => ({
     tabs,
     isNotificationsEnabled: true,
+    privateKey: null,
+    isFetched: false,
 
     getSettings: async () => {
       try {
         const { notification, buyingInfoAuto, buyingInfoSniper } =
           await getSettings();
 
+        useAutobuySettingsStore.getState().setValues(buyingInfoAuto);
+        useSniperSettingsStore.getState().setValues(buyingInfoSniper);
+
         set((state) => {
           state.isNotificationsEnabled = notification;
+          state.isFetched = true;
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
-          useAutobuySettingsStore.getState().setValues(buyingInfoAuto);
-          useSniperSettingsStore.getState().setValues(buyingInfoSniper);
+    updateSettings: async () => {
+      if (!get().isFetched) {
+        return;
+      }
+
+      const notification = get().isNotificationsEnabled;
+      const buyingInfoAuto = useAutobuySettingsStore.getState();
+      const buyingInfoSniper = useSniperSettingsStore.getState();
+
+      const settings = {
+        notification,
+        buyingInfoAuto: {
+          slippage: Number(buyingInfoAuto.slippage),
+          amount: Number(buyingInfoAuto.amount),
+          computeUnitLimit: Number(buyingInfoAuto.computeLimit),
+          computeUnitPrice: Number(buyingInfoAuto.computePrice),
+          repeatTransaction: Number(buyingInfoAuto.retryValue),
+          fromToken: buyingInfoAuto.fromToken,
+        },
+        buyingInfoSniper: {
+          slippage: Number(buyingInfoSniper.slippage),
+          amount: Number(buyingInfoSniper.amount),
+          computeUnitLimit: Number(buyingInfoSniper.computeLimit),
+          computeUnitPrice: Number(buyingInfoSniper.computePrice),
+          repeatTransaction: Number(buyingInfoSniper.retryValue),
+          fromToken: buyingInfoAuto.fromToken,
+        },
+      };
+
+      try {
+        await updateSettings(settings);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    getPrivateKey: async () => {
+      try {
+        const privateKey = await getPrivateKey();
+        set((state) => {
+          state.privateKey = privateKey;
         });
       } catch (error) {
         console.error(error);

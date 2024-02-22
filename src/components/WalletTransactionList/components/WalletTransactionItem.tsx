@@ -1,6 +1,7 @@
 import React from "react";
 import { clsx } from "clsx";
 
+import formatBugNumbers from "@utils/formatBigNumbers";
 import { Transaction } from "@stores/WalletStore";
 
 import classes from "../styles.module.css";
@@ -45,7 +46,7 @@ const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
 
 const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
   const { value, marketCap, pnl, initial, metadata } = transaction;
-  const { name, imageUrl } = metadata;
+  const { name, symbol, imageUrl } = metadata;
 
   return (
     <li className={classes.transaction}>
@@ -53,14 +54,14 @@ const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
         <div className={classes.nameContainer}>
           <div className={classes.avatar}>
             {imageUrl ? (
-              <img src={imageUrl} alt={name} />
+              <img src={imageUrl} alt={symbol} />
             ) : (
               name[0].toUpperCase()
             )}
           </div>
-          <span className={classes.name}>{name}</span>
+          <span className={classes.name}>{symbol}</span>
         </div>
-        <span className={classes.cap}>${marketCap.toFixed(3)}</span>
+        <span className={classes.cap}>${formatBugNumbers(marketCap)}</span>
       </div>
       <div className={classes.info}>
         <div className={classes.column}>

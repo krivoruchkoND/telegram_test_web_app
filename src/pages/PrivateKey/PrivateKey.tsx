@@ -1,15 +1,14 @@
 import { useLocation, Link } from "wouter";
-import { nanoid } from "nanoid";
 
 import CopyButton from "@/components/CopyButton";
 import useShowBackButton from "@hooks/useBackButton";
 
 import classes from "./styles.module.css";
-
-const USER_ID = nanoid(24);
+import { useSettingsStore } from "@/stores/SettingsStore";
 
 const PrivateKey = () => {
   const [, setLocation] = useLocation();
+  const privateKey = useSettingsStore((state) => state.privateKey);
   const isBackButtonSupported = useShowBackButton(() =>
     setLocation("/profile"),
   );
@@ -26,7 +25,7 @@ const PrivateKey = () => {
           information should never be shared with strangers.
         </div>
       </div>
-      <CopyButton value={`${USER_ID}${USER_ID}${USER_ID}`} />
+      {privateKey && <CopyButton value={privateKey} />}
       {!isBackButtonSupported && <Link href="/profile">Go back</Link>}
     </div>
   );

@@ -37,7 +37,7 @@ const InfoWithCopyButton: React.FC<{ title: string; value: string }> = ({
       >
         {middleTrim(value, 4, 4)}
         <div className={classes.icon}>
-          <img src={copyIcon} />
+          <img src={copyIcon} alt="copy" />
         </div>
       </button>
     </>
@@ -74,7 +74,7 @@ const Profile = () => {
         <div></div>
         <div className={classes.text}>SHOW MY PRIVATE KEY</div>
         <div className={classes.icon}>
-          <img src={arrowIcon} />
+          <img src={arrowIcon} alt="arrowRight" />
         </div>
       </Link>
       <ReferralBlock />
