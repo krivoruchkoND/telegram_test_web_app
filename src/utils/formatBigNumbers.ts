@@ -1,3 +1,12 @@
+const toFixed = (value: number, fraction: number) => {
+  const isDecimal = value % 1 !== 0;
+
+  if (isDecimal) {
+    return value.toFixed(fraction);
+  }
+
+  return value.toFixed(0);
+};
 const formatBugNumbers = (value: number) => {
   const absValue = Math.abs(value);
 
@@ -6,15 +15,15 @@ const formatBugNumbers = (value: number) => {
   }
 
   if (absValue < 0.0001) {
-    return value.toFixed(8);
+    return toFixed(value, 8);
   }
 
   if (absValue < 0.001) {
-    return value.toFixed(6);
+    return toFixed(value, 6);
   }
 
   if (absValue < 1000) {
-    return value.toFixed(3);
+    return toFixed(value, 3);
   }
 
   return Intl.NumberFormat("en-US", {
