@@ -1,13 +1,19 @@
 const formatBugNumbers = (value: number) => {
-  if (value < 0.0001) {
+  const absValue = Math.abs(value);
+
+  if (absValue === 0) {
+    return 0;
+  }
+
+  if (absValue < 0.0001) {
     return value.toFixed(8);
   }
 
-  if (value < 0.001) {
+  if (absValue < 0.001) {
     return value.toFixed(6);
   }
 
-  if (value < 1000) {
+  if (absValue < 1000) {
     return value.toFixed(3);
   }
 
