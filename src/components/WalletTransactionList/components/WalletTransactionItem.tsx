@@ -59,7 +59,7 @@ const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
               name[0].toUpperCase()
             )}
           </div>
-          <span className={classes.name}>{symbol}</span>
+          <span className={classes.name}>{name}</span>
         </div>
         <span className={classes.cap}>${formatBugNumbers(marketCap)}</span>
       </div>
