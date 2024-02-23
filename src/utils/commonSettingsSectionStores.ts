@@ -6,6 +6,7 @@ type SettingValues = Awaited<ReturnType<typeof getSettings>>["buyingInfoAuto"];
 
 const computeLimitAutoValue = "1400000";
 const computePriceAutoValue = "0.005";
+export const computePriceMultiplier = 10e6;
 
 export type CommonSettingsSectionStore = {
   slippage: string;
@@ -71,7 +72,9 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       state.slippage = slippage.toString();
       state.amount = amount.toString();
       state.computeLimit = computeUnitLimit.toString();
-      state.computePrice = computeUnitPrice.toString();
+      state.computePrice = (
+        computeUnitPrice / computePriceMultiplier
+      ).toString();
       state.retryValue = repeatTransaction.toString();
       state.fromToken = fromToken;
 
