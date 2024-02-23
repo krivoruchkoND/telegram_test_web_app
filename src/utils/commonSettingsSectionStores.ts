@@ -4,9 +4,9 @@ import { getSettings } from "@apis/settings";
 
 type SettingValues = Awaited<ReturnType<typeof getSettings>>["buyingInfoAuto"];
 
+export const computePriceMultiplier = 10e6;
 const computeLimitAutoValue = "1400000";
 const computePriceAutoValue = "0.005";
-export const computePriceMultiplier = 10e6;
 
 export type CommonSettingsSectionStore = {
   slippage: string;
@@ -81,7 +81,8 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       state.allowAutoComputeLimit =
         computeUnitLimit === Number(computeLimitAutoValue);
       state.allowAutoComputePrice =
-        computeUnitPrice === Number(computePriceAutoValue);
+        computeUnitPrice / computePriceMultiplier ===
+        Number(computePriceAutoValue);
     });
   },
 
