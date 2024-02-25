@@ -4,6 +4,7 @@ import debounce from "debounce";
 
 import { useSettingsStore } from "@stores/SettingsStore";
 import { useSniperSettingsStore } from "@stores/SniperSettingsStore";
+import preventDefault from "@utils/preventDefault";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
 import FormItem from "@components/FormItem";
@@ -45,12 +46,8 @@ const Snipper = () => {
     debouncedUpdateSettings();
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
   return (
-    <form className={classes.autobuy} onSubmit={onSubmit}>
+    <form className={classes.autobuy} onSubmit={preventDefault}>
       <PageTitle title="Sniper TG channel" />
 
       <FormItem

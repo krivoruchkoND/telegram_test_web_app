@@ -12,7 +12,7 @@ function getRandomInt(min: number, max: number) {
 }
 
 function randomNameGenerator() {
-  var name1 = [
+  const name1 = [
     "abandoned",
     "able",
     "absolute",
@@ -1363,7 +1363,7 @@ function randomNameGenerator() {
     "rocky",
   ];
 
-  var name2 = [
+  const name2 = [
     "people",
     "history",
     "way",
@@ -2867,7 +2867,7 @@ function randomNameGenerator() {
     "Lieuwe",
   ];
 
-  var name =
+  return (
     capFirst(name1[getRandomInt(0, name1.length + 1)]).slice(
       0,
       getRandomInt(3, 5),
@@ -2876,9 +2876,8 @@ function randomNameGenerator() {
     capFirst(name2[getRandomInt(0, name2.length + 1)]).slice(
       0,
       getRandomInt(2, 5),
-    );
-
-  return name;
+    )
+  );
 }
 
 export default randomNameGenerator;

@@ -17,7 +17,7 @@ const icons: { [key: string]: string } = {
   violet: rockVioletIcon,
 };
 
-type Props = {};
+type Props = unknown;
 
 const DynamicSettingTabItem: React.FC<Props & Tab> = ({
   id,
