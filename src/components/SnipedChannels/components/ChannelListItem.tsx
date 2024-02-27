@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Channel } from "@stores/SnipedChannelsStore";
+import { Channel, useSnipedChannelsStore } from "@stores/SnipedChannelsStore";
 
 import classes from "../styles.module.css";
 
@@ -11,6 +11,8 @@ type Props = {
 const channelHasCallsCount = false;
 
 const ChannelListItem: React.FC<Props> = ({ channel }) => {
+  const remove = useSnipedChannelsStore((state) => state.removeSnipedChannel);
+
   return (
     <li className={classes.channel}>
       <div className={classes.contentWrapper}>
@@ -28,7 +30,9 @@ const ChannelListItem: React.FC<Props> = ({ channel }) => {
           )}
         </div>
       </div>
-      <button className={classes.removeButton}>remove</button>
+      <button className={classes.removeButton} onClick={() => remove(channel)}>
+        remove
+      </button>
     </li>
   );
 };
