@@ -6,15 +6,10 @@ import { Transaction } from "@stores/WalletStore";
 
 import classes from "../styles.module.css";
 
-type Props = {
-  transaction: Transaction;
-};
+type PNLProps = { pnl: Transaction["pnl"] };
 
-const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
-  pnl,
-  initial,
-}) => {
-  if (pnl === null || initial === null) {
+const PNL: React.FC<PNLProps> = ({ pnl }) => {
+  if (pnl === null) {
     return (
       <div className={clsx(classes.column, classes.alignCenter)}>
         <div className={classes.title}>Trade PNL</div>
@@ -23,9 +18,8 @@ const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
     );
   }
 
-  const PNLPercent = (pnl / initial) * 100;
-  const isNegative = pnl < 0;
-  const prefix = isNegative ? "-" : "+";
+  const isNegative = pnl.value < 0;
+  const prefix = pnl.value > 0 ? "" : "+";
 
   return (
     <div className={clsx(classes.column, classes.alignCenter)}>
@@ -37,15 +31,19 @@ const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
         )}
       >
         {prefix}
-        {pnl.toFixed(3)} SOL ({prefix}
-        {PNLPercent.toFixed(3)}%)
+        {pnl.value.toFixed(3)} SOL ({prefix}
+        {pnl.rate.toFixed(3)}%)
       </span>
     </div>
   );
 };
 
+type Props = {
+  transaction: Transaction;
+};
+
 const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
-  const { value, marketCap, pnl, initial, metadata } = transaction;
+  const { value, marketCap, pnl, amount, metadata } = transaction;
   const { name, symbol, imageUrl } = metadata;
 
   return (
@@ -68,11 +66,11 @@ const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
           <div className={classes.title}>Value</div>
           <span>{formatBugNumbers(value)} SOL</span>
         </div>
-        <PNL pnl={pnl} initial={initial} />
+        <PNL pnl={pnl} />
         <div className={clsx(classes.column, classes.alignRight)}>
-          <div className={classes.title}>Initial</div>
+          <div className={classes.title}>Amount</div>
           <span>
-            {initial ? `${formatBugNumbers(initial)} ${symbol}` : "Unknown"}
+            {amount ? `${formatBugNumbers(amount)} ${symbol}` : "Unknown"}
           </span>
         </div>
       </div>

@@ -5,9 +5,9 @@ import { getSettings } from "@apis/settings";
 
 type SettingValues = Awaited<ReturnType<typeof getSettings>>["buyingInfoAuto"];
 
-export const computePriceMultiplier = 10e6;
+export const computePriceMultiplier = 10e9;
 const computeLimitAutoValue = "1400000";
-const computePriceAutoValue = "0.005";
+const computePriceAutoValue = "0.000005";
 
 export type CommonSettingsSectionStore = {
   slippage: string;

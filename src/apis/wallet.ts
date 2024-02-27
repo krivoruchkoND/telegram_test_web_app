@@ -7,15 +7,16 @@ export type Token = {
   id: string;
   market_cap: number;
   value: number;
-  initial: number | null;
-  pnl: number | null;
+  amount: number | null;
+  pnl: {
+    value: number;
+    rate: number;
+  } | null;
   metadata: {
     name: string;
     symbol: string;
     description: string | null;
-    uri: string;
     image_url: string | null;
-    is_mutable: boolean;
   };
 };
 
