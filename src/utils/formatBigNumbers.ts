@@ -7,11 +7,12 @@ const toFixed = (value: number, fraction: number) => {
 
   return value.toFixed(0);
 };
+
 const formatBugNumbers = (value: number) => {
   const absValue = Math.abs(value);
 
   if (absValue === 0) {
-    return 0;
+    return "0";
   }
 
   if (absValue < 0.0001) {
@@ -19,11 +20,11 @@ const formatBugNumbers = (value: number) => {
   }
 
   if (absValue < 0.001) {
-    return toFixed(value, 4);
+    return toFixed(value, 6);
   }
 
   if (absValue < 1000) {
-    return toFixed(value, 2);
+    return toFixed(value, 4);
   }
 
   return Intl.NumberFormat("en-US", {

@@ -37,7 +37,7 @@ const solMask = {
   blocks: {
     d: {
       mask: Number,
-      scale: 5,
+      scale: 8,
       radix: ".",
       mapToRadix: [","],
       thousandsSeparator: " ",
