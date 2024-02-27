@@ -1,18 +1,13 @@
+import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
 import dragHandleIcon from "@assets/DragHandle.svg";
 import Switch from "@components/Switch";
 
-const platforms = [
-  {
-    id: 1,
-    name: "Jupiter",
-  },
-  {
-    id: 2,
-    name: "Radyum",
-  },
-];
-
 const SwapPlatforms = () => {
+  const swapPlatforms = useAutobuySettingsStore((state) => state.swapPlatforms);
+  // const changeSwapPlatformsOrder = useAutobuySettingsStore(
+  //   (state) => state.changeSwapPlatformsOrder,
+  // );
+
   return (
     <>
       <Switch
@@ -22,12 +17,12 @@ const SwapPlatforms = () => {
         checked={true}
         onChange={() => null}
       />
-      {platforms.map(({ id, name }) => (
+      {swapPlatforms.map(({ id, title }) => (
         <div key={id}>
           <div>
             <img src={dragHandleIcon} />
           </div>
-          <div>{name}</div>
+          <div>{title}</div>
         </div>
       ))}
       <div>Choosing a platform for swap</div>
