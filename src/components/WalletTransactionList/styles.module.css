@@ -40,6 +40,10 @@
             height: 27px;
           }
         }
+
+        > .clearBackground {
+          background-color: transparent;
+        }
         
         > .name {
           text-transform: uppercase;

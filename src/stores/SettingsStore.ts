@@ -4,7 +4,6 @@ import { immer } from "zustand/middleware/immer";
 import { getSettings, updateSettings, getPrivateKey } from "@apis/settings";
 import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
 import { useSniperSettingsStore } from "@stores/SniperSettingsStore";
-import { computePriceMultiplier } from "@utils/commonSettingsSectionStores";
 
 const tabs = [
   {
@@ -97,8 +96,7 @@ export const useSettingsStore = create<SettingsStore>()(
           slippage: Number(buyingInfoAuto.slippage),
           amount: Number(buyingInfoAuto.amount),
           computeUnitLimit: Number(buyingInfoAuto.computeLimit),
-          computeUnitPrice:
-            Number(buyingInfoAuto.computePrice) * computePriceMultiplier,
+          computeUnitPrice: Number(buyingInfoAuto.computePrice),
           repeatTransaction: Number(buyingInfoAuto.retryValue),
           fromToken: buyingInfoAuto.fromToken,
           swapPlatforms: buyingInfoAuto.swapPlatforms.map(({ title }) => title),
@@ -107,8 +105,7 @@ export const useSettingsStore = create<SettingsStore>()(
           slippage: Number(buyingInfoSniper.slippage),
           amount: Number(buyingInfoSniper.amount),
           computeUnitLimit: Number(buyingInfoSniper.computeLimit),
-          computeUnitPrice:
-            Number(buyingInfoSniper.computePrice) * computePriceMultiplier,
+          computeUnitPrice: Number(buyingInfoSniper.computePrice),
           repeatTransaction: Number(buyingInfoSniper.retryValue),
           fromToken: buyingInfoSniper.fromToken,
           swapPlatforms: buyingInfoSniper.swapPlatforms.map(

@@ -5,7 +5,6 @@ import { getSettings } from "@apis/settings";
 
 type SettingValues = Awaited<ReturnType<typeof getSettings>>["buyingInfoAuto"];
 
-export const computePriceMultiplier = 10e9;
 const computeLimitAutoValue = "1400000";
 const computePriceAutoValue = "0.000005";
 
@@ -77,17 +76,14 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       state.slippage = slippage.toString();
       state.amount = amount.toString();
       state.computeLimit = computeUnitLimit.toString();
-      state.computePrice = (
-        computeUnitPrice / computePriceMultiplier
-      ).toString();
+      state.computePrice = computeUnitPrice.toString();
       state.retryValue = repeatTransaction.toString();
       state.fromToken = fromToken;
 
       state.allowAutoComputeLimit =
         computeUnitLimit === Number(computeLimitAutoValue);
       state.allowAutoComputePrice =
-        computeUnitPrice / computePriceMultiplier ===
-        Number(computePriceAutoValue);
+        computeUnitPrice === Number(computePriceAutoValue);
 
       state.swapPlatforms = swapPlatforms.map((title) => ({
         title,

@@ -31,8 +31,8 @@ const PNL: React.FC<PNLProps> = ({ pnl }) => {
         )}
       >
         {prefix}
-        {pnl.value.toFixed(3)} SOL ({prefix}
-        {pnl.rate.toFixed(3)}%)
+        {formatBugNumbers(pnl.value)} SOL ({prefix}
+        {formatBugNumbers(pnl.rate)}%)
       </span>
     </div>
   );
@@ -50,7 +50,12 @@ const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
     <li className={classes.transaction}>
       <div className={classes.title}>
         <div className={classes.nameContainer}>
-          <div className={classes.avatar}>
+          <div
+            className={clsx(
+              classes.avatar,
+              imageUrl && classes.clearBackground,
+            )}
+          >
             {imageUrl ? (
               <img src={imageUrl} alt={symbol} />
             ) : (

@@ -15,15 +15,15 @@ const formatBugNumbers = (value: number) => {
   }
 
   if (absValue < 0.0001) {
-    return toFixed(value, 8);
-  }
-
-  if (absValue < 0.001) {
     return toFixed(value, 6);
   }
 
+  if (absValue < 0.001) {
+    return toFixed(value, 4);
+  }
+
   if (absValue < 1000) {
-    return toFixed(value, 3);
+    return toFixed(value, 2);
   }
 
   return Intl.NumberFormat("en-US", {
