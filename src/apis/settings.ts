@@ -6,6 +6,7 @@ import snakecaseKeys from "snakecase-keys";
 //   mockSettingsValue,
 //   mockProfileSettingsValue,
 // } from "@mocks/settings";
+// import { mockValue, buildMockResponse } from "@mocks/sniper";
 import baseInstance from "./baseInstance";
 
 export type Settings = {
@@ -38,6 +39,13 @@ export type ProfileSettings = {
   };
 };
 
+export type Channel = {
+  id: number;
+  telegram_channel_tag: string;
+  title: string;
+  image_url: string;
+};
+
 export const getSettings = async () => {
   const response = await baseInstance.get<Settings>(`/settings/all`);
 
@@ -67,4 +75,34 @@ export const getProfileSettings = async () => {
 export const getPrivateKey = async () => {
   const response = await baseInstance.get<string>(`/settings/private_key`);
   return response.data;
+};
+
+export const getSnipedChannels = async () => {
+  const response = await baseInstance.get<{ channels: Channel[] }>(
+    `/settings/sniped_channels`,
+  );
+
+  // const mockResponse = await buildMockResponse(mockValue);
+
+  return camelcaseKeys(response.data, { deep: true });
+};
+
+export const addSnipedChannel = async (channelTag: string) => {
+  const response = await baseInstance.post<{ channels: Channel[] }>(
+    "/settings/add_sniped_channel",
+    {
+      channel_tag: channelTag,
+    },
+  );
+
+  return camelcaseKeys(response.data, { deep: true });
+};
+
+export const removeSnipedChannel = async (channel: CamelCaseKeys<Channel>) => {
+  await baseInstance.post<void>(
+    "/settings/remove_sniped_channel",
+    snakecaseKeys(channel),
+  );
+
+  return true;
 };

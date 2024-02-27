@@ -8,6 +8,7 @@ import preventDefault from "@utils/preventDefault";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
 import FormItem from "@components/FormItem";
+import SnipedChannels from "@components/SnipedChannels";
 
 import classes from "./styles.module.css";
 
@@ -47,84 +48,88 @@ const Snipper = () => {
   };
 
   return (
-    <form className={classes.autobuy} onSubmit={preventDefault}>
+    <div className={classes.sniperPage}>
       <PageTitle title="Sniper TG channel" />
 
-      <FormItem
-        id="slippage"
-        value={slippage}
-        onChange={(v) => onChangeHandler(v, setSlippage)}
-        label="Slippage"
-        description="Difference between expected and actual results amounts of token"
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "percent"]}
-      />
+      <SnipedChannels />
 
-      <FormItem
-        id="amount"
-        value={amount}
-        onChange={(v) => onChangeHandler(v, setAmount)}
-        label="Amount"
-        description="Number of tokens for purchase"
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "float"]}
-      />
+      <form onSubmit={preventDefault} className={classes.sniperForm}>
+        <FormItem
+          id="slippage"
+          value={slippage}
+          onChange={(v) => onChangeHandler(v, setSlippage)}
+          label="Slippage"
+          description="Difference between expected and actual results amounts of token"
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "percent"]}
+        />
 
-      <FormItem
-        id="computeLimit"
-        value={computeLimit}
-        onChange={(v) => onChangeHandler(v, setComputeLimit)}
-        label="Compute Unit Limit"
-        description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
-        switchProps={{
-          subLabel: "Auto",
-          checked: allowAutoComputeLimit,
-          onChange: (value) => {
-            setAllowAutoComputeLimit(value);
-            setComputeLimitToDefault(value);
-            debouncedUpdateSettings();
-          },
-        }}
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "decimal"]}
-      />
+        <FormItem
+          id="amount"
+          value={amount}
+          onChange={(v) => onChangeHandler(v, setAmount)}
+          label="Amount"
+          description="Number of tokens for purchase"
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "float"]}
+        />
 
-      <FormItem
-        id="computePrice"
-        value={computePrice}
-        onChange={(v) => onChangeHandler(v, setComputePrice)}
-        label="Compute Unit Price (priority)"
-        description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
-        switchProps={{
-          subLabel: "Auto",
-          checked: allowAutoComputePrice,
-          onChange: (value) => {
-            setAllowAutoComputePrice(value);
-            setComputePriceToDefault(value);
-            debouncedUpdateSettings();
-          },
-        }}
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "sol"]}
-      />
+        <FormItem
+          id="computeLimit"
+          value={computeLimit}
+          onChange={(v) => onChangeHandler(v, setComputeLimit)}
+          label="Compute Unit Limit"
+          description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
+          switchProps={{
+            subLabel: "Auto",
+            checked: allowAutoComputeLimit,
+            onChange: (value) => {
+              setAllowAutoComputeLimit(value);
+              setComputeLimitToDefault(value);
+              debouncedUpdateSettings();
+            },
+          }}
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "decimal"]}
+        />
 
-      <FormItem
-        id="retryValue"
-        value={retryValue}
-        onChange={(v) => onChangeHandler(v, setRetryValue)}
-        label="Retry value"
-        description="Number of retry transaction in node if transaction fail"
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "decimal"]}
-      />
+        <FormItem
+          id="computePrice"
+          value={computePrice}
+          onChange={(v) => onChangeHandler(v, setComputePrice)}
+          label="Compute Unit Price (priority)"
+          description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
+          switchProps={{
+            subLabel: "Auto",
+            checked: allowAutoComputePrice,
+            onChange: (value) => {
+              setAllowAutoComputePrice(value);
+              setComputePriceToDefault(value);
+              debouncedUpdateSettings();
+            },
+          }}
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "sol"]}
+        />
 
-      {!isBackButtonSupported && <Link href="/">Go back</Link>}
-    </form>
+        <FormItem
+          id="retryValue"
+          value={retryValue}
+          onChange={(v) => onChangeHandler(v, setRetryValue)}
+          label="Retry value"
+          description="Number of retry transaction in node if transaction fail"
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "decimal"]}
+        />
+
+        {!isBackButtonSupported && <Link href="/">Go back</Link>}
+      </form>
+    </div>
   );
 };
 

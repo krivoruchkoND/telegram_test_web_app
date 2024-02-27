@@ -42,6 +42,10 @@
       &:disabled {
         color: var(--rb-text-color-7);
       }
+
+      &::placeholder {
+        color: var(--rb-text-color-7);
+      }
     }
 
     > .description {

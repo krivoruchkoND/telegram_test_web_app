@@ -1,0 +1,133 @@
+.snipeChannels { 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding-bottom: 24px;
+
+  border-bottom: 1px solid var(--rb-background-color-1);
+
+  > .title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+
+    background: var(--rb-gradient-color-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  > .addChannel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    > .input {
+      padding: 20px;
+
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 19px;
+      text-align: center;
+      color: var(--rb-text-color-6);
+
+      background-color: var(--rb-background-color-1);
+      border: none;
+      border-radius: 20px;
+
+      &:focus {
+        outline: 1px solid var(--rb-text-color-3);
+      }
+  
+      &::placeholder {
+        color: var(--rb-text-color-7);
+      }
+    }
+
+    > .button {
+      cursor: pointer;
+      padding: 20px;
+      
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 19px;      
+
+      border-radius: 40px;
+      border: none;
+      background-color: var(--rb-background-color-1);
+
+      > .text {
+        background: var(--rb-gradient-color-2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      &:focus {
+        outline: 1px solid var(--rb-text-color-3);
+      }
+    }
+  }
+
+  > .channelList {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 0;
+    margin: 0;
+    margin-top: 24px;
+
+    > .channel {
+      list-style-type: none;
+      display: flex;
+      justify-content: space-between;
+
+      > .contentWrapper { 
+        display: flex;
+        gap: 10px;
+  
+        > .avatar {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 28px;
+          height: 28px;
+          background-color: darkgray;
+  
+          > img {
+            width: 28px;
+            height: 28px;
+          }
+        }
+  
+        > .content {
+          > .title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19px;
+
+            background: var(--rb-gradient-color-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;            
+          }
+
+          > .callsCount {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19px;
+            color: var(--rb-text-color-2);
+          }
+        }
+      }
+
+      > .removeButton {
+        cursor: pointer;
+        align-self: flex-start;
+        padding: 0;
+        border: none;
+        background-color: transparent;
+
+        color: var(--rb-text-color-2);
+      }
+    }
+  }
+}
