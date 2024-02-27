@@ -1,12 +1,13 @@
 import { immer } from "zustand/middleware/immer";
+import { nanoid } from "nanoid";
 
 import { getSettings } from "@apis/settings";
 
 type SettingValues = Awaited<ReturnType<typeof getSettings>>["buyingInfoAuto"];
 
-export const computePriceMultiplier = 10e6;
+export const computePriceMultiplier = 10e9;
 const computeLimitAutoValue = "1400000";
-const computePriceAutoValue = "0.005";
+const computePriceAutoValue = "0.000005";
 
 export type CommonSettingsSectionStore = {
   slippage: string;
@@ -30,6 +31,8 @@ export type CommonSettingsSectionStore = {
   retryValue: string;
   setRetryValue: (value: string) => void;
 
+  swapPlatforms: { title: string; id: string }[];
+  changeSwapPlatformsOrder: (dragIndex: number, hoverIndex: number) => void;
   fromToken: string;
 
   setValues: (values: SettingValues) => void;
@@ -58,6 +61,7 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
   allowAutoComputePrice: true,
   retryValue: "0",
   fromToken: "",
+  swapPlatforms: [],
 
   setValues: (values) => {
     const {
@@ -67,6 +71,7 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       computeUnitPrice,
       repeatTransaction,
       fromToken,
+      swapPlatforms,
     } = values;
     set((state) => {
       state.slippage = slippage.toString();
@@ -83,6 +88,11 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       state.allowAutoComputePrice =
         computeUnitPrice / computePriceMultiplier ===
         Number(computePriceAutoValue);
+
+      state.swapPlatforms = swapPlatforms.map((title) => ({
+        title,
+        id: nanoid(8),
+      }));
     });
   },
 
@@ -135,6 +145,13 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
   setRetryValue: (value) => {
     set((state) => {
       state.retryValue = value;
+    });
+  },
+  changeSwapPlatformsOrder: (dragIndex, hoverIndex) => {
+    set((state) => {
+      const dragItem = state.swapPlatforms[dragIndex];
+      state.swapPlatforms.splice(dragIndex, 1);
+      state.swapPlatforms.splice(hoverIndex, 0, dragItem);
     });
   },
 }));

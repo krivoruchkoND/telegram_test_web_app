@@ -18,6 +18,7 @@ export type Settings = {
     from_token: string;
     compute_unit_limit: number;
     compute_unit_price: number;
+    swap_platforms: string[];
   };
   buying_info_sniper: {
     repeat_transaction: number;
@@ -26,6 +27,7 @@ export type Settings = {
     from_token: string;
     compute_unit_limit: number;
     compute_unit_price: number;
+    swap_platforms: string[];
   };
 };
 
