@@ -20,7 +20,7 @@ export type Swap = {
 export const getSwaps = async (params: { page: number; size: number }) => {
   const response = await baseInstance.get<{
     swaps: Swap[];
-  }>(`/swaps`, { params });
+  }>(`/swaps/all`, { params });
 
   // const responseMock = await mockResponse;
 
