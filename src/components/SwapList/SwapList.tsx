@@ -1,11 +1,11 @@
-import { swapsGenerator, combineSwapsByDay } from "@utils/swapsGenerator";
+import { useSwapsStore } from "@stores/SwapsStore";
 
 import SwapItemsList from "./components/SwapItemsList";
 import classes from "./styles.module.css";
 
-const swaps = combineSwapsByDay(swapsGenerator());
-
 const SwapList = () => {
+  const swaps = useSwapsStore((state) => state.swaps);
+
   return (
     <ul className={classes.swaps}>
       {Object.entries(swaps).map(([date, swaps]) => (

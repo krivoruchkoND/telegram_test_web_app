@@ -34,7 +34,7 @@
       font-weight: 500;
       line-height: 17px;
 
-      > .titleCol {
+      .titleCol {
         > .title {
           background: var(--rb-gradient-color-2);
           -webkit-background-clip: text;
@@ -42,6 +42,7 @@
         }
 
         > .description {
+          margin-top: 6px;
           color: var(--rb-text-color-3)
         }
       }
@@ -50,6 +51,74 @@
         text-align: right;
         > .raw {
           color: var(--rb-text-color-1);
+
+          &:last-child {
+            margin-top: 6px;
+          }
+        }
+      }
+
+      .flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      
+      .negative {
+        color: var(--rb-text-color-5);
+      }
+
+      .positive {
+        color: var(--rb-text-color-4);
+      }
+
+      .avatars {
+        position: relative;
+        height: 42px;
+        width: 45px;
+
+        > .avatar {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 28px;
+          height: 28px;
+          background-color: darkgray;
+          border-radius: 28px;
+          border: 1px solid black;
+
+          > img {
+            width: 28px;
+            height: 28px;
+          }
+        }
+
+        > .singleImage {
+          padding: 1px 2px;
+          width: 40px;
+          height: 40px;
+
+          > img {
+            width: 40px;
+            height: 40px;
+          }
+        }
+
+        > .topLeft {
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        > .bottomRight {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+        }
+
+        > .clearBackground {
+          background-color: transparent;
         }
       }
     }
