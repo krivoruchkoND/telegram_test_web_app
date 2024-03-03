@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { type Swap } from "@stores/SwapsStore";
 
 const addLeadingZero = (value: number) => (value < 10 ? `0${value}` : value);
@@ -15,10 +14,10 @@ const combineSwapsByDay = (swaps: Swap[]) => {
       if (!acc[formattedDate]) {
         acc[formattedDate] = [];
       }
-      acc[formattedDate].push({ id: nanoid(), ...swap });
+      acc[formattedDate].push(swap);
       return acc;
     },
-    {} as Record<string, (Swap & { id: string })[]>,
+    {} as Record<string, Swap[]>,
   );
 };
 

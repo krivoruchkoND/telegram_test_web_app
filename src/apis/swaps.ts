@@ -7,10 +7,12 @@ type Address = {
   address: string;
   amount: number;
   name?: string;
-  uri?: string;
+  symbol?: string;
+  image_url?: string;
 };
 
 export type Swap = {
+  id: string;
   type: "swapped" | "send" | "received";
   datetime: string;
   from_address: Address;

@@ -10,7 +10,7 @@ export type SwapsStore = {
   page: number;
   size: number;
 
-  swaps: { [key: string]: (Swap & { id: string })[] };
+  swaps: { [key: string]: Swap[] };
 
   getSwaps: () => Promise<void>;
 };
