@@ -31,57 +31,58 @@ const Exchange: FC = () => {
   const [isAutoPlatforms, setIsAutoPlatforms] = useState(true);
   const [swapPlatforms, setSwapPlatforms] = useState<string[]>([]);
   const { data: token, isLoading: isTokenLoading } = useQuery({
-    queryKey: ["token", "wallet"],
+    queryKey: ["wallet"],
     queryFn: () => getTokenById(tokenId!),
   });
   const { data: solBalance, isLoading: isSolLoading } = useQuery({
-    queryKey: ["sol", "balance", "exchange"],
+    queryKey: ["balance", "sol"],
     queryFn: getSOLBalance,
   });
   const { data: buySettings, isLoading: areBuySettingsLoading } = useQuery({
-    queryKey: ["settings", "exchange", "buy"],
+    queryKey: ["settings", "buy"],
     queryFn: getBuySettings,
   });
   const { data: sellSettings, isLoading: areSellSettingsLoading } = useQuery({
-    queryKey: ["settings", "exchange", "sell"],
+    queryKey: ["settings", "sell"],
     queryFn: getSellSettings,
   });
   const settings = isSelling ? sellSettings : buySettings;
   const { mutateAsync: mutateBuyToken, isPending: isBuyingPending } =
     useMutation({
-      mutationKey: ["exchange", "balance"],
+      mutationKey: ["balance", "tokens"],
       mutationFn: buyToken,
     });
   const { mutateAsync: mutateSellToken, isPending: isSellingPending } =
     useMutation({
-      mutationKey: ["exchange", "balance"],
+      mutationKey: ["balance", "tokens"],
       mutationFn: sellToken,
     });
+  const isLoading = isTokenLoading || isSolLoading || areBuySettingsLoading || areSellSettingsLoading;
   const mutateExchange = isSelling ? mutateSellToken : mutateBuyToken;
   const isExchangePending = isSelling ? isSellingPending : isBuyingPending;
 
   const [slippage, setSlippage] = useState(settings?.slippage ?? 0);
   const [amount, setAmount] = useState(0);
 
-  const [computeLimit, setComputeLimit] = useState(
+  const [computeUnitLimit, setComputeUnitLimit] = useState(
     settings?.computeUnitLimit ?? 0,
   );
   const [allowAutoComputeLimit, setAllowAutoComputeLimit] = useState(true);
 
   useEffect(() => {
     if (allowAutoComputeLimit) {
-      setComputeLimit(settings?.computeUnitLimit ?? 0);
+      setComputeUnitLimit(settings?.computeUnitLimit ?? 0);
     }
   }, [allowAutoComputeLimit]);
 
-  const [computePrice, setComputePrice] = useState(
+  const [computeUnitPrice, setComputeUnitPrice] = useState(
     settings?.computeUnitPrice ?? 0,
   );
   const [allowAutoComputePrice, setAllowAutoComputePrice] = useState(true);
 
   useEffect(() => {
     if (allowAutoComputePrice) {
-      setComputePrice(settings?.computeUnitPrice ?? 0);
+      setComputeUnitPrice(settings?.computeUnitPrice ?? 0);
     }
   }, [allowAutoComputePrice]);
 
@@ -100,13 +101,13 @@ const Exchange: FC = () => {
     setRetryValue(settings?.repeatTransaction ?? 0);
 
     setAllowAutoComputeLimit(true);
-    setComputeLimit(settings?.computeUnitLimit ?? 0);
+    setComputeUnitLimit(settings?.computeUnitLimit ?? 0);
 
     setAllowAutoComputePrice(true);
-    setComputePrice(settings?.computeUnitPrice ?? 0);
+    setComputeUnitPrice(settings?.computeUnitPrice ?? 0);
 
     setSwapPlatforms(settings?.swapPlatforms ?? []);
-  }, [isSelling]);
+  }, [isSelling, isLoading]);
 
   useEffect(() => {
     if (isAutoPlatforms) {
@@ -126,8 +127,8 @@ const Exchange: FC = () => {
         tokenId: token!.id,
         amount,
         slippage,
-        computeUnitLimit: computeLimit,
-        computeUnitPrice: computePrice,
+        computeUnitLimit,
+        computeUnitPrice,
         swapPlatforms,
       });
     } catch (error) {
@@ -135,13 +136,8 @@ const Exchange: FC = () => {
     }
   };
 
-  if (
-    isTokenLoading ||
-    isSolLoading ||
-    areBuySettingsLoading ||
-    areSellSettingsLoading
-  ) {
-    return null;
+  if (isLoading) {
+    return <>Loading...</>;
   }
 
   return (
@@ -186,8 +182,8 @@ const Exchange: FC = () => {
 
         <FormItem
           id={"computeLimit"}
-          value={String(computeLimit)}
-          onChange={handleSetNumber(setComputeLimit)}
+          value={String(computeUnitLimit)}
+          onChange={handleSetNumber(setComputeUnitLimit)}
           label={"Compute Unit Limit"}
           description={
             "The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
@@ -203,8 +199,8 @@ const Exchange: FC = () => {
         />
         <FormItem
           id={"computePrice"}
-          value={String(computePrice)}
-          onChange={handleSetNumber(setComputePrice)}
+          value={String(computeUnitPrice)}
+          onChange={handleSetNumber(setComputeUnitPrice)}
           label={"Compute Unit Price (priority)"}
           description={
             "Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
