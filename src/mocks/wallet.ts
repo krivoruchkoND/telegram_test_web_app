@@ -1,22 +1,23 @@
-import { type Token } from "@apis/wallet";
+import { type TokenResponse } from "@apis/wallet";
 
-const mockValue: { total_value: number; tokens: Token[] } = {
+const mockValue: { total_value: number; tokens: TokenResponse[] } = {
   total_value: 1.308736748656447,
   tokens: [
     {
       id: "5KxnfDmsXVBNkVHYhW4kztV7ZCCCbrkYxBVrqLWF3G7J",
       market_cap: 581042.5069549171,
       value: 1.2897278616569157,
-      initial: null,
-      pnl: null,
+      amount: 13212,
+      pnl: {
+        value: 23,
+        rate: 24,
+      },
       metadata: {
         name: "ROCK",
         symbol: "ROCK",
         description: "It's just a rock",
-        uri: "https://gateway.irys.xyz/39U7lVZ9prvs4XCQkV1zWylqyIQ1uNSrjw84yXNmmqA",
         image_url:
           "https://gateway.irys.xyz/m0x31ZCuqG640Dvteo-GmiKaLvD7YvmLnV7WrT7Ugmo",
-        is_mutable: false,
       },
     },
     {
@@ -24,10 +25,12 @@ const mockValue: { total_value: number; tokens: Token[] } = {
       market_cap: 75224155.41769873,
       value: 0.017775656495404375,
       initial: null,
+      // @ts-ignore
       pnl: null,
       metadata: {
         name: "Wen",
         symbol: "WEN",
+        // @ts-ignore
         description: null,
         uri: "https://qgp7lco5ylyitscysc2c7clhpxipw6sexpc2eij7g5rq3pnkcx2q.arweave.net/gZ_1id3C8InIWJC0L4lnfdD7ekS7xaIhPzdjDb2qFfU",
         image_url:
@@ -40,11 +43,13 @@ const mockValue: { total_value: number; tokens: Token[] } = {
       market_cap: 23388551.1472813,
       value: 0.0012332305041269998,
       initial: null,
+      // @ts-ignore
       pnl: null,
       metadata: {
         name: "PONKE",
         symbol: "PONKE",
         description: "HI IM PONKE",
+        // @ts-ignore
         uri: "https://gateway.irys.xyz/S6nT0toKFAzwMJ7gm7Bh78tLTk9LeSGRjT2_1gp6otk",
         image_url:
           "https://gateway.irys.xyz/YBMDVBvnfgO1gXCSmmc8p0RQhc69WWe8_kOkoT8w7nE",
@@ -56,12 +61,15 @@ const mockValue: { total_value: number; tokens: Token[] } = {
       market_cap: 5035022529.539843,
       value: 0,
       initial: null,
+      // @ts-ignore
       pnl: null,
       metadata: {
         name: "USD Coin",
         symbol: "USDC",
+        // @ts-ignore
         description: null,
         uri: "",
+        // @ts-ignore
         image_url: null,
         is_mutable: true,
       },

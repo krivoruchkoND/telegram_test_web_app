@@ -1,33 +1,44 @@
 import camelcaseKeys from "camelcase-keys";
-
-// import { mockResponse } from "@mocks/wallet";
 import baseInstance from "./baseInstance";
 
-export type Token = {
+export type TokenResponse = {
   id: string;
   market_cap: number;
   value: number;
-  initial: number | null;
-  pnl: number | null;
+  amount: number;
+  pnl: {
+    value: number;
+    rate: number;
+  };
   metadata: {
     name: string;
     symbol: string;
-    description: string | null;
-    uri: string;
-    image_url: string | null;
-    is_mutable: boolean;
+    description: string;
+    image_url: string;
   };
 };
+
+export type Token = Awaited<ReturnType<typeof getTokenById>>;
 
 export const getTokens = async (params: { page: number; size: number }) => {
   const response = await baseInstance.get<{
     total_value: number;
-    tokens: Token[];
+    tokens: TokenResponse[];
   }>(`/wallet/tokens`, {
     params,
   });
 
-  // const responseMock = await mockResponse;
-
   return camelcaseKeys(response.data, { deep: true });
+};
+
+export const getTokenById = async (id: string) => {
+  const { data } = await baseInstance.get<TokenResponse>(
+    `/wallet/tokens/${id}`,
+  );
+  return camelcaseKeys(data, { deep: true });
+};
+
+export const getSOLBalance = async () => {
+  const { data } = await baseInstance.get<number>("/wallet/balance/SOL");
+  return data;
 };

@@ -38,12 +38,18 @@ export type ProfileSettings = {
   };
 };
 
+export type ExchangeSettingsResponse = {
+  repeat_transaction: number;
+  slippage: number;
+  from_token: string;
+  swap_platforms: string[];
+  compute_unit_limit: number;
+  compute_unit_price: number;
+};
+
 export const getSettings = async () => {
-  const response = await baseInstance.get<Settings>(`/settings/all`);
-
-  // const responseMock = await buildMockResponse(mockSettingsValue);
-
-  return camelcaseKeys(response.data, { deep: true });
+  const { data } = await baseInstance.get<Settings>(`/settings/all`);
+  return camelcaseKeys(data, { deep: true });
 };
 
 export const updateSettings = async (
@@ -53,18 +59,30 @@ export const updateSettings = async (
     "/settings/update",
     snakecaseKeys(settings, { deep: true }),
   );
+
   return true;
 };
 
 export const getProfileSettings = async () => {
   const response = await baseInstance.get<ProfileSettings>(`/settings/profile`);
-
-  // const responseMock = await buildMockResponse(mockProfileSettingsValue);
-
   return camelcaseKeys(response.data, { deep: true });
 };
 
 export const getPrivateKey = async () => {
-  const response = await baseInstance.get<string>(`/settings/private_key`);
-  return response.data;
+  const { data } = await baseInstance.get<string>(`/settings/private_key`);
+  return data;
+};
+
+export const getBuySettings = async () => {
+  const { data } =
+    await baseInstance.get<ExchangeSettingsResponse>(`/settings/buy`);
+
+  return camelcaseKeys(data);
+};
+
+export const getSellSettings = async () => {
+  const { data } =
+    await baseInstance.get<ExchangeSettingsResponse>(`/settings/sell`);
+
+  return camelcaseKeys(data);
 };

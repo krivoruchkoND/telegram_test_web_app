@@ -1,0 +1,44 @@
+.platform {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 60px;
+  width: 100%;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
+
+  border: none;
+  border-radius: 20px;
+
+  background-color: var(--rb-background-color-1);
+  padding: 20px 16px;
+
+  outline: none;
+  color: var(--rb-text-color-7);
+}
+
+.buttons {
+  display: flex;
+  gap: 24px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+
+  outline: none;
+  border: none;
+
+  background: none;
+}
+
+.button_down {
+  rotate: 180deg;
+}

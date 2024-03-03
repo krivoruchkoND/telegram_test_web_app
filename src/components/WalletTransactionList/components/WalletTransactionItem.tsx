@@ -5,16 +5,17 @@ import formatBugNumbers from "@utils/formatBigNumbers";
 import { Transaction } from "@stores/WalletStore";
 
 import classes from "../styles.module.css";
+import { Link } from "wouter";
 
 type Props = {
   transaction: Transaction;
 };
 
-const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
-  pnl,
-  initial,
-}) => {
-  if (pnl === null || initial === null) {
+const PNL: React.FC<{
+  pnl: { rate: number; value: number };
+  amount: number;
+}> = ({ pnl, amount }) => {
+  if (pnl === null || amount === null) {
     return (
       <div className={clsx(classes.column, classes.alignCenter)}>
         <div className={classes.title}>Trade PNL</div>
@@ -23,8 +24,8 @@ const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
     );
   }
 
-  const PNLPercent = (pnl / initial) * 100;
-  const isNegative = pnl < 0;
+  const PNLPercent = (pnl.value / amount) * 100;
+  const isNegative = pnl.value < 0;
   const prefix = isNegative ? "-" : "+";
 
   return (
@@ -37,7 +38,7 @@ const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
         )}
       >
         {prefix}
-        {pnl.toFixed(3)} SOL ({prefix}
+        {pnl.value.toFixed(3)} SOL ({prefix}
         {PNLPercent.toFixed(3)}%)
       </span>
     </div>
@@ -45,38 +46,40 @@ const PNL: React.FC<{ pnl: number | null; initial: number | null }> = ({
 };
 
 const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
-  const { value, marketCap, pnl, initial, metadata } = transaction;
+  const { value, marketCap, pnl, amount, metadata } = transaction;
   const { name, symbol, imageUrl } = metadata;
 
   return (
-    <li className={classes.transaction}>
-      <div className={classes.title}>
-        <div className={classes.nameContainer}>
-          <div className={classes.avatar}>
-            {imageUrl ? (
-              <img src={imageUrl} alt={symbol} />
-            ) : (
-              name[0].toUpperCase()
-            )}
+    <Link href={`/exchange/${transaction.id}`}>
+      <li className={classes.transaction}>
+        <div className={classes.title}>
+          <div className={classes.nameContainer}>
+            <div className={classes.avatar}>
+              {imageUrl ? (
+                <img src={imageUrl} alt={symbol} />
+              ) : (
+                name[0].toUpperCase()
+              )}
+            </div>
+            <span className={classes.name}>{name}</span>
           </div>
-          <span className={classes.name}>{name}</span>
+          <span className={classes.cap}>${formatBugNumbers(marketCap)}</span>
         </div>
-        <span className={classes.cap}>${formatBugNumbers(marketCap)}</span>
-      </div>
-      <div className={classes.info}>
-        <div className={classes.column}>
-          <div className={classes.title}>Value</div>
-          <span>{formatBugNumbers(value)} SOL</span>
+        <div className={classes.info}>
+          <div className={classes.column}>
+            <div className={classes.title}>Value</div>
+            <span>{formatBugNumbers(value)} SOL</span>
+          </div>
+          <PNL pnl={pnl} amount={amount} />
+          <div className={clsx(classes.column, classes.alignRight)}>
+            <div className={classes.title}>Initial</div>
+            <span>
+              {amount ? `${formatBugNumbers(amount)} ${symbol}` : "Unknown"}
+            </span>
+          </div>
         </div>
-        <PNL pnl={pnl} initial={initial} />
-        <div className={clsx(classes.column, classes.alignRight)}>
-          <div className={classes.title}>Initial</div>
-          <span>
-            {initial ? `${formatBugNumbers(initial)} ${symbol}` : "Unknown"}
-          </span>
-        </div>
-      </div>
-    </li>
+      </li>
+    </Link>
   );
 };
 

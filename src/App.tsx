@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Switch, Router, Route } from "wouter";
+import React, { useEffect } from "react";
+import { Route, Router, Switch } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 
 import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
@@ -11,9 +11,11 @@ import Settings from "@pages/Settings";
 import Swaps from "@pages/Swaps";
 import Trades from "@pages/Trades";
 import Splash from "@pages/Splash";
+import Exchange from "@pages/Exchange";
 
 import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
   const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
@@ -39,6 +41,7 @@ function App() {
         <Switch>
           <Route path="/" component={Splash} />
           <Route path="/wallet" component={Wallet} />
+          <Route path="/exchange/:tokenId" component={Exchange} nest />
           <Route path="/settings" component={Settings} nest />
           <Route path="/swaps" component={Swaps} />
           <Route path="/trades" component={Trades} />
@@ -56,4 +59,14 @@ const AppWithRouter = () => (
   </Router>
 );
 
-export default AppWithRouter;
+const queryClient = new QueryClient();
+
+const AppWithQueryProvider: React.FC = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppWithRouter />
+    </QueryClientProvider>
+  );
+};
+
+export default AppWithQueryProvider;
