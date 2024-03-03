@@ -26,7 +26,6 @@ const Splash = () => {
 
   return (
     <div className={classes.splash}>
-      {isAuthSucceed}
       <div className={classes.icon}>
         <img src={rockIcon} height="100%" width="100%" />
       </div>
