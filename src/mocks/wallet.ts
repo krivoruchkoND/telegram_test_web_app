@@ -24,54 +24,41 @@ const mockValue: { total_value: number; tokens: TokenResponse[] } = {
       id: "WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk",
       market_cap: 75224155.41769873,
       value: 0.017775656495404375,
-      initial: null,
-      // @ts-ignore
+      amount: null,
       pnl: null,
       metadata: {
         name: "Wen",
         symbol: "WEN",
-        // @ts-ignore
         description: null,
-        uri: "https://qgp7lco5ylyitscysc2c7clhpxipw6sexpc2eij7g5rq3pnkcx2q.arweave.net/gZ_1id3C8InIWJC0L4lnfdD7ekS7xaIhPzdjDb2qFfU",
         image_url:
           "https://shdw-drive.genesysgo.net/GwJapVHVvfM4Mw4sWszkzywncUWuxxPd6s9VuFfXRgie/wen_logo.png",
-        is_mutable: false,
       },
     },
     {
       id: "5z3EqYQo9HiCEs3R84RCDMu2n7anpDMxRhdK8PSWmrRC",
       market_cap: 23388551.1472813,
       value: 0.0012332305041269998,
-      initial: null,
-      // @ts-ignore
+      amount: null,
       pnl: null,
       metadata: {
         name: "PONKE",
         symbol: "PONKE",
         description: "HI IM PONKE",
-        // @ts-ignore
-        uri: "https://gateway.irys.xyz/S6nT0toKFAzwMJ7gm7Bh78tLTk9LeSGRjT2_1gp6otk",
         image_url:
           "https://gateway.irys.xyz/YBMDVBvnfgO1gXCSmmc8p0RQhc69WWe8_kOkoT8w7nE",
-        is_mutable: true,
       },
     },
     {
       id: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
       market_cap: 5035022529.539843,
       value: 0,
-      initial: null,
-      // @ts-ignore
+      amount: null,
       pnl: null,
       metadata: {
         name: "USD Coin",
         symbol: "USDC",
-        // @ts-ignore
-        description: null,
-        uri: "",
-        // @ts-ignore
+        description: "test",
         image_url: null,
-        is_mutable: true,
       },
     },
   ],

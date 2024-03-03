@@ -52,7 +52,7 @@ export const swapsGenerator = () => {
   const count = Number(getRandomArbitrary(7, 15, 0));
 
   let prevDate = new Date();
-  const swaps = Array.from({ length: count }, (_, i) => i).map((_, i) => {
+  return Array.from({ length: count }, (_, i) => i).map((_, i) => {
     const type = swapTypes[Math.floor(Math.random() * swapTypes.length)];
 
     const date = new Date(prevDate);
@@ -65,8 +65,6 @@ export const swapsGenerator = () => {
       ...mapTypeToGenerator[type](),
     };
   });
-
-  return swaps;
 };
 
 const addLeadingZero = (value: number) => (value < 10 ? `0${value}` : value);

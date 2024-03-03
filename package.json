@@ -9,7 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "check-types": "tsc"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.24.2",
@@ -43,12 +44,16 @@
     "autoprefixer": "^10.4.17",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-config-silence": "^2.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-plugin-unicorn": "^51.0.1",
     "gh-pages": "^6.1.1",
+    "lint-staged": "^15.2.2",
     "postcss-nesting": "^12.0.2",
     "prettier": "3.2.4",
+    "simple-git-hooks": "^2.9.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-svgr": "^4.2.0",
@@ -56,5 +61,14 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "npm exec eslint --fix"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run check-types && npx lint-staged",
+    "preserveUnused": true
+  }
 }

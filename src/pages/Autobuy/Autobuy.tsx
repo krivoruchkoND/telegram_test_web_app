@@ -4,6 +4,7 @@ import debounce from "debounce";
 
 import { useSettingsStore } from "@stores/SettingsStore";
 import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
+import preventDefault from "@utils/preventDefault";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
 import FormItem from "@components/FormItem";
@@ -46,12 +47,8 @@ const Autobuy = () => {
     debouncedUpdateSettings();
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
   return (
-    <form className={classes.autobuy} onSubmit={onSubmit}>
+    <form className={classes.autobuy} onSubmit={preventDefault}>
       <PageTitle title="Autobuy" />
 
       {/* <SwapPlatforms /> */}

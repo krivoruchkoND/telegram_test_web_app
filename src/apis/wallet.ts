@@ -3,13 +3,13 @@ import baseInstance from "./baseInstance";
 
 export type TokenResponse = {
   id: string;
-  market_cap: number;
-  value: number;
+  market_cap?: number;
+  value?: number;
   amount: number;
   pnl: {
     value: number;
     rate: number;
-  };
+  } | null;
   metadata: {
     name: string;
     symbol: string;

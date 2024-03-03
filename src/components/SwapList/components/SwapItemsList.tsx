@@ -1,14 +1,15 @@
 import React from "react";
 
-import { swapsGenerator } from "@utils/swapsGenerator";
+import { type Swap } from "@stores/SwapsStore";
 
 import SwapItem from "./SwapItem";
 import classes from "../styles.module.css";
 
 type Props = {
   title: string;
-  swaps: ReturnType<typeof swapsGenerator>;
+  swaps: (Swap & { id: string })[];
 };
+
 const SwapItemsList: React.FC<Props> = ({ title, swaps }) => {
   return (
     <li>

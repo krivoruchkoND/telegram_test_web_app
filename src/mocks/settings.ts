@@ -9,6 +9,7 @@ export const mockSettingsValue: Settings = {
     from_token: "So11111111111111111111111111111111111111112",
     compute_unit_limit: 1400000,
     compute_unit_price: 5000,
+    swap_platforms: ["jupiter", "radyum"],
   },
   buying_info_sniper: {
     repeat_transaction: 0,
@@ -17,6 +18,7 @@ export const mockSettingsValue: Settings = {
     from_token: "So11111111111111111111111111111111111111112",
     compute_unit_limit: 1400000,
     compute_unit_price: 5000,
+    swap_platforms: ["jupiter", "radyum"],
   },
 };
 

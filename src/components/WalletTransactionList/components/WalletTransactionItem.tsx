@@ -7,15 +7,10 @@ import { Transaction } from "@stores/WalletStore";
 import classes from "../styles.module.css";
 import { Link } from "wouter";
 
-type Props = {
-  transaction: Transaction;
-};
+type PNLProps = { pnl: Transaction["pnl"] };
 
-const PNL: React.FC<{
-  pnl: { rate: number; value: number };
-  amount: number;
-}> = ({ pnl, amount }) => {
-  if (pnl === null || amount === null) {
+const PNL: React.FC<PNLProps> = ({ pnl }) => {
+  if (pnl === null) {
     return (
       <div className={clsx(classes.column, classes.alignCenter)}>
         <div className={classes.title}>Trade PNL</div>
@@ -24,9 +19,8 @@ const PNL: React.FC<{
     );
   }
 
-  const PNLPercent = (pnl.value / amount) * 100;
   const isNegative = pnl.value < 0;
-  const prefix = isNegative ? "-" : "+";
+  const prefix = pnl.value > 0 ? "" : "+";
 
   return (
     <div className={clsx(classes.column, classes.alignCenter)}>
@@ -38,11 +32,15 @@ const PNL: React.FC<{
         )}
       >
         {prefix}
-        {pnl.value.toFixed(3)} SOL ({prefix}
-        {PNLPercent.toFixed(3)}%)
+        {formatBugNumbers(pnl.value)} SOL ({prefix}
+        {formatBugNumbers(pnl.rate)}%)
       </span>
     </div>
   );
+};
+
+type Props = {
+  transaction: Transaction;
 };
 
 const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
@@ -63,16 +61,19 @@ const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
             </div>
             <span className={classes.name}>{name}</span>
           </div>
-          <span className={classes.cap}>${formatBugNumbers(marketCap)}</span>
+          <span className={classes.cap}>
+            ${formatBugNumbers(marketCap || 0)}
+          </span>
         </div>
         <div className={classes.info}>
           <div className={classes.column}>
             <div className={classes.title}>Value</div>
-            <span>{formatBugNumbers(value)} SOL</span>
+            <span>{formatBugNumbers(value || 0)} SOL</span>
           </div>
-          <PNL pnl={pnl} amount={amount} />
+
+          <PNL pnl={pnl} />
           <div className={clsx(classes.column, classes.alignRight)}>
-            <div className={classes.title}>Initial</div>
+            <div className={classes.title}>Amount</div>
             <span>
               {amount ? `${formatBugNumbers(amount)} ${symbol}` : "Unknown"}
             </span>

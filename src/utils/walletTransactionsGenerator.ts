@@ -6,7 +6,7 @@ import randomNameGenerator from "./randomNameGenerator";
 const walletTransactionsGenerator = () => {
   const count = Number(getRandomArbitrary(4, 5, 0));
 
-  const transactions = Array.from({ length: count }, (_, i) => i).map(() => {
+  return Array.from({ length: count }, (_, i) => i).map(() => {
     const initial = Number(getRandomArbitrary(10, 100));
     const delta = Number(getRandomArbitrary(-5, 5));
     const value = Number(getRandomArbitrary(initial - delta, initial + delta));
@@ -29,8 +29,6 @@ const walletTransactionsGenerator = () => {
       coinCap,
     };
   });
-
-  return transactions;
 };
 
 export default walletTransactionsGenerator;
