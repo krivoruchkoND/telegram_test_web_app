@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import ReactSlider from "react-slider";
 import "./styles.css";
 
 type Props = {
   value: number;
-  onChange: (value: number) => any;
+  onChange: (value: number) => void;
 };
 
 const FormSlider: React.FC<Props> = ({ value, onChange }) => {
@@ -28,7 +29,7 @@ const FormSlider: React.FC<Props> = ({ value, onChange }) => {
         step={5}
         value={value}
         onChange={onChange}
-        renderMark={(props: any) => {
+        renderMark={(props) => {
           let percent = 0;
           const forth = sliderLength / 4;
           const left = Number(props.style?.left ?? 0);

@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable unicorn/consistent-function-scoping */
+/* eslint-disable sonarjs/cognitive-complexity */
 import {
   Dispatch,
   FC,
@@ -6,19 +9,21 @@ import {
   useEffect,
   useState,
 } from "react";
-import FormItem from "@/components/FormItem";
-import classes from "./styles.module.css";
+import { Redirect, useParams } from "wouter";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+import FormItem from "@components/FormItem";
 import ExchangeToken from "@components/ExchangeToken";
 import AmountInput from "@components/AmountInput";
 import ExchangeSwitch from "@components/ExchangeSwitch";
 import PrimaryButton from "@components/PrimaryButton";
 import PageTitle from "@components/PageTitle";
 import PlatformsSwapper from "@components/PlatformsSwapper";
-import { buyToken, sellToken } from "@apis/swaps.ts";
-import { getBuySettings, getSellSettings } from "@apis/settings.ts";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getSOLBalance, getTokenById } from "@apis/wallet.ts";
-import { Redirect, useParams } from "wouter";
+import { buyToken, sellToken } from "@apis/swaps";
+import { getBuySettings, getSellSettings } from "@apis/settings";
+import { getSOLBalance, getTokenById } from "@apis/wallet";
+
+import classes from "./styles.module.css";
 
 const Exchange: FC = () => {
   const { tokenId } = useParams();
@@ -54,15 +59,6 @@ const Exchange: FC = () => {
     });
   const mutateExchange = isSelling ? mutateSellToken : mutateBuyToken;
   const isExchangePending = isSelling ? isSellingPending : isBuyingPending;
-
-  if (
-    isTokenLoading ||
-    isSolLoading ||
-    areBuySettingsLoading ||
-    areSellSettingsLoading
-  ) {
-    return null;
-  }
 
   const [slippage, setSlippage] = useState(settings?.slippage ?? 0);
   const [amount, setAmount] = useState(0);
@@ -129,7 +125,7 @@ const Exchange: FC = () => {
       await mutateExchange({
         tokenId: token!.id,
         amount,
-        slippage: slippage,
+        slippage,
         computeUnitLimit: computeLimit,
         computeUnitPrice: computePrice,
         swapPlatforms,
@@ -138,6 +134,15 @@ const Exchange: FC = () => {
       console.error(error);
     }
   };
+
+  if (
+    isTokenLoading ||
+    isSolLoading ||
+    areBuySettingsLoading ||
+    areSellSettingsLoading
+  ) {
+    return null;
+  }
 
   return (
     <div className={classes.exchange}>

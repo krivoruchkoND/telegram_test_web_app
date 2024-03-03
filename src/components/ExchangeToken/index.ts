@@ -1,1 +1,1 @@
-export { default } from "./ExchangeToken.tsx";
+export { default } from "./ExchangeToken";

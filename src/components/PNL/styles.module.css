@@ -1,0 +1,33 @@
+.column {
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.title {
+  margin-bottom: 8px;
+  color: var(--rb-text-color-3)
+}
+
+.description {
+  color: var(--rb-text-color-1);
+}
+
+.preventWrap {
+  white-space: nowrap;
+}
+
+.positive {
+  color: var(--rb-text-color-4)
+}
+
+.negative {
+  color: var(--rb-text-color-5)
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignRight {
+  text-align: right;
+}

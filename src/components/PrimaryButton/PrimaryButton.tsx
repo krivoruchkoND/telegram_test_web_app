@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 
 type Props = {
   type?: "submit" | "reset" | "button";
+  className?: string;
 } & React.HTMLProps<HTMLButtonElement>;
 
 const PrimaryButton: React.FC<PropsWithChildren<Props>> = ({

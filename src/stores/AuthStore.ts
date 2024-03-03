@@ -11,7 +11,7 @@ export type AuthStore = {
 
 export const useAuthStore = create<AuthStore>()(
   immer((set) => ({
-    isAuthSucceed: false,
+    isAuthSucceed: true, // false,
     accessToken: null,
     auth: async (initData: string) => {
       try {
