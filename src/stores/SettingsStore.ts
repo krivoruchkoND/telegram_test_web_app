@@ -98,7 +98,7 @@ export const useSettingsStore = create<SettingsStore>()(
           computeUnitLimit: Number(buyingInfoAuto.computeLimit),
           computeUnitPrice: Number(buyingInfoAuto.computePrice),
           repeatTransaction: Number(buyingInfoAuto.retryValue),
-          fromToken: buyingInfoAuto.fromToken,
+          fromToken: buyingInfoAuto.fromToken ?? "",
           swapPlatforms: buyingInfoAuto.swapPlatforms.map(({ title }) => title),
         },
         buyingInfoSniper: {
@@ -107,7 +107,7 @@ export const useSettingsStore = create<SettingsStore>()(
           computeUnitLimit: Number(buyingInfoSniper.computeLimit),
           computeUnitPrice: Number(buyingInfoSniper.computePrice),
           repeatTransaction: Number(buyingInfoSniper.retryValue),
-          fromToken: buyingInfoSniper.fromToken,
+          fromToken: buyingInfoSniper.fromToken ?? "",
           swapPlatforms: buyingInfoSniper.swapPlatforms.map(
             ({ title }) => title,
           ),

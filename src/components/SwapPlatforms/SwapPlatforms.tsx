@@ -42,6 +42,10 @@ const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
     (state) => state.changeSwapPlatformsOrder,
   );
 
+  if (swapPlatforms.length === 0) {
+    return null;
+  }
+
   const handleChangeOrder = (startIndex: number, endIndex: number) => {
     changeSwapPlatformsOrder(startIndex, endIndex);
     onChange();

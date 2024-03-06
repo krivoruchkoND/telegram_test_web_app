@@ -9,30 +9,30 @@ const computeLimitAutoValue = "1400000";
 const computePriceAutoValue = "0.000005";
 
 export type CommonSettingsSectionStore = {
-  slippage: string;
+  slippage: string | null;
   setSlippage: (value: string) => void;
 
-  amount: string;
+  amount: string | null;
   setAmount: (value: string) => void;
 
-  computeLimit: string;
+  computeLimit: string | null;
   allowAutoComputeLimit: boolean;
   setComputeLimit: (value: string) => void;
   setAllowAutoComputeLimit: (value: boolean) => void;
   setComputeLimitToDefault: (value: boolean) => void;
 
-  computePrice: string;
+  computePrice: string | null;
   allowAutoComputePrice: boolean;
   setComputePrice: (value: string) => void;
   setAllowAutoComputePrice: (value: boolean) => void;
   setComputePriceToDefault: (value: boolean) => void;
 
-  retryValue: string;
+  retryValue: string | null;
   setRetryValue: (value: string) => void;
 
   swapPlatforms: { title: string; id: string }[];
   changeSwapPlatformsOrder: (startIndex: number, endIndex: number) => void;
-  fromToken: string;
+  fromToken: string | null;
 
   setValues: (values: SettingValues) => void;
 };
@@ -52,14 +52,14 @@ export type SettingOnChangeKeys = `set${Capitalize<SettingKeys>}`;
 export type SettingEnablerOnChangeKeys = `set${Capitalize<SettingEnablerKeys>}`;
 
 export const initializer = immer<CommonSettingsSectionStore>((set) => ({
-  slippage: "0.5",
-  amount: "0.1",
-  computeLimit: computeLimitAutoValue,
+  slippage: null,
+  amount: null,
+  computeLimit: null,
   allowAutoComputeLimit: true,
-  computePrice: computePriceAutoValue,
+  computePrice: null,
   allowAutoComputePrice: true,
-  retryValue: "0",
-  fromToken: "",
+  retryValue: null,
+  fromToken: null,
   swapPlatforms: [],
 
   setValues: (values) => {

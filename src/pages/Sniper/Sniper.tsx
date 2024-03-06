@@ -54,78 +54,88 @@ const Snipper = () => {
       <SnipedChannels />
 
       <form onSubmit={preventDefault} className={classes.sniperForm}>
-        <FormItem
-          id="slippage"
-          value={slippage}
-          onChange={(v) => onChangeHandler(v, setSlippage)}
-          label="Slippage"
-          description="Difference between expected and actual results amounts of token"
-          inputMode="decimal"
-          placeholder="Enter value"
-          masks={["empty", "percent"]}
-        />
+        {slippage !== null && (
+          <FormItem
+            id="slippage"
+            value={slippage}
+            onChange={(v) => onChangeHandler(v, setSlippage)}
+            label="Slippage"
+            description="Difference between expected and actual results amounts of token"
+            inputMode="decimal"
+            placeholder="Enter value"
+            masks={["empty", "percent"]}
+          />
+        )}
 
-        <FormItem
-          id="amount"
-          value={amount}
-          onChange={(v) => onChangeHandler(v, setAmount)}
-          label="Amount"
-          description="Number of tokens for purchase"
-          inputMode="decimal"
-          placeholder="Enter value"
-          masks={["empty", "float"]}
-        />
+        {amount !== null && (
+          <FormItem
+            id="amount"
+            value={amount}
+            onChange={(v) => onChangeHandler(v, setAmount)}
+            label="Amount"
+            description="Number of tokens for purchase"
+            inputMode="decimal"
+            placeholder="Enter value"
+            masks={["empty", "float"]}
+          />
+        )}
 
-        <FormItem
-          id="computeLimit"
-          value={computeLimit}
-          onChange={(v) => onChangeHandler(v, setComputeLimit)}
-          label="Compute Unit Limit"
-          description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
-          switchProps={{
-            subLabel: "Auto",
-            checked: allowAutoComputeLimit,
-            onChange: (value) => {
-              setAllowAutoComputeLimit(value);
-              setComputeLimitToDefault(value);
-              debouncedUpdateSettings();
-            },
-          }}
-          inputMode="decimal"
-          placeholder="Enter value"
-          masks={["empty", "decimal"]}
-        />
+        {computeLimit !== null && (
+          <FormItem
+            id="computeLimit"
+            value={computeLimit}
+            onChange={(v) => onChangeHandler(v, setComputeLimit)}
+            label="Compute Unit Limit"
+            description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
+            switchProps={{
+              subLabel: "Auto",
+              checked: allowAutoComputeLimit,
+              onChange: (value) => {
+                setAllowAutoComputeLimit(value);
+                setComputeLimitToDefault(value);
+                debouncedUpdateSettings();
+              },
+            }}
+            inputMode="decimal"
+            placeholder="Enter value"
+            masks={["empty", "decimal"]}
+          />
+        )}
 
-        <FormItem
-          id="computePrice"
-          value={computePrice}
-          onChange={(v) => onChangeHandler(v, setComputePrice)}
-          label="Compute Unit Price (priority)"
-          description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
-          switchProps={{
-            subLabel: "Auto",
-            checked: allowAutoComputePrice,
-            onChange: (value) => {
-              setAllowAutoComputePrice(value);
-              setComputePriceToDefault(value);
-              debouncedUpdateSettings();
-            },
-          }}
-          inputMode="decimal"
-          placeholder="Enter value"
-          masks={["empty", "sol"]}
-        />
+        {computePrice !== null && (
+          <FormItem
+            id="computePrice"
+            value={computePrice}
+            onChange={(v) => onChangeHandler(v, setComputePrice)}
+            label="Compute Unit Price (priority)"
+            description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
+            switchProps={{
+              subLabel: "Auto",
+              checked: allowAutoComputePrice,
+              onChange: (value) => {
+                setAllowAutoComputePrice(value);
+                setComputePriceToDefault(value);
+                debouncedUpdateSettings();
+              },
+            }}
+            inputMode="decimal"
+            placeholder="Enter value"
+            masks={["empty", "sol"]}
+          />
+        )}
 
-        <FormItem
-          id="retryValue"
-          value={retryValue}
-          onChange={(v) => onChangeHandler(v, setRetryValue)}
-          label="Retry value"
-          description="Number of retry transaction in node if transaction fail"
-          inputMode="decimal"
-          placeholder="Enter value"
-          masks={["empty", "decimal"]}
-        />
+        {retryValue !== null && (
+          <FormItem
+            id="retryValue"
+            value={retryValue}
+            onChange={(v) => onChangeHandler(v, setRetryValue)}
+            label="Retry value"
+            description="Number of retry transaction in node if transaction fail"
+            inputMode="decimal"
+            placeholder="Enter value"
+            masks={["empty", "decimal"]}
+          />
+        )}
 
         {!isBackButtonSupported && <Link href="/">Go back</Link>}
       </form>
