@@ -2,26 +2,36 @@ import { type Settings, type ProfileSettings } from "@apis/settings";
 
 export const mockSettingsValue: Settings = {
   notification: true,
-  autobuy: true,
-  sniper: false,
   buying_info_auto: {
+    turn_off: true,
     repeat_transaction: 0,
     amount: 0.5,
     slippage: 0.3,
     from_token: "So11111111111111111111111111111111111111112",
     compute_unit_limit: 1400000,
     compute_unit_price: 5000,
-    swap_platforms: ["jupiter", "radyum", "test_platform"],
+    swap_platforms: [
+      "jupiter",
+      "radyum",
+      "test_platform",
+      "another_test_platform",
+    ],
     mev_protection: 0.1,
   },
   buying_info_sniper: {
+    turn_off: false,
     repeat_transaction: 0,
     amount: 0.5,
     slippage: 0.3,
     from_token: "So11111111111111111111111111111111111111112",
     compute_unit_limit: 1400000,
     compute_unit_price: 5000,
-    swap_platforms: ["jupiter", "radyum", "test_platform"],
+    swap_platforms: [
+      "jupiter",
+      "radyum",
+      "test_platform",
+      "another_test_platform",
+    ],
     mev_protection: 0.5,
   },
 };

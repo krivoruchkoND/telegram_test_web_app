@@ -62,21 +62,16 @@ export const useSettingsStore = create<SettingsStore>()(
 
     getSettings: async () => {
       try {
-        const {
-          notification,
-          autobuy,
-          sniper,
-          buyingInfoAuto,
-          buyingInfoSniper,
-        } = await getSettings();
+        const { notification, buyingInfoAuto, buyingInfoSniper } =
+          await getSettings();
 
         useAutobuySettingsStore.getState().setValues(buyingInfoAuto);
         useSniperSettingsStore.getState().setValues(buyingInfoSniper);
 
         set((state) => {
           state.isNotificationsEnabled = notification;
-          state.isAutoBuyEnabled = autobuy;
-          state.isSniperEnabled = sniper;
+          state.isAutoBuyEnabled = !buyingInfoAuto.turnOff;
+          state.isSniperEnabled = !buyingInfoSniper.turnOff;
           state.isFetched = true;
         });
       } catch (error) {
@@ -100,6 +95,7 @@ export const useSettingsStore = create<SettingsStore>()(
         autobuy,
         sniper,
         buyingInfoAuto: {
+          turnOff: !autobuy,
           slippage: Number(buyingInfoAuto.slippage),
           amount: Number(buyingInfoAuto.amount),
           computeUnitLimit: Number(buyingInfoAuto.computeLimit),
@@ -110,6 +106,7 @@ export const useSettingsStore = create<SettingsStore>()(
           mevProtection: Number(buyingInfoAuto.mevProtection),
         },
         buyingInfoSniper: {
+          turnOff: !sniper,
           slippage: Number(buyingInfoSniper.slippage),
           amount: Number(buyingInfoSniper.amount),
           computeUnitLimit: Number(buyingInfoSniper.computeLimit),

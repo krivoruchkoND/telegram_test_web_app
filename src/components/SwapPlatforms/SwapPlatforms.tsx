@@ -7,28 +7,51 @@ import arrowIcon from "@assets/SwapPlatformsArrowDown.svg";
 
 import classes from "./styles.module.css";
 
-const Arrow = (props: {
+type ArrowProps = {
   direction: "up" | "down";
-  onClick: (startIndex: number, endIndex: number) => void;
-  index: number;
-}) => {
-  const { direction, onClick, index } = props;
+  onClick: () => void;
+  disabled?: boolean;
+};
 
-  const handleClick = () => {
-    if (direction === "up") {
-      onClick(index, index - 1);
-    } else {
-      onClick(index, index + 1);
-    }
-  };
-
+const Arrow: React.FC<ArrowProps> = ({ direction, onClick, disabled }) => {
   return (
     <button
-      onClick={handleClick}
-      className={clsx(classes.swapArrow, classes[direction])}
+      onClick={disabled ? undefined : onClick}
+      className={clsx(
+        classes.swapArrow,
+        classes[direction],
+        disabled && classes.disabled,
+      )}
     >
       <img src={arrowIcon} alt={`arrow-${direction}`} />
     </button>
+  );
+};
+
+type SwapPlatformItemProps = {
+  title: string;
+  isFirst: boolean;
+  isLast: boolean;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+};
+
+const SwapPlatformItem: React.FC<SwapPlatformItemProps> = ({
+  title,
+  isFirst,
+  isLast,
+  onMoveUp,
+  onMoveDown,
+  ...flipperProps
+}) => {
+  return (
+    <div className={classes.swapPlatformItem} {...flipperProps}>
+      <div className={classes.title}>{title}</div>
+      <div className={classes.arrows}>
+        {!isLast && <Arrow direction="down" onClick={onMoveDown} />}
+        {!isFirst && <Arrow direction="up" onClick={onMoveUp} />}
+      </div>
+    </div>
   );
 };
 
@@ -51,31 +74,27 @@ const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
     onChange();
   };
 
+  const moveUp = (index: number) => {
+    handleChangeOrder(index, index - 1);
+  };
+
+  const moveDown = (index: number) => {
+    handleChangeOrder(index, index + 1);
+  };
+
   return (
     <div className={classes.swapPlatformContainer}>
       <div className={classes.title}>Swap Platforms</div>
       <Flipper flipKey={swapPlatforms.map(({ id }) => id).join("")}>
         {swapPlatforms.map(({ id, title }, index) => (
           <Flipped key={id} flipId={id}>
-            <div className={classes.swapPlatformItem}>
-              <div className={classes.title}>{title}</div>
-              <div className={classes.arrows}>
-                {index !== swapPlatforms.length - 1 && (
-                  <Arrow
-                    direction="down"
-                    onClick={handleChangeOrder}
-                    index={index}
-                  />
-                )}
-                {index !== 0 && (
-                  <Arrow
-                    direction="up"
-                    onClick={handleChangeOrder}
-                    index={index}
-                  />
-                )}
-              </div>
-            </div>
+            <SwapPlatformItem
+              title={title}
+              isFirst={index === 0}
+              isLast={index === swapPlatforms.length - 1}
+              onMoveUp={() => moveUp(index)}
+              onMoveDown={() => moveDown(index)}
+            />
           </Flipped>
         ))}
       </Flipper>

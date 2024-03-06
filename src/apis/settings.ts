@@ -11,9 +11,8 @@ import baseInstance from "./baseInstance";
 
 export type Settings = {
   notification: boolean;
-  autobuy: boolean;
-  sniper: boolean;
   buying_info_auto: {
+    turn_off: boolean;
     repeat_transaction: number;
     amount: number;
     slippage: number;
@@ -24,6 +23,7 @@ export type Settings = {
     mev_protection: number;
   };
   buying_info_sniper: {
+    turn_off: boolean;
     repeat_transaction: number;
     amount: number;
     slippage: number;
