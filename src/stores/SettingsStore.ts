@@ -17,36 +17,30 @@ const tabs = [
     label: "Auto buy",
     description: "Immediately buy when pasting token address",
     iconColor: "green",
+    enableOptionLKey: "AutoBuy" as const,
   },
   {
     id: "snipper",
     label: "Sniper TG channel",
     description: "Snipe TG channels calls",
     iconColor: "blue",
+    enableOptionLKey: "Sniper" as const,
   },
 ];
 
-export type Control = {
-  id: string;
-  type: "toggle" | "numericSlider" | "percentageSlider";
-  label: string;
-  description?: string | null;
-  value: string;
-};
-
-export type Tab = {
-  id: string;
-  label: string;
-  description?: string | null;
-  iconColor: string;
-  controls?: (Control | Control[])[];
-};
+export type Tab = (typeof tabs)[number];
 
 export type SettingsStore = {
   tabs: Tab[];
 
   isNotificationsEnabled: boolean;
   setIsNotificationsEnabled: (value: boolean) => void;
+
+  isAutoBuyEnabled: boolean;
+  setIsAutoBuyEnabled: (value: boolean) => void;
+
+  isSniperEnabled: boolean;
+  setIsSniperEnabled: (value: boolean) => void;
 
   getSettings: () => Promise<void>;
   updateSettings: () => Promise<void>;
@@ -61,19 +55,28 @@ export const useSettingsStore = create<SettingsStore>()(
   immer((set, get) => ({
     tabs,
     isNotificationsEnabled: true,
+    isAutoBuyEnabled: false,
+    isSniperEnabled: false,
     privateKey: null,
     isFetched: false,
 
     getSettings: async () => {
       try {
-        const { notification, buyingInfoAuto, buyingInfoSniper } =
-          await getSettings();
+        const {
+          notification,
+          autobuy,
+          sniper,
+          buyingInfoAuto,
+          buyingInfoSniper,
+        } = await getSettings();
 
         useAutobuySettingsStore.getState().setValues(buyingInfoAuto);
         useSniperSettingsStore.getState().setValues(buyingInfoSniper);
 
         set((state) => {
           state.isNotificationsEnabled = notification;
+          state.isAutoBuyEnabled = autobuy;
+          state.isSniperEnabled = sniper;
           state.isFetched = true;
         });
       } catch (error) {
@@ -87,11 +90,15 @@ export const useSettingsStore = create<SettingsStore>()(
       }
 
       const notification = get().isNotificationsEnabled;
+      const autobuy = get().isAutoBuyEnabled;
+      const sniper = get().isSniperEnabled;
       const buyingInfoAuto = useAutobuySettingsStore.getState();
       const buyingInfoSniper = useSniperSettingsStore.getState();
 
       const settings = {
         notification,
+        autobuy,
+        sniper,
         buyingInfoAuto: {
           slippage: Number(buyingInfoAuto.slippage),
           amount: Number(buyingInfoAuto.amount),
@@ -135,6 +142,18 @@ export const useSettingsStore = create<SettingsStore>()(
     setIsNotificationsEnabled: (value) => {
       set((state) => {
         state.isNotificationsEnabled = value;
+      });
+    },
+
+    setIsAutoBuyEnabled: (value) => {
+      set((state) => {
+        state.isAutoBuyEnabled = value;
+      });
+    },
+
+    setIsSniperEnabled: (value) => {
+      set((state) => {
+        state.isSniperEnabled = value;
       });
     },
   })),

@@ -2,6 +2,8 @@ import { type Settings, type ProfileSettings } from "@apis/settings";
 
 export const mockSettingsValue: Settings = {
   notification: true,
+  autobuy: true,
+  sniper: false,
   buying_info_auto: {
     repeat_transaction: 0,
     amount: 0.5,

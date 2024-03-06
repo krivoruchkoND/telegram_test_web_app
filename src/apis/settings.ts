@@ -11,6 +11,8 @@ import baseInstance from "./baseInstance";
 
 export type Settings = {
   notification: boolean;
+  autobuy: boolean;
+  sniper: boolean;
   buying_info_auto: {
     repeat_transaction: number;
     amount: number;
