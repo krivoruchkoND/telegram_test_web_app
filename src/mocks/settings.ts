@@ -12,6 +12,7 @@ export const mockSettingsValue: Settings = {
     compute_unit_limit: 1400000,
     compute_unit_price: 5000,
     swap_platforms: ["jupiter", "radyum", "test_platform"],
+    mev_protection: 0.1,
   },
   buying_info_sniper: {
     repeat_transaction: 0,
@@ -21,6 +22,7 @@ export const mockSettingsValue: Settings = {
     compute_unit_limit: 1400000,
     compute_unit_price: 5000,
     swap_platforms: ["jupiter", "radyum", "test_platform"],
+    mev_protection: 0.5,
   },
 };
 

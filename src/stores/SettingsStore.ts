@@ -107,6 +107,7 @@ export const useSettingsStore = create<SettingsStore>()(
           repeatTransaction: Number(buyingInfoAuto.retryValue),
           fromToken: buyingInfoAuto.fromToken ?? "",
           swapPlatforms: buyingInfoAuto.swapPlatforms.map(({ title }) => title),
+          mevProtection: Number(buyingInfoAuto.mevProtection),
         },
         buyingInfoSniper: {
           slippage: Number(buyingInfoSniper.slippage),
@@ -118,6 +119,7 @@ export const useSettingsStore = create<SettingsStore>()(
           swapPlatforms: buyingInfoSniper.swapPlatforms.map(
             ({ title }) => title,
           ),
+          mevProtection: Number(buyingInfoAuto.mevProtection),
         },
       };
 

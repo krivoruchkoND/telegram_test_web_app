@@ -21,6 +21,7 @@ export type Settings = {
     compute_unit_limit: number;
     compute_unit_price: number;
     swap_platforms: string[];
+    mev_protection: number;
   };
   buying_info_sniper: {
     repeat_transaction: number;
@@ -30,6 +31,7 @@ export type Settings = {
     compute_unit_limit: number;
     compute_unit_price: number;
     swap_platforms: string[];
+    mev_protection: number;
   };
 };
 

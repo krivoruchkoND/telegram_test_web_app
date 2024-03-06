@@ -27,6 +27,11 @@ export type CommonSettingsSectionStore = {
   setAllowAutoComputePrice: (value: boolean) => void;
   setComputePriceToDefault: (value: boolean) => void;
 
+  mevProtection: string | null;
+  isMevProtectionEnabled: boolean;
+  setMevProtection: (value: string) => void;
+  setIsMevProtectionEnabled: (value: boolean) => void;
+
   retryValue: string | null;
   setRetryValue: (value: string) => void;
 
@@ -42,14 +47,8 @@ export type SettingKeys =
   | "amount"
   | "computeLimit"
   | "computePrice"
-  | "retryValue";
-
-export type SettingEnablerKeys =
-  `allowAuto${Capitalize<"computeLimit" | "computePrice">}`;
-
-export type SettingOnChangeKeys = `set${Capitalize<SettingKeys>}`;
-
-export type SettingEnablerOnChangeKeys = `set${Capitalize<SettingEnablerKeys>}`;
+  | "retryValue"
+  | "mevProtection";
 
 export const initializer = immer<CommonSettingsSectionStore>((set) => ({
   slippage: null,
@@ -58,6 +57,8 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
   allowAutoComputeLimit: true,
   computePrice: null,
   allowAutoComputePrice: true,
+  mevProtection: null,
+  isMevProtectionEnabled: true,
   retryValue: null,
   fromToken: null,
   swapPlatforms: [],
@@ -71,10 +72,12 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       repeatTransaction,
       fromToken,
       swapPlatforms,
+      mevProtection,
     } = values;
     set((state) => {
       state.slippage = slippage.toString();
       state.amount = amount.toString();
+      state.mevProtection = mevProtection.toString();
       state.computeLimit = computeUnitLimit.toString();
       state.computePrice = computeUnitPrice.toString();
       state.retryValue = repeatTransaction.toString();
@@ -84,6 +87,7 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
         computeUnitLimit === Number(computeLimitAutoValue);
       state.allowAutoComputePrice =
         computeUnitPrice === Number(computePriceAutoValue);
+      state.isMevProtectionEnabled = mevProtection !== null;
 
       state.swapPlatforms = swapPlatforms.map((title) => ({
         title,
@@ -102,6 +106,23 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       state.amount = value;
     });
   },
+
+  setMevProtection: (value) => {
+    set((state) => {
+      state.mevProtection = value;
+    });
+  },
+
+  setIsMevProtectionEnabled: (value) => {
+    set((state) => {
+      state.isMevProtectionEnabled = value;
+
+      if (!value) {
+        state.mevProtection = "";
+      }
+    });
+  },
+
   setComputeLimit: (value) => {
     set((state) => {
       state.computeLimit = value;

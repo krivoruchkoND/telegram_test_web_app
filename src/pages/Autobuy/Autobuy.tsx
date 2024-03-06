@@ -21,6 +21,10 @@ const Autobuy = () => {
     slippage,
     setSlippage,
     amount,
+    mevProtection,
+    setMevProtection,
+    isMevProtectionEnabled,
+    setIsMevProtectionEnabled,
     setAmount,
     computeLimit,
     setComputeLimit,
@@ -76,6 +80,29 @@ const Autobuy = () => {
           inputMode="decimal"
           placeholder="Enter value"
           masks={["empty", "float"]}
+        />
+      )}
+
+      {mevProtection !== null && (
+        <FormItem
+          id="mevProtection"
+          value={mevProtection}
+          onChange={(v) => onChangeHandler(v, setMevProtection)}
+          label="SMART-MEV PROTECTION"
+          description="Enable this for protection against sandwich attacks from MEV bots and save on gas fees in the event of a failed transaction."
+          switchProps={{
+            checked: isMevProtectionEnabled,
+            onChange: (value) => {
+              setIsMevProtectionEnabled(value);
+              debouncedUpdateSettings();
+            },
+          }}
+          disabled={!isMevProtectionEnabled}
+          inputMode="decimal"
+          placeholder={
+            isMevProtectionEnabled ? "Enter value" : "Enable to edit"
+          }
+          masks={["empty", "sol"]}
         />
       )}
 

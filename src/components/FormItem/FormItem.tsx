@@ -17,6 +17,7 @@ type Props = {
   masks: (keyof typeof maskMap)[];
   placeholder?: string;
   switchProps?: Omit<React.ComponentProps<typeof Switch>, "id" | "label">;
+  disabled?: boolean;
 };
 
 const FormItem: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const FormItem: React.FC<Props> = ({
   placeholder,
   masks,
   switchProps,
+  disabled,
 }) => {
   const ref = useRef(null);
   const inputRef = useRef(null);
@@ -43,6 +45,19 @@ const FormItem: React.FC<Props> = ({
   const handleSwitchChange = (checked: boolean) => {
     onSwitchChange?.(checked);
   };
+
+  let isDisabled = false;
+  switch (true) {
+    case disabled !== undefined:
+      isDisabled = disabled;
+      break;
+    case checked !== undefined:
+      isDisabled = checked;
+      break;
+    default:
+      isDisabled = false;
+      break;
+  }
 
   return (
     <div className={classes.formItem}>
@@ -68,7 +83,7 @@ const FormItem: React.FC<Props> = ({
           onAccept={(value, _mask) => onChange?.(value)}
           inputMode={inputMode}
           className={classes.input}
-          disabled={checked === undefined ? false : checked}
+          disabled={isDisabled}
         />
         <div className={classes.description}>{description}</div>
       </div>
