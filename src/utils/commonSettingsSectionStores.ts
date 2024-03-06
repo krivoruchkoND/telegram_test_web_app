@@ -87,7 +87,7 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
         computeUnitLimit === Number(computeLimitAutoValue);
       state.allowAutoComputePrice =
         computeUnitPrice === Number(computePriceAutoValue);
-      state.isMevProtectionEnabled = mevProtection !== null;
+      state.isMevProtectionEnabled = mevProtection !== 0;
 
       state.swapPlatforms = swapPlatforms.map((title) => ({
         title,
