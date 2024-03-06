@@ -51,7 +51,7 @@ const Autobuy = () => {
     <form className={classes.autobuy} onSubmit={preventDefault}>
       <PageTitle title="Autobuy" />
 
-      <SwapPlatforms />
+      <SwapPlatforms onChange={debouncedUpdateSettings} />
 
       <FormItem
         id="slippage"

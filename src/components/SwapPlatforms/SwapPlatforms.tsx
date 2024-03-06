@@ -1,3 +1,4 @@
+import React from "react";
 import { Flipper, Flipped } from "react-flip-toolkit";
 import clsx from "clsx";
 
@@ -31,11 +32,20 @@ const Arrow = (props: {
   );
 };
 
-const SwapPlatforms = () => {
+type Props = {
+  onChange: () => void;
+};
+
+const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
   const swapPlatforms = useAutobuySettingsStore((state) => state.swapPlatforms);
   const changeSwapPlatformsOrder = useAutobuySettingsStore(
     (state) => state.changeSwapPlatformsOrder,
   );
+
+  const handleChangeOrder = (startIndex: number, endIndex: number) => {
+    changeSwapPlatformsOrder(startIndex, endIndex);
+    onChange();
+  };
 
   return (
     <div className={classes.swapPlatformContainer}>
@@ -49,14 +59,14 @@ const SwapPlatforms = () => {
                 {index !== swapPlatforms.length - 1 && (
                   <Arrow
                     direction="down"
-                    onClick={changeSwapPlatformsOrder}
+                    onClick={handleChangeOrder}
                     index={index}
                   />
                 )}
                 {index !== 0 && (
                   <Arrow
                     direction="up"
-                    onClick={changeSwapPlatformsOrder}
+                    onClick={handleChangeOrder}
                     index={index}
                   />
                 )}
