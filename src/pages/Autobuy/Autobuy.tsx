@@ -8,7 +8,7 @@ import preventDefault from "@utils/preventDefault";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
 import FormItem from "@components/FormItem";
-// import SwapPlatforms from "@components/SwapPlatforms";
+import SwapPlatforms from "@components/SwapPlatforms";
 
 import classes from "./styles.module.css";
 
@@ -51,7 +51,7 @@ const Autobuy = () => {
     <form className={classes.autobuy} onSubmit={preventDefault}>
       <PageTitle title="Autobuy" />
 
-      {/* <SwapPlatforms /> */}
+      <SwapPlatforms />
 
       <FormItem
         id="slippage"

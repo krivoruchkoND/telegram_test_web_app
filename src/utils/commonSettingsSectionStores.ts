@@ -31,7 +31,7 @@ export type CommonSettingsSectionStore = {
   setRetryValue: (value: string) => void;
 
   swapPlatforms: { title: string; id: string }[];
-  changeSwapPlatformsOrder: (dragIndex: number, hoverIndex: number) => void;
+  changeSwapPlatformsOrder: (startIndex: number, endIndex: number) => void;
   fromToken: string;
 
   setValues: (values: SettingValues) => void;
@@ -143,11 +143,11 @@ export const initializer = immer<CommonSettingsSectionStore>((set) => ({
       state.retryValue = value;
     });
   },
-  changeSwapPlatformsOrder: (dragIndex, hoverIndex) => {
+  changeSwapPlatformsOrder: (startIndex, endIndex) => {
     set((state) => {
-      const dragItem = state.swapPlatforms[dragIndex];
-      state.swapPlatforms.splice(dragIndex, 1);
-      state.swapPlatforms.splice(hoverIndex, 0, dragItem);
+      const dragItem = state.swapPlatforms[startIndex];
+      state.swapPlatforms.splice(startIndex, 1);
+      state.swapPlatforms.splice(endIndex, 0, dragItem);
     });
   },
 }));
