@@ -4,6 +4,7 @@ import debounce from "debounce";
 
 import { useSettingsStore } from "@stores/SettingsStore";
 import { useSniperSettingsStore } from "@stores/SniperSettingsStore";
+import { useWalletStore } from "@stores/WalletStore";
 import preventDefault from "@utils/preventDefault";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
@@ -14,6 +15,7 @@ import classes from "./styles.module.css";
 
 const Snipper = () => {
   const [, setLocation] = useLocation();
+  const balance = useWalletStore((state) => state.balance);
   const updateSettings = useSettingsStore((state) => state.updateSettings);
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
@@ -77,10 +79,13 @@ const Snipper = () => {
             value={amount}
             onChange={(v) => onChangeHandler(v, setAmount)}
             label="Amount"
-            description="Number of tokens for purchase"
+            description={`Balance: ${balance}`}
             inputMode="decimal"
             placeholder="Enter value"
             masks={["empty", "float"]}
+            sliderProps={{
+              max: balance,
+            }}
           />
         )}
 

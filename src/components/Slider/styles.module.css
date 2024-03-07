@@ -1,0 +1,21 @@
+.slider {
+  width: calc(100% - 20px);
+  margin: 2px auto;
+
+  :global(.rc-slider-handle-dragging) {
+    box-shadow: none !important;
+  }
+
+  :global(.rc-slider-mark-text) {
+    background-color: var(--rb-background-color-2);
+    color: var(--rb-text-color-3);
+  }
+
+  :global(.rc-slider-mark-text-active) {
+    color: var(--rb-text-color-8);
+  }
+
+  :global(.rc-slider-step) {
+    display: none;
+  }
+}

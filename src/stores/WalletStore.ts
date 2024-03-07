@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { getTokens } from "@apis/wallet";
+import { getTokens, getBalance } from "@apis/wallet";
 
 export type Transaction = Awaited<
   ReturnType<typeof getTokens>
@@ -13,8 +13,10 @@ export type WalletStore = {
 
   totalValue: number;
   transactions: Transaction[];
+  balance: number;
 
   getTokens: () => Promise<void>;
+  getBalance: () => Promise<void>;
 };
 
 export const useWalletStore = create<WalletStore>()(
@@ -22,6 +24,7 @@ export const useWalletStore = create<WalletStore>()(
     page: 1,
     size: 10,
     totalValue: 0,
+    balance: 0,
     transactions: [],
 
     getTokens: async () => {
@@ -34,6 +37,18 @@ export const useWalletStore = create<WalletStore>()(
         set((state) => {
           state.totalValue = totalValue;
           state.transactions = tokens;
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    getBalance: async () => {
+      try {
+        const balance = await getBalance();
+
+        set((state) => {
+          state.balance = balance;
         });
       } catch (error) {
         console.error(error);

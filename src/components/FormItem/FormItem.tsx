@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { IMaskInput } from "react-imask";
 
 import Switch from "@components/Switch";
+import Slider from "@components/Slider";
 import { SettingKeys } from "@utils/commonSettingsSectionStores";
 
 import maskMap from "./masks";
@@ -17,6 +18,7 @@ type Props = {
   masks: (keyof typeof maskMap)[];
   placeholder?: string;
   switchProps?: Omit<React.ComponentProps<typeof Switch>, "id" | "label">;
+  sliderProps?: Omit<React.ComponentProps<typeof Slider>, "value" | "onChange">;
   disabled?: boolean;
 };
 
@@ -30,6 +32,7 @@ const FormItem: React.FC<Props> = ({
   placeholder,
   masks,
   switchProps,
+  sliderProps,
   disabled,
 }) => {
   const ref = useRef(null);
@@ -85,6 +88,13 @@ const FormItem: React.FC<Props> = ({
           className={classes.input}
           disabled={isDisabled}
         />
+        {sliderProps && (
+          <Slider
+            value={Number(value)}
+            onChange={(v) => onChange(String(v))}
+            {...sliderProps}
+          />
+        )}
         <div className={classes.description}>{description}</div>
       </div>
     </div>

@@ -32,3 +32,9 @@ export const getTokens = async (params: { page: number; size: number }) => {
 
   return camelcaseKeys(response.data, { deep: true });
 };
+
+export const getBalance = async () => {
+  const response = await baseInstance.get<number>(`/wallet/balance/SOL`);
+
+  return response.data;
+};

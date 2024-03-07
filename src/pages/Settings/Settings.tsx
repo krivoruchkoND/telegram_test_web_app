@@ -3,6 +3,7 @@ import { Switch, Route } from "wouter";
 
 import { useSettingsStore } from "@stores/SettingsStore";
 import { useAuthStore } from "@stores/AuthStore";
+import { useWalletStore } from "@stores/WalletStore";
 import { useSnipedChannelsStore } from "@stores/SnipedChannelsStore";
 import DynamicSettingTabs from "@components/DynamicSettingTabs";
 import NotificationSwitch from "@components/NotificationSwitch";
@@ -14,6 +15,7 @@ import Snipper from "@pages/Sniper";
 import classes from "./styles.module.css";
 
 const Settings = () => {
+  const getBallance = useWalletStore((store) => store.getBalance);
   const getSettings = useSettingsStore((state) => state.getSettings);
   const getPrivateKey = useSettingsStore((state) => state.getPrivateKey);
   const getSnipedChannels = useSnipedChannelsStore(
@@ -26,6 +28,7 @@ const Settings = () => {
       getSettings();
       getPrivateKey();
       getSnipedChannels();
+      getBallance();
     }
   }, [isAuthSucceed]);
 
