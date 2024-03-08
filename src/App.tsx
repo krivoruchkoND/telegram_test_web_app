@@ -39,7 +39,7 @@ const App = observer(() => {
       <div className={classes.content}>
         <Switch>
           <Route path="/" component={Splash} />
-          <Route path="/wallet" component={Wallet} />
+          <Route path="/wallet" component={Wallet} nest />
           <Route path="/settings" component={Settings} nest />
           <Route path="/swaps" component={Swaps} />
           <Route path="/trades" component={Trades} />

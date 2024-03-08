@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
+import { Link } from "wouter";
 import { clsx } from "clsx";
 
 import formatBugNumbers from "@utils/formatBigNumbers";
@@ -44,12 +45,12 @@ type Props = {
 };
 
 const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
-  const { value, marketCap, pnl, amount, metadata } = transaction;
+  const { value, marketCap, pnl, amount, metadata, id } = transaction;
   const { name, symbol, imageUrl } = metadata;
 
   return (
     <li className={classes.transaction}>
-      <div className={classes.title}>
+      <Link href={`/transaction/${id}`} className={classes.title}>
         <div className={classes.nameContainer}>
           <div
             className={clsx(
@@ -66,7 +67,7 @@ const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
           <span className={classes.name}>{name}</span>
         </div>
         <span className={classes.cap}>${formatBugNumbers(marketCap)}</span>
-      </div>
+      </Link>
       <div className={classes.info}>
         <div className={classes.column}>
           <div className={classes.title}>Value</div>

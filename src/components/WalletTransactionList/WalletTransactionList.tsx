@@ -1,4 +1,3 @@
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
 import { useRootStore } from "@hooks/useRootStore";
@@ -10,8 +9,6 @@ const WalletTransactionList = () => {
   const {
     walletStore: { transactions },
   } = useRootStore();
-
-  console.log("🚨", toJS(transactions));
 
   return (
     <ul className={classes.transactions}>
