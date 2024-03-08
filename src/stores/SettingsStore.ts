@@ -17,6 +17,8 @@ class SettingsStore {
 
   autoBuySettings = new GenericSettingsStore();
   sniperSettings = new GenericSettingsStore();
+  lastBuySettings = new GenericSettingsStore();
+  lastSellSettings = new GenericSettingsStore();
 
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
@@ -38,11 +40,18 @@ class SettingsStore {
 
   getSettings = async () => {
     try {
-      const { notification, buyingInfoAuto, buyingInfoSniper } =
-        await getSettings();
+      const {
+        notification,
+        buyingInfoAuto,
+        buyingInfoSniper,
+        lastBuyInfo,
+        lastSellInfo,
+      } = await getSettings();
 
       this.autoBuySettings.setValues(buyingInfoAuto);
       this.sniperSettings.setValues(buyingInfoSniper);
+      this.lastBuySettings.setValues(lastBuyInfo);
+      this.lastSellSettings.setValues(lastSellInfo);
 
       runInAction(() => {
         this.isNotificationsEnabled = notification;
@@ -66,6 +75,8 @@ class SettingsStore {
       isSniperEnabled,
       autoBuySettings,
       sniperSettings,
+      lastBuySettings,
+      lastSellSettings,
     } = this;
 
     const settings: Parameters<typeof updateSettings>[0] = {
@@ -91,6 +102,22 @@ class SettingsStore {
         mevProtection: Number(sniperSettings.mevProtection),
         fromToken: sniperSettings.fromToken ?? "",
         swapPlatforms: sniperSettings.swapPlatforms.map(({ title }) => title),
+      },
+      lastBuyInfo: {
+        repeatTransaction: Number(lastBuySettings.retryValue),
+        slippage: Number(lastBuySettings.slippage),
+        fromToken: lastBuySettings.fromToken ?? "",
+        swapPlatforms: lastBuySettings.swapPlatforms.map(({ title }) => title),
+        computeUnitLimit: Number(lastBuySettings.computeLimit),
+        computeUnitPrice: Number(lastBuySettings.computePrice),
+      },
+      lastSellInfo: {
+        repeatTransaction: Number(lastSellSettings.retryValue),
+        slippage: Number(lastSellSettings.slippage),
+        fromToken: lastSellSettings.fromToken ?? "",
+        swapPlatforms: lastSellSettings.swapPlatforms.map(({ title }) => title),
+        computeUnitLimit: Number(lastSellSettings.computeLimit),
+        computeUnitPrice: Number(lastSellSettings.computePrice),
       },
     };
 

@@ -11,30 +11,24 @@ import snakecaseKeys from "snakecase-keys";
 
 import baseInstance from "./baseInstance";
 
+type SettingParams = {
+  repeat_transaction: number;
+  slippage: number;
+  from_token: string;
+  swap_platforms: string[];
+  compute_unit_limit: number;
+  compute_unit_price: number;
+  turn_off?: boolean;
+  amount?: number;
+  mev_protection?: number;
+};
+
 export type Settings = {
   notification: boolean;
-  buying_info_auto: {
-    turn_off: boolean;
-    repeat_transaction: number;
-    amount: number;
-    slippage: number;
-    from_token: string;
-    compute_unit_limit: number;
-    compute_unit_price: number;
-    swap_platforms: string[];
-    mev_protection: number;
-  };
-  buying_info_sniper: {
-    turn_off: boolean;
-    repeat_transaction: number;
-    amount: number;
-    slippage: number;
-    from_token: string;
-    compute_unit_limit: number;
-    compute_unit_price: number;
-    swap_platforms: string[];
-    mev_protection: number;
-  };
+  buying_info_auto: SettingParams;
+  buying_info_sniper: SettingParams;
+  last_buy_info: SettingParams;
+  last_sell_info: SettingParams;
 };
 
 export type ProfileSettings = {

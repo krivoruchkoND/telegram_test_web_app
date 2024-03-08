@@ -40,6 +40,22 @@ export const settingsAllMock: Settings = {
     ],
     mev_protection: 0.5,
   },
+  last_buy_info: {
+    repeat_transaction: 0,
+    slippage: 0.3,
+    from_token: "So111111",
+    swap_platforms: ["jupiter", "radyum"],
+    compute_unit_limit: 1400000,
+    compute_unit_price: 5000,
+  },
+  last_sell_info: {
+    repeat_transaction: 0,
+    slippage: 0.3,
+    from_token: "So111111",
+    swap_platforms: ["jupiter", "radyum"],
+    compute_unit_limit: 1400000,
+    compute_unit_price: 5000,
+  },
 };
 
 export const profileSettingsMock: ProfileSettings = {
