@@ -1,6 +1,6 @@
 import { type Swap } from "@apis/swaps";
 
-export const mockValue: { swaps: Swap[] } = {
+export const swapsMock: { swaps: Swap[] } = {
   swaps: [
     {
       id: "1",
@@ -55,11 +55,3 @@ export const mockValue: { swaps: Swap[] } = {
     },
   ],
 };
-
-export const mockResponse = new Promise<{ data: typeof mockValue }>(
-  (resolve) => {
-    setTimeout(() => {
-      resolve({ data: mockValue });
-    }, 1000);
-  },
-);

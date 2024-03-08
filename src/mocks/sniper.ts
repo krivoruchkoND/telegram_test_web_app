@@ -16,10 +16,3 @@ export const mockValue: { channels: Channel[] } = {
     },
   ],
 };
-
-export const buildMockResponse = <T>(returnValue: T) =>
-  new Promise<{ data: T }>((resolve) => {
-    setTimeout(() => {
-      resolve({ data: returnValue });
-    }, 1000);
-  });

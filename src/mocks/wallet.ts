@@ -1,6 +1,6 @@
 import { type Token } from "@apis/wallet";
 
-const mockValue: { total_value: number; tokens: Token[] } = {
+export const tokensMock: { total_value: number; tokens: Token[] } = {
   total_value: 1.308736748656447,
   tokens: [
     {
@@ -61,10 +61,4 @@ const mockValue: { total_value: number; tokens: Token[] } = {
   ],
 };
 
-export const mockResponse = new Promise<{ data: typeof mockValue }>(
-  (resolve) => {
-    setTimeout(() => {
-      resolve({ data: mockValue });
-    }, 1000);
-  },
-);
+export const balanceMock = 1337.123456789;

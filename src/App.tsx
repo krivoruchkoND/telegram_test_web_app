@@ -17,9 +17,10 @@ import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
 
 const App = observer(() => {
-  const { authStore, profileSettingsStore } = useRootStore();
-  const { isAuthSucceed } = authStore;
-  const { getProfileSettings } = profileSettingsStore;
+  const {
+    authStore: { isAuthSucceed },
+    profileSettingsStore: { getProfileSettings },
+  } = useRootStore();
 
   useInitTelegramWebApp();
   useAuthHandler();
@@ -50,12 +51,13 @@ const App = observer(() => {
 });
 
 // hook useAuthHandler needs to be called inside a Router
-const AppWithRouter = observer(() => (
+// wrapping AppWithRouter into observer causes weird behavior
+const AppWithRouter = () => (
   <RootStoreProvider>
     <Router hook={useHashLocation}>
       <App />
     </Router>
   </RootStoreProvider>
-));
+);
 
 export default AppWithRouter;

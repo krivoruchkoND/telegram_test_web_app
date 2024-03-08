@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import { Flipper, Flipped } from "react-flip-toolkit";
 import clsx from "clsx";
 
@@ -103,4 +104,4 @@ const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
   );
 };
 
-export default SwapPlatforms;
+export default observer(SwapPlatforms);

@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import { clsx } from "clsx";
 
 import formatBugNumbers from "@utils/formatBigNumbers";
@@ -83,4 +84,4 @@ const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
   );
 };
 
-export default WalletTransactionItem;
+export default observer(WalletTransactionItem);

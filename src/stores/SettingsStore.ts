@@ -44,10 +44,12 @@ class SettingsStore {
       this.autoBuySettings.setValues(buyingInfoAuto);
       this.sniperSettings.setValues(buyingInfoSniper);
 
-      this.isNotificationsEnabled = notification;
-      this.isAutoBuyEnabled = !buyingInfoAuto.turnOff;
-      this.isSniperEnabled = !buyingInfoSniper.turnOff;
-      this.isFetched = true;
+      runInAction(() => {
+        this.isNotificationsEnabled = notification;
+        this.isAutoBuyEnabled = !buyingInfoAuto.turnOff;
+        this.isSniperEnabled = !buyingInfoSniper.turnOff;
+        this.isFetched = true;
+      });
     } catch (error) {
       console.error("SettingsStore getSettings", error);
     }

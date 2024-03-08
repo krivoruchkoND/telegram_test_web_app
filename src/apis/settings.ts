@@ -1,12 +1,14 @@
 import camelcaseKeys, { CamelCaseKeys } from "camelcase-keys";
 import snakecaseKeys from "snakecase-keys";
 
-// import {
-//   buildMockResponse,
-//   mockSettingsValue,
-//   mockProfileSettingsValue,
-// } from "@mocks/settings";
-// import { mockValue, buildMockResponse } from "@mocks/sniper";
+import {
+  settingsAllMock,
+  profileSettingsMock,
+  privateKeyMock,
+  snipedChannelsMock,
+} from "@mocks/settings";
+import buildMockResponse from "@utils/buildMockResponse";
+
 import baseInstance from "./baseInstance";
 
 export type Settings = {
@@ -53,11 +55,14 @@ export type Channel = {
 };
 
 export const getSettings = async () => {
-  const response = await baseInstance.get<Settings>(`/settings/all`);
+  // const response = await baseInstance.get<Settings>(`/settings/all`);
+  // return camelcaseKeys(response.data, { deep: true });
 
-  // const responseMock = await buildMockResponse(mockSettingsValue);
-
-  return camelcaseKeys(response.data, { deep: true });
+  const responseMock = await buildMockResponse(
+    settingsAllMock,
+    "/settings/all",
+  );
+  return camelcaseKeys(responseMock.data, { deep: true });
 };
 
 export const updateSettings = async (
@@ -71,26 +76,38 @@ export const updateSettings = async (
 };
 
 export const getProfileSettings = async () => {
-  const response = await baseInstance.get<ProfileSettings>(`/settings/profile`);
+  // const response = await baseInstance.get<ProfileSettings>(`/settings/profile`);
+  // return camelcaseKeys(response.data, { deep: true });
 
-  // const responseMock = await buildMockResponse(mockProfileSettingsValue);
-
-  return camelcaseKeys(response.data, { deep: true });
+  const responseMock = await buildMockResponse(
+    profileSettingsMock,
+    "/settings/profile",
+  );
+  return camelcaseKeys(responseMock.data, { deep: true });
 };
 
 export const getPrivateKey = async () => {
-  const response = await baseInstance.get<string>(`/settings/private_key`);
-  return response.data;
+  // const response = await baseInstance.get<string>(`/settings/private_key`);
+  // return response.data;
+
+  const responseMock = await buildMockResponse(
+    privateKeyMock,
+    "/settings/private_key",
+  );
+  return responseMock.data;
 };
 
 export const getSnipedChannels = async () => {
-  const response = await baseInstance.get<{ channels: Channel[] }>(
-    `/settings/sniped_channels`,
+  // const response = await baseInstance.get<{ channels: Channel[] }>(
+  //   `/settings/sniped_channels`,
+  // );
+  // return camelcaseKeys(response.data, { deep: true });
+
+  const responseMock = await buildMockResponse(
+    snipedChannelsMock,
+    "/settings/sniped_channels",
   );
-
-  // const mockResponse = await buildMockResponse(mockValue);
-
-  return camelcaseKeys(response.data, { deep: true });
+  return camelcaseKeys(responseMock.data, { deep: true });
 };
 
 export const addSnipedChannel = async (channelTag: string) => {
