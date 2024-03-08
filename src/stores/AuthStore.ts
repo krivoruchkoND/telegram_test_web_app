@@ -6,7 +6,7 @@ import RootStore from "./RootStore";
 
 class AuthStore {
   rootStore: RootStore;
-  isAuthSucceed: boolean = true; // false; // ? is it excessive?
+  isAuthSucceed: boolean = false; // ? is it excessive?
   accessToken: string | null = null;
 
   constructor(rootStore: RootStore) {
