@@ -1,11 +1,19 @@
+import { observer } from "mobx-react-lite";
+
+import { useRootStore } from "@hooks/useRootStore";
 import rockVioletIcon from "@assets/RockViolet.svg";
 import CopyButton from "@components/CopyButton";
-import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
 
 import classes from "./styles.module.css";
 
 const ReferralBlock = () => {
-  const referral = useProfileSettingsStore((state) => state.referral);
+  const {
+    profileSettingsStore: { referral },
+  } = useRootStore();
+
+  if (!referral) {
+    return null;
+  }
 
   return (
     <div className={classes.referral}>
@@ -41,4 +49,4 @@ const ReferralBlock = () => {
   );
 };
 
-export default ReferralBlock;
+export default observer(ReferralBlock);

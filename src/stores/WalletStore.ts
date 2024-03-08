@@ -1,58 +1,55 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { makeAutoObservable, runInAction } from "mobx";
 
 import { getTokens, getBalance } from "@apis/wallet";
+
+import RootStore from "./RootStore";
 
 export type Transaction = Awaited<
   ReturnType<typeof getTokens>
 >["tokens"][number];
 
-export type WalletStore = {
-  page: number;
-  size: number;
+class WalletStore {
+  rootStore: RootStore;
+  page: number = 1;
+  size: number = 100;
 
-  totalValue: number;
-  transactions: Transaction[];
-  balance: number;
+  totalValue: number | null = null;
+  transactions: Transaction[] = [];
+  balance: number | null = null;
 
-  getTokens: () => Promise<void>;
-  getBalance: () => Promise<void>;
-};
+  constructor(rootStore: RootStore) {
+    makeAutoObservable(this);
 
-export const useWalletStore = create<WalletStore>()(
-  immer((set) => ({
-    page: 1,
-    size: 10,
-    totalValue: 0,
-    balance: 0,
-    transactions: [],
+    this.rootStore = rootStore;
+  }
 
-    getTokens: async () => {
-      try {
-        const { totalValue, tokens } = await getTokens({
-          page: 1,
-          size: 100, // TODO: implement pagination
-        });
+  getTokens = async () => {
+    try {
+      const { totalValue, tokens } = await getTokens({
+        page: this.page,
+        size: this.size,
+      });
 
-        set((state) => {
-          state.totalValue = totalValue;
-          state.transactions = tokens;
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
+      runInAction(() => {
+        this.totalValue = totalValue;
+        this.transactions = tokens;
+      });
+    } catch (error) {
+      console.error("WalletStore getTokens", error);
+    }
+  };
 
-    getBalance: async () => {
-      try {
-        const balance = await getBalance();
+  getBalance = async () => {
+    try {
+      const balance = await getBalance();
 
-        set((state) => {
-          state.balance = balance;
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  })),
-);
+      runInAction(() => {
+        this.balance = balance;
+      });
+    } catch (error) {
+      console.error("WalletStore getBalance", error);
+    }
+  };
+}
+
+export default WalletStore;

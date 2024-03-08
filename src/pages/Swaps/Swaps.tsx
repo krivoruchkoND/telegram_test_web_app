@@ -1,13 +1,15 @@
 import { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 
-import SwapList from "@/components/SwapList";
-import { useSwapsStore } from "@stores/SwapsStore";
-import { useAuthStore } from "@stores/AuthStore";
+import { useRootStore } from "@hooks/useRootStore";
+import SwapList from "@components/SwapList";
 
 import classes from "./styles.module.css";
 const Swaps = () => {
-  const getSwaps = useSwapsStore((state) => state.getSwaps);
-  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
+  const {
+    swapsStore: { getSwaps },
+    authStore: { isAuthSucceed },
+  } = useRootStore();
 
   useEffect(() => {
     if (isAuthSucceed) {
@@ -22,4 +24,4 @@ const Swaps = () => {
   );
 };
 
-export default Swaps;
+export default observer(Swaps);

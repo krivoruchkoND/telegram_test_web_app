@@ -1,39 +1,38 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { makeAutoObservable, runInAction } from "mobx";
 
 import { getSwaps } from "@apis/swaps";
 import combineSwapsByDay from "@utils/combineSwapsByDay";
 
+import RootStore from "./RootStore";
+
 export type Swap = Awaited<ReturnType<typeof getSwaps>>["swaps"][number];
 
-export type SwapsStore = {
-  page: number;
-  size: number;
+class SwapsStore {
+  rootStore: RootStore;
+  page: number = 1;
+  size: number = 100;
+  swaps: { [key: string]: Swap[] } = {};
 
-  swaps: { [key: string]: Swap[] };
+  constructor(rootStore: RootStore) {
+    makeAutoObservable(this);
 
-  getSwaps: () => Promise<void>;
-};
+    this.rootStore = rootStore;
+  }
 
-export const useSwapsStore = create<SwapsStore>()(
-  immer((set) => ({
-    page: 1,
-    size: 10,
-    swaps: {},
+  getSwaps = async () => {
+    try {
+      const { swaps } = await getSwaps({
+        page: this.page,
+        size: this.size,
+      });
 
-    getSwaps: async () => {
-      try {
-        const { swaps } = await getSwaps({
-          page: 1,
-          size: 100, // TODO: implement pagination
-        });
+      runInAction(() => {
+        this.swaps = combineSwapsByDay(swaps);
+      });
+    } catch (error) {
+      console.error("SwapsStore getSwaps", error);
+    }
+  };
+}
 
-        set((state) => {
-          state.swaps = combineSwapsByDay(swaps);
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  })),
-);
+export default SwapsStore;

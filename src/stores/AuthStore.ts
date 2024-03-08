@@ -1,29 +1,30 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { makeAutoObservable, runInAction } from "mobx";
 
 import { auth } from "@apis/auth";
 
-export type AuthStore = {
-  isAuthSucceed: boolean;
-  accessToken: string | null;
-  auth: (initData: string) => Promise<void>;
-};
+import RootStore from "./RootStore";
 
-export const useAuthStore = create<AuthStore>()(
-  immer((set) => ({
-    isAuthSucceed: false,
-    accessToken: null,
-    auth: async (initData: string) => {
-      try {
-        const { accessToken } = await auth(initData);
-        set((state) => {
-          state.accessToken = accessToken;
-          state.isAuthSucceed = true;
-        });
-      } catch (error) {
-        // TODO: redirect to splash screen?
-        console.error(error);
-      }
-    },
-  })),
-);
+class AuthStore {
+  rootStore: RootStore;
+  isAuthSucceed: boolean = false; // ? is it excessive?
+  accessToken: string | null = null;
+
+  constructor(rootStore: RootStore) {
+    makeAutoObservable(this);
+    this.rootStore = rootStore;
+  }
+
+  auth = async (initData: string) => {
+    try {
+      const { accessToken } = await auth(initData);
+      runInAction(() => {
+        this.accessToken = accessToken;
+        this.isAuthSucceed = true;
+      });
+    } catch (error) {
+      console.error("AuthStore auth error", error);
+    }
+  };
+}
+
+export default AuthStore;

@@ -1,10 +1,14 @@
-import { useSwapsStore } from "@stores/SwapsStore";
+import { observer } from "mobx-react-lite";
+
+import { useRootStore } from "@hooks/useRootStore";
 
 import SwapItemsList from "./components/SwapItemsList";
 import classes from "./styles.module.css";
 
 const SwapList = () => {
-  const swaps = useSwapsStore((state) => state.swaps);
+  const {
+    swapsStore: { swaps },
+  } = useRootStore();
 
   return (
     <ul className={classes.swaps}>
@@ -22,4 +26,4 @@ const SwapList = () => {
   );
 };
 
-export default SwapList;
+export default observer(SwapList);

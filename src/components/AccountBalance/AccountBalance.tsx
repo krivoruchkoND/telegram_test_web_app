@@ -1,6 +1,6 @@
-import { useWalletStore } from "@stores/WalletStore";
-import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
+import { observer } from "mobx-react-lite";
 
+import { useRootStore } from "@hooks/useRootStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import middleTrim from "@utils/middleTrim";
 import copyIcon from "@assets/Copy.svg";
@@ -10,13 +10,18 @@ import referIcon from "@assets/ReferArrow.svg";
 import classes from "./styles.module.css";
 
 const AccountBalance = () => {
-  const publicAddress = useProfileSettingsStore((state) => state.publicAddress);
-  const referralUrl = useProfileSettingsStore((state) => state.referral.url);
-  const totalValue = useWalletStore((state) => state.totalValue);
+  const {
+    profileSettingsStore: { publicAddress, referral },
+    walletStore: { totalValue },
+  } = useRootStore();
 
   const [, copy] = useCopyToClipboard();
 
-  const handleCopy = (value: string) => {
+  const handleCopy = (value: string | null) => {
+    if (value === null) {
+      return;
+    }
+
     copy(value)
       .then(() => {
         console.log("Copied!", value);
@@ -41,16 +46,16 @@ const AccountBalance = () => {
       )}
 
       <div className={classes.balance}>
-        {totalValue.toFixed(5)}
+        {totalValue?.toFixed(5)}
         <div className={classes.icon}>
           <img src={coinIcon} alt="sol_coin" />
         </div>
       </div>
 
-      {referralUrl && (
+      {referral?.url && (
         <button
           className={classes.referButton}
-          onClick={() => handleCopy(referralUrl)}
+          onClick={() => handleCopy(referral.url)}
         >
           <span className={classes.text}>Refer friends</span>
           <div className={classes.icon}>
@@ -62,4 +67,4 @@ const AccountBalance = () => {
   );
 };
 
-export default AccountBalance;
+export default observer(AccountBalance);

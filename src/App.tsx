@@ -1,9 +1,10 @@
 import { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import { Switch, Router, Route } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 
-import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
-import { useAuthStore } from "@stores/AuthStore";
+import { RootStoreProvider } from "@contexts/RootStoreContext";
+import { useRootStore } from "@hooks/useRootStore";
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
 import useAuthHandler from "@hooks/useAuthHandler";
 import Wallet from "@pages/Wallet";
@@ -15,11 +16,10 @@ import Splash from "@pages/Splash";
 import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
 
-function App() {
-  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
-  const getProfileSettings = useProfileSettingsStore(
-    (store) => store.getProfileSettings,
-  );
+const App = observer(() => {
+  const { authStore, profileSettingsStore } = useRootStore();
+  const { isAuthSucceed } = authStore;
+  const { getProfileSettings } = profileSettingsStore;
 
   useInitTelegramWebApp();
   useAuthHandler();
@@ -47,13 +47,15 @@ function App() {
       </div>
     </main>
   );
-}
+});
 
 // hook useAuthHandler needs to be called inside a Router
-const AppWithRouter = () => (
-  <Router hook={useHashLocation}>
-    <App />
-  </Router>
-);
+const AppWithRouter = observer(() => (
+  <RootStoreProvider>
+    <Router hook={useHashLocation}>
+      <App />
+    </Router>
+  </RootStoreProvider>
+));
 
 export default AppWithRouter;

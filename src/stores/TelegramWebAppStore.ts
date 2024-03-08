@@ -1,24 +1,25 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { makeAutoObservable } from "mobx";
 
-export type TelegramWebAppStore = {
-  isLoaded: boolean;
-  webApp: typeof Telegram.WebApp | null;
-  setLoaded: (isLoaded: boolean) => void;
-  setWebApp: (webApp: typeof Telegram.WebApp) => void;
-};
+import RootStore from "./RootStore";
 
-export const useTelegramWebAppStore = create<TelegramWebAppStore>()(
-  immer((set) => ({
-    isLoaded: false,
-    webApp: null,
-    setLoaded: (isLoaded) =>
-      set((state) => {
-        state.isLoaded = isLoaded;
-      }),
-    setWebApp: (webApp) =>
-      set((state) => {
-        state.webApp = webApp;
-      }),
-  })),
-);
+class TelegramWebAppStore {
+  rootStore: RootStore;
+  isLoaded = false;
+  webApp: typeof Telegram.WebApp | null = null;
+
+  constructor(rootStore: RootStore) {
+    makeAutoObservable(this);
+
+    this.rootStore = rootStore;
+  }
+
+  setLoaded = (isLoaded: boolean) => {
+    this.isLoaded = isLoaded;
+  };
+
+  setWebApp = (webApp: typeof Telegram.WebApp) => {
+    this.webApp = webApp;
+  };
+}
+
+export default TelegramWebAppStore;

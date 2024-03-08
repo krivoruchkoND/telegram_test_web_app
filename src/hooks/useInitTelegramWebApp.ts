@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 
-import { useTelegramWebAppStore } from "@stores/TelegramWebAppStore";
+import { useRootStore } from "./useRootStore";
 
 const useInitTelegramWebApp = () => {
-  const webApp = useTelegramWebAppStore((state) => state.webApp);
-  const setWebApp = useTelegramWebAppStore((state) => state.setWebApp);
+  const {
+    telegramWebAppStore: { webApp, setWebApp },
+  } = useRootStore();
 
   useEffect(() => {
     const timer = setInterval(() => {

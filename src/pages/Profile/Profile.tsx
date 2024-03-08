@@ -1,8 +1,9 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 import { clsx } from "clsx";
 
-import { useProfileSettingsStore } from "@stores/ProfileSettingsStore";
+import { useRootStore } from "@hooks/useRootStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import useShowBackButton from "@hooks/useBackButton";
 import middleTrim from "@utils/middleTrim";
@@ -49,8 +50,9 @@ const Profile = () => {
   const [, setLocation] = useLocation();
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
-  const publicAddress = useProfileSettingsStore((state) => state.publicAddress);
-  const createAt = useProfileSettingsStore((state) => state.createAt);
+  const {
+    profileSettingsStore: { publicAddress, createAt },
+  } = useRootStore();
 
   return (
     <div className={classes.profile}>
@@ -84,4 +86,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default observer(Profile);

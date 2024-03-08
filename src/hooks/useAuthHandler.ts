@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 
-import { useTelegramWebAppStore } from "@stores/TelegramWebAppStore";
-import { useAuthStore } from "@stores/AuthStore";
+import { useRootStore } from "./useRootStore";
 
 const useAuthHandler = () => {
   const [, setLocation] = useLocation();
-  const webApp = useTelegramWebAppStore((store) => store.webApp);
-  const auth = useAuthStore((store) => store.auth);
-  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
+  const {
+    telegramWebAppStore: { webApp },
+    authStore: { auth, isAuthSucceed },
+  } = useRootStore();
 
   useEffect(() => {
     if (!isAuthSucceed) {

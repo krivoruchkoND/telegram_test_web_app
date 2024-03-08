@@ -1,9 +1,11 @@
 import { useEffect, useCallback, useState } from "react";
 
-import { useTelegramWebAppStore } from "@stores/TelegramWebAppStore";
+import { useRootStore } from "./useRootStore";
 
 const useBackButton = (onBack: () => void) => {
-  const webApp = useTelegramWebAppStore((store) => store.webApp);
+  const {
+    telegramWebAppStore: { webApp },
+  } = useRootStore();
   const handler = useCallback(onBack, [onBack]);
   const [isSupported, setIsSupported] = useState(false);
 

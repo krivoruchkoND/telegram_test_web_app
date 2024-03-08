@@ -1,10 +1,11 @@
 import { useCallback } from "react";
+import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 import debounce from "debounce";
 
 import { useSettingsStore } from "@stores/SettingsStore";
 import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
-import { useWalletStore } from "@stores/WalletStore";
+import { useRootStore } from "@hooks/useRootStore";
 import preventDefault from "@utils/preventDefault";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
@@ -15,7 +16,9 @@ import classes from "./styles.module.css";
 
 const Autobuy = () => {
   const [, setLocation] = useLocation();
-  const balance = useWalletStore((state) => state.balance);
+  const {
+    walletStore: { balance },
+  } = useRootStore();
   const updateSettings = useSettingsStore((state) => state.updateSettings);
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
@@ -83,7 +86,7 @@ const Autobuy = () => {
           placeholder="Enter value"
           masks={["empty", "float"]}
           sliderProps={{
-            max: balance,
+            max: balance ?? 0,
           }}
         />
       )}
@@ -173,4 +176,4 @@ const Autobuy = () => {
   );
 };
 
-export default Autobuy;
+export default observer(Autobuy);

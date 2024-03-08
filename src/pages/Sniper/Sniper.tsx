@@ -1,11 +1,12 @@
 import { useCallback } from "react";
+import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 import debounce from "debounce";
 
 import { useSettingsStore } from "@stores/SettingsStore";
 import { useSniperSettingsStore } from "@stores/SniperSettingsStore";
-import { useWalletStore } from "@stores/WalletStore";
 import preventDefault from "@utils/preventDefault";
+import { useRootStore } from "@hooks/useRootStore";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
 import FormItem from "@components/FormItem";
@@ -15,7 +16,9 @@ import classes from "./styles.module.css";
 
 const Snipper = () => {
   const [, setLocation] = useLocation();
-  const balance = useWalletStore((state) => state.balance);
+  const {
+    walletStore: { balance },
+  } = useRootStore();
   const updateSettings = useSettingsStore((state) => state.updateSettings);
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
@@ -84,7 +87,7 @@ const Snipper = () => {
             placeholder="Enter value"
             masks={["empty", "float"]}
             sliderProps={{
-              max: balance,
+              max: balance ?? 0,
             }}
           />
         )}
@@ -175,4 +178,4 @@ const Snipper = () => {
   );
 };
 
-export default Snipper;
+export default observer(Snipper);

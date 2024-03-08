@@ -1,10 +1,10 @@
 import { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import { Switch, Route } from "wouter";
 
 import { useSettingsStore } from "@stores/SettingsStore";
-import { useAuthStore } from "@stores/AuthStore";
-import { useWalletStore } from "@stores/WalletStore";
 import { useSnipedChannelsStore } from "@stores/SnipedChannelsStore";
+import { useRootStore } from "@hooks/useRootStore";
 import DynamicSettingTabs from "@components/DynamicSettingTabs";
 import NotificationSwitch from "@components/NotificationSwitch";
 import PrivateKey from "@pages/PrivateKey";
@@ -15,20 +15,22 @@ import Snipper from "@pages/Sniper";
 import classes from "./styles.module.css";
 
 const Settings = () => {
-  const getBallance = useWalletStore((store) => store.getBalance);
+  const {
+    walletStore: { getBalance },
+    authStore: { isAuthSucceed },
+  } = useRootStore();
   const getSettings = useSettingsStore((state) => state.getSettings);
   const getPrivateKey = useSettingsStore((state) => state.getPrivateKey);
   const getSnipedChannels = useSnipedChannelsStore(
     (state) => state.getSnipedChannels,
   );
-  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
 
   useEffect(() => {
     if (isAuthSucceed) {
       getSettings();
       getPrivateKey();
       getSnipedChannels();
-      getBallance();
+      getBalance();
     }
   }, [isAuthSucceed]);
 
@@ -49,4 +51,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default observer(Settings);

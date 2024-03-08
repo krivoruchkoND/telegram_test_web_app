@@ -1,8 +1,13 @@
-import { useTelegramWebAppStore } from "@/stores/TelegramWebAppStore";
+import { observer } from "mobx-react-lite";
+
+import { useRootStore } from "@hooks/useRootStore";
 
 const UserData = () => {
-  const webApp = useTelegramWebAppStore((state) => state.webApp);
+  const {
+    telegramWebAppStore: { webApp },
+  } = useRootStore();
   const { initData, initDataUnsafe } = webApp || {};
+
   return (
     <div>
       <h3>User Data</h3>
@@ -12,4 +17,4 @@ const UserData = () => {
   );
 };
 
-export default UserData;
+export default observer(UserData);

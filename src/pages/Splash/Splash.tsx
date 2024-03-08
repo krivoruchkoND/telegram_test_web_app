@@ -1,16 +1,19 @@
+import { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import { useLocation } from "wouter";
 
 import rockIcon from "@assets/RockGray.svg";
-import { useAuthStore } from "@/stores/AuthStore";
+import { useRootStore } from "@hooks/useRootStore";
 
 import classes from "./styles.module.css";
-import { useEffect } from "react";
 
 const SPLASH_TIMEOUT = 1000;
 
 const Splash = () => {
   const [, setLocation] = useLocation();
-  const isAuthSucceed = useAuthStore((store) => store.isAuthSucceed);
+  const {
+    authStore: { isAuthSucceed },
+  } = useRootStore();
 
   useEffect(() => {
     const redirect = () => {
@@ -35,4 +38,4 @@ const Splash = () => {
   );
 };
 
-export default Splash;
+export default observer(Splash);
