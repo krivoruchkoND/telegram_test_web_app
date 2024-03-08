@@ -1,10 +1,12 @@
-import { useSettingsStore } from "@stores/SettingsStore";
-
+import { observer } from "mobx-react-lite";
+import { useRootStore } from "@hooks/useRootStore";
 import DynamicSettingTabItem from "./components/DynamicSettingTabItem";
 import classes from "./styles.module.css";
 
 const DynamicSettingTabs = () => {
-  const tabs = useSettingsStore((store) => store.tabs);
+  const {
+    settingsStore: { tabs },
+  } = useRootStore();
 
   return (
     <ul className={classes.settings}>
@@ -15,4 +17,4 @@ const DynamicSettingTabs = () => {
   );
 };
 
-export default DynamicSettingTabs;
+export default observer(DynamicSettingTabs);

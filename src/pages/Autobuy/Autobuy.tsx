@@ -3,8 +3,6 @@ import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 import debounce from "debounce";
 
-import { useSettingsStore } from "@stores/SettingsStore";
-import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
 import { useRootStore } from "@hooks/useRootStore";
 import preventDefault from "@utils/preventDefault";
 import useShowBackButton from "@hooks/useBackButton";
@@ -18,8 +16,8 @@ const Autobuy = () => {
   const [, setLocation] = useLocation();
   const {
     walletStore: { balance },
+    settingsStore: { updateSettings, autoBuySettings },
   } = useRootStore();
-  const updateSettings = useSettingsStore((state) => state.updateSettings);
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
   const {
@@ -44,7 +42,7 @@ const Autobuy = () => {
 
     setComputeLimitToDefault,
     setComputePriceToDefault,
-  } = useAutobuySettingsStore();
+  } = autoBuySettings;
 
   const debouncedUpdateSettings = useCallback(
     debounce(updateSettings, 1000),

@@ -3,15 +3,15 @@ import { IMaskInput } from "react-imask";
 
 import Switch from "@components/Switch";
 import Slider from "@components/Slider";
-import { SettingKeys } from "@utils/commonSettingsSectionStores";
+import { type SettingKeys } from "@stores/GenericSettingsStore";
 
 import maskMap from "./masks";
 import classes from "./styles.module.css";
 
 type Props = {
   id: SettingKeys;
-  value: string;
-  onChange: (value: string) => void;
+  value: number | string;
+  onChange: (value: number) => void;
   label: string;
   description: string;
   inputMode: "decimal" | "numeric";
@@ -82,8 +82,8 @@ const FormItem: React.FC<Props> = ({
           unmask={true}
           ref={ref}
           inputRef={inputRef}
-          value={value}
-          onAccept={(value, _mask) => onChange?.(value)}
+          value={String(value)}
+          onAccept={(value, _mask) => onChange?.(Number(value))}
           inputMode={inputMode}
           className={classes.input}
           disabled={isDisabled}
@@ -91,7 +91,7 @@ const FormItem: React.FC<Props> = ({
         {sliderProps && (
           <Slider
             value={Number(value)}
-            onChange={(v) => onChange(String(v))}
+            onChange={(v) => onChange(v)}
             {...sliderProps}
           />
         )}

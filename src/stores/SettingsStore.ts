@@ -1,159 +1,115 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { makeAutoObservable, runInAction } from "mobx";
 
+import { tabs } from "@consts/settingsTabs";
 import { getSettings, updateSettings, getPrivateKey } from "@apis/settings";
-import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
-import { useSniperSettingsStore } from "@stores/SniperSettingsStore";
 
-const tabs = [
-  {
-    id: "profile",
-    label: "Profile",
-    description: "Main bot configurable parameters",
-    iconColor: "gray",
-  },
-  {
-    id: "autobuy",
-    label: "Auto buy",
-    description: "Immediately buy when pasting token address",
-    iconColor: "green",
-    enableOptionLKey: "AutoBuy" as const,
-  },
-  {
-    id: "snipper",
-    label: "Sniper TG channel",
-    description: "Snipe TG channels calls",
-    iconColor: "blue",
-    enableOptionLKey: "Sniper" as const,
-  },
-];
+import RootStore from "./RootStore";
+import GenericSettingsStore from "./GenericSettingsStore";
 
-export type Tab = (typeof tabs)[number];
+class SettingsStore {
+  rootStore: RootStore;
+  tabs = tabs;
+  isNotificationsEnabled = true;
+  isAutoBuyEnabled = true;
+  isSniperEnabled = true;
+  privateKey: string | null = null;
+  isFetched = false;
 
-export type SettingsStore = {
-  tabs: Tab[];
+  autoBuySettings = new GenericSettingsStore();
+  sniperSettings = new GenericSettingsStore();
 
-  isNotificationsEnabled: boolean;
-  setIsNotificationsEnabled: (value: boolean) => void;
+  constructor(rootStore: RootStore) {
+    makeAutoObservable(this);
 
-  isAutoBuyEnabled: boolean;
-  setIsAutoBuyEnabled: (value: boolean) => void;
+    this.rootStore = rootStore;
+  }
 
-  isSniperEnabled: boolean;
-  setIsSniperEnabled: (value: boolean) => void;
+  setIsNotificationsEnabled = (value: boolean) => {
+    this.isNotificationsEnabled = value;
+  };
 
-  getSettings: () => Promise<void>;
-  updateSettings: () => Promise<void>;
+  setIsAutoBuyEnabled = (value: boolean) => {
+    this.isAutoBuyEnabled = value;
+  };
 
-  privateKey: string | null;
-  getPrivateKey: () => Promise<void>;
+  setIsSniperEnabled = (value: boolean) => {
+    this.isSniperEnabled = value;
+  };
 
-  isFetched: boolean;
-};
+  getSettings = async () => {
+    try {
+      const { notification, buyingInfoAuto, buyingInfoSniper } =
+        await getSettings();
 
-export const useSettingsStore = create<SettingsStore>()(
-  immer((set, get) => ({
-    tabs,
-    isNotificationsEnabled: true,
-    isAutoBuyEnabled: false,
-    isSniperEnabled: false,
-    privateKey: null,
-    isFetched: false,
+      this.autoBuySettings.setValues(buyingInfoAuto);
+      this.sniperSettings.setValues(buyingInfoSniper);
 
-    getSettings: async () => {
-      try {
-        const { notification, buyingInfoAuto, buyingInfoSniper } =
-          await getSettings();
+      this.isNotificationsEnabled = notification;
+      this.isAutoBuyEnabled = !buyingInfoAuto.turnOff;
+      this.isSniperEnabled = !buyingInfoSniper.turnOff;
+      this.isFetched = true;
+    } catch (error) {
+      console.error("SettingsStore getSettings", error);
+    }
+  };
 
-        useAutobuySettingsStore.getState().setValues(buyingInfoAuto);
-        useSniperSettingsStore.getState().setValues(buyingInfoSniper);
+  updateSettings = async () => {
+    if (!this.isFetched) {
+      return;
+    }
 
-        set((state) => {
-          state.isNotificationsEnabled = notification;
-          state.isAutoBuyEnabled = !buyingInfoAuto.turnOff;
-          state.isSniperEnabled = !buyingInfoSniper.turnOff;
-          state.isFetched = true;
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
+    const {
+      isNotificationsEnabled,
+      isAutoBuyEnabled,
+      isSniperEnabled,
+      autoBuySettings,
+      sniperSettings,
+    } = this;
 
-    updateSettings: async () => {
-      if (!get().isFetched) {
-        return;
-      }
+    const settings: Parameters<typeof updateSettings>[0] = {
+      notification: isNotificationsEnabled,
+      buyingInfoAuto: {
+        turnOff: !isAutoBuyEnabled,
+        slippage: Number(autoBuySettings.slippage),
+        amount: Number(autoBuySettings.amount),
+        computeUnitLimit: Number(autoBuySettings.computeLimit),
+        computeUnitPrice: Number(autoBuySettings.computePrice),
+        repeatTransaction: Number(autoBuySettings.retryValue),
+        mevProtection: Number(autoBuySettings.mevProtection),
+        fromToken: autoBuySettings.fromToken ?? "",
+        swapPlatforms: autoBuySettings.swapPlatforms.map(({ title }) => title),
+      },
+      buyingInfoSniper: {
+        turnOff: !isSniperEnabled,
+        slippage: Number(sniperSettings.slippage),
+        amount: Number(sniperSettings.amount),
+        computeUnitLimit: Number(sniperSettings.computeLimit),
+        computeUnitPrice: Number(sniperSettings.computePrice),
+        repeatTransaction: Number(sniperSettings.retryValue),
+        mevProtection: Number(sniperSettings.mevProtection),
+        fromToken: sniperSettings.fromToken ?? "",
+        swapPlatforms: sniperSettings.swapPlatforms.map(({ title }) => title),
+      },
+    };
 
-      const notification = get().isNotificationsEnabled;
-      const autobuy = get().isAutoBuyEnabled;
-      const sniper = get().isSniperEnabled;
-      const buyingInfoAuto = useAutobuySettingsStore.getState();
-      const buyingInfoSniper = useSniperSettingsStore.getState();
+    try {
+      await updateSettings(settings);
+    } catch (error) {
+      console.error("SettingsStore updateSettings", error);
+    }
+  };
 
-      const settings = {
-        notification,
-        autobuy,
-        sniper,
-        buyingInfoAuto: {
-          turnOff: !autobuy,
-          slippage: Number(buyingInfoAuto.slippage),
-          amount: Number(buyingInfoAuto.amount),
-          computeUnitLimit: Number(buyingInfoAuto.computeLimit),
-          computeUnitPrice: Number(buyingInfoAuto.computePrice),
-          repeatTransaction: Number(buyingInfoAuto.retryValue),
-          fromToken: buyingInfoAuto.fromToken ?? "",
-          swapPlatforms: buyingInfoAuto.swapPlatforms.map(({ title }) => title),
-          mevProtection: Number(buyingInfoAuto.mevProtection),
-        },
-        buyingInfoSniper: {
-          turnOff: !sniper,
-          slippage: Number(buyingInfoSniper.slippage),
-          amount: Number(buyingInfoSniper.amount),
-          computeUnitLimit: Number(buyingInfoSniper.computeLimit),
-          computeUnitPrice: Number(buyingInfoSniper.computePrice),
-          repeatTransaction: Number(buyingInfoSniper.retryValue),
-          fromToken: buyingInfoSniper.fromToken ?? "",
-          swapPlatforms: buyingInfoSniper.swapPlatforms.map(
-            ({ title }) => title,
-          ),
-          mevProtection: Number(buyingInfoAuto.mevProtection),
-        },
-      };
+  getPrivateKey = async () => {
+    try {
+      const privateKey = await getPrivateKey();
 
-      try {
-        await updateSettings(settings);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    getPrivateKey: async () => {
-      try {
-        const privateKey = await getPrivateKey();
-        set((state) => {
-          state.privateKey = privateKey;
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    setIsNotificationsEnabled: (value) => {
-      set((state) => {
-        state.isNotificationsEnabled = value;
+      runInAction(() => {
+        this.privateKey = privateKey;
       });
-    },
+    } catch (error) {
+      console.error("SettingsStore getPrivateKey", error);
+    }
+  };
+}
 
-    setIsAutoBuyEnabled: (value) => {
-      set((state) => {
-        state.isAutoBuyEnabled = value;
-      });
-    },
-
-    setIsSniperEnabled: (value) => {
-      set((state) => {
-        state.isSniperEnabled = value;
-      });
-    },
-  })),
-);
+export default SettingsStore;

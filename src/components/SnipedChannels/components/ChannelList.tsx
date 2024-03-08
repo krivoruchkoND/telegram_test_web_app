@@ -1,10 +1,14 @@
-import { useSnipedChannelsStore } from "@stores/SnipedChannelsStore";
+import { observer } from "mobx-react-lite";
+
+import { useRootStore } from "@hooks/useRootStore";
 
 import ChannelListItem from "./ChannelListItem";
 import classes from "../styles.module.css";
 
 const ChannelList = () => {
-  const channels = useSnipedChannelsStore((state) => state.channels);
+  const {
+    snipedChannelsStore: { channels },
+  } = useRootStore();
 
   if (channels.length === 0) {
     return null;
@@ -19,4 +23,4 @@ const ChannelList = () => {
   );
 };
 
-export default ChannelList;
+export default observer(ChannelList);

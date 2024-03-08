@@ -5,6 +5,8 @@ import ProfileSettingsStore from "./ProfileSettingsStore";
 import WalletStore from "./WalletStore";
 import SwapsStore from "./SwapsStore";
 import TelegramWebAppStore from "./TelegramWebAppStore";
+import SettingsStore from "./SettingsStore";
+import SnipedChannelsStore from "./SnipedChannelsStore";
 
 class RootStore {
   authStore: AuthStore;
@@ -12,6 +14,8 @@ class RootStore {
   walletStore: WalletStore;
   swapsStore: SwapsStore;
   telegramWebAppStore: TelegramWebAppStore;
+  settingsStore: SettingsStore;
+  snipedChannelsStore: SnipedChannelsStore;
 
   constructor() {
     makeAutoObservable(this);
@@ -21,6 +25,8 @@ class RootStore {
     this.walletStore = new WalletStore(this);
     this.swapsStore = new SwapsStore(this);
     this.telegramWebAppStore = new TelegramWebAppStore(this);
+    this.settingsStore = new SettingsStore(this);
+    this.snipedChannelsStore = new SnipedChannelsStore(this);
   }
 }
 

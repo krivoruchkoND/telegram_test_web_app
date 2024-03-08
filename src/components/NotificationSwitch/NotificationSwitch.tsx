@@ -1,17 +1,18 @@
 import { useCallback } from "react";
+import { observer } from "mobx-react-lite";
 import debounce from "debounce";
 
 import Switch from "@components/Switch";
-import { useSettingsStore } from "@stores/SettingsStore";
+import { useRootStore } from "@hooks/useRootStore";
 
 const NotificationSwitch = () => {
-  const isNotificationsEnabled = useSettingsStore(
-    (state) => state.isNotificationsEnabled,
-  );
-  const setIsNotificationsEnabled = useSettingsStore(
-    (state) => state.setIsNotificationsEnabled,
-  );
-  const updateSettings = useSettingsStore((state) => state.updateSettings);
+  const {
+    settingsStore: {
+      isNotificationsEnabled,
+      setIsNotificationsEnabled,
+      updateSettings,
+    },
+  } = useRootStore();
 
   const debouncedUpdateSettings = useCallback(
     debounce(updateSettings, 1000),
@@ -31,4 +32,4 @@ const NotificationSwitch = () => {
   );
 };
 
-export default NotificationSwitch;
+export default observer(NotificationSwitch);

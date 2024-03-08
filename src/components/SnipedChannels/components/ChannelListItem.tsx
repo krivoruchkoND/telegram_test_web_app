@@ -1,6 +1,8 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
-import { Channel, useSnipedChannelsStore } from "@stores/SnipedChannelsStore";
+import { useRootStore } from "@hooks/useRootStore";
+import { Channel } from "@stores/SnipedChannelsStore";
 
 import classes from "../styles.module.css";
 
@@ -11,7 +13,9 @@ type Props = {
 const channelHasCallsCount = false;
 
 const ChannelListItem: React.FC<Props> = ({ channel }) => {
-  const remove = useSnipedChannelsStore((state) => state.removeSnipedChannel);
+  const {
+    snipedChannelsStore: { removeSnipedChannel },
+  } = useRootStore();
 
   return (
     <li className={classes.channel}>
@@ -30,11 +34,14 @@ const ChannelListItem: React.FC<Props> = ({ channel }) => {
           )}
         </div>
       </div>
-      <button className={classes.removeButton} onClick={() => remove(channel)}>
+      <button
+        className={classes.removeButton}
+        onClick={() => removeSnipedChannel(channel)}
+      >
         remove
       </button>
     </li>
   );
 };
 
-export default ChannelListItem;
+export default observer(ChannelListItem);

@@ -1,14 +1,17 @@
+import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 
-import CopyButton from "@/components/CopyButton";
+import CopyButton from "@components/CopyButton";
 import useShowBackButton from "@hooks/useBackButton";
+import { useRootStore } from "@hooks/useRootStore";
 
 import classes from "./styles.module.css";
-import { useSettingsStore } from "@/stores/SettingsStore";
 
 const PrivateKey = () => {
   const [, setLocation] = useLocation();
-  const privateKey = useSettingsStore((state) => state.privateKey);
+  const {
+    settingsStore: { privateKey },
+  } = useRootStore();
   const isBackButtonSupported = useShowBackButton(() =>
     setLocation("/profile"),
   );
@@ -31,4 +34,4 @@ const PrivateKey = () => {
   );
 };
 
-export default PrivateKey;
+export default observer(PrivateKey);

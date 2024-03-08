@@ -3,8 +3,6 @@ import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 import debounce from "debounce";
 
-import { useSettingsStore } from "@stores/SettingsStore";
-import { useSniperSettingsStore } from "@stores/SniperSettingsStore";
 import preventDefault from "@utils/preventDefault";
 import { useRootStore } from "@hooks/useRootStore";
 import useShowBackButton from "@hooks/useBackButton";
@@ -18,8 +16,8 @@ const Snipper = () => {
   const [, setLocation] = useLocation();
   const {
     walletStore: { balance },
+    settingsStore: { updateSettings, sniperSettings },
   } = useRootStore();
-  const updateSettings = useSettingsStore((state) => state.updateSettings);
   const isBackButtonSupported = useShowBackButton(() => setLocation("/"));
 
   const {
@@ -44,7 +42,7 @@ const Snipper = () => {
 
     setComputeLimitToDefault,
     setComputePriceToDefault,
-  } = useSniperSettingsStore();
+  } = sniperSettings;
 
   const debouncedUpdateSettings = useCallback(
     debounce(updateSettings, 1000),

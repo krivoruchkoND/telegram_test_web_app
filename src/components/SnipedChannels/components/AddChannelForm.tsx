@@ -1,15 +1,14 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
-import { useSnipedChannelsStore } from "@stores/SnipedChannelsStore";
+import { useRootStore } from "@hooks/useRootStore";
 
 import classes from "../styles.module.css";
 
 const AddChannelForm = () => {
-  const channelLink = useSnipedChannelsStore((state) => state.channelLink);
-  const setChannelLink = useSnipedChannelsStore(
-    (state) => state.setChannelLink,
-  );
-  const addChannel = useSnipedChannelsStore((state) => state.addSnipedChannel);
+  const {
+    snipedChannelsStore: { channelLink, setChannelLink, addSnipedChannel },
+  } = useRootStore();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChannelLink(e.target.value);
@@ -24,7 +23,7 @@ const AddChannelForm = () => {
       "channelLink" in formObject &&
       typeof formObject.channelLink === "string"
     ) {
-      addChannel(formObject.channelLink);
+      addSnipedChannel(formObject.channelLink);
       setChannelLink("");
     }
   };
@@ -45,4 +44,4 @@ const AddChannelForm = () => {
   );
 };
 
-export default AddChannelForm;
+export default observer(AddChannelForm);

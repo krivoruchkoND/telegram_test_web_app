@@ -2,7 +2,7 @@ import React from "react";
 import { Flipper, Flipped } from "react-flip-toolkit";
 import clsx from "clsx";
 
-import { useAutobuySettingsStore } from "@stores/AutobuySettingsStore";
+import { useRootStore } from "@hooks/useRootStore";
 import arrowIcon from "@assets/SwapPlatformsArrowDown.svg";
 
 import classes from "./styles.module.css";
@@ -60,10 +60,10 @@ type Props = {
 };
 
 const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
-  const swapPlatforms = useAutobuySettingsStore((state) => state.swapPlatforms);
-  const changeSwapPlatformsOrder = useAutobuySettingsStore(
-    (state) => state.changeSwapPlatformsOrder,
-  );
+  const {
+    settingsStore: { autoBuySettings },
+  } = useRootStore();
+  const { swapPlatforms, changeSwapPlatformsOrder } = autoBuySettings;
 
   if (swapPlatforms.length === 0) {
     return null;

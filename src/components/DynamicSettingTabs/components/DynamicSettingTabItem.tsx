@@ -1,8 +1,10 @@
 import React, { useCallback } from "react";
+import { observer } from "mobx-react-lite";
 import { Link } from "wouter";
 import debounce from "debounce";
 
-import { useSettingsStore, type Tab } from "@stores/SettingsStore";
+import { useRootStore } from "@hooks/useRootStore";
+import { type Tab } from "@consts/settingsTabs";
 import Switch from "@components/Switch";
 import rockGrayIcon from "@assets/RockGray.svg";
 import rockBlueIcon from "@assets/RockBlue.svg";
@@ -26,18 +28,17 @@ const DynamicSettingTabItem: React.FC<Tab> = ({
   description,
   enableOptionLKey,
 }) => {
-  const updateSettings = useSettingsStore((state) => state.updateSettings);
+  const {
+    settingsStore,
+    settingsStore: { updateSettings },
+  } = useRootStore();
 
   const switchValueKey =
     enableOptionLKey && (`is${enableOptionLKey}Enabled` as const);
   const switchHandlerKey =
     enableOptionLKey && (`setIs${enableOptionLKey}Enabled` as const);
-  const isEnabled = useSettingsStore((state) =>
-    switchValueKey ? state[switchValueKey] : null,
-  );
-  const onEnable = useSettingsStore((state) =>
-    switchHandlerKey ? state[switchHandlerKey] : null,
-  );
+  const isEnabled = switchValueKey && settingsStore[switchValueKey];
+  const onEnable = switchHandlerKey && settingsStore[switchHandlerKey];
 
   const debouncedUpdateSettings = useCallback(
     debounce(updateSettings, 1000),
@@ -58,7 +59,7 @@ const DynamicSettingTabItem: React.FC<Tab> = ({
         </div>
         <div className={classes.description}>{description}</div>
       </Link>
-      {isEnabled !== null && onEnable !== null && (
+      {isEnabled !== undefined && onEnable !== undefined && (
         <div className={classes.switchContainer}>
           <Switch
             id={label}
@@ -75,4 +76,4 @@ const DynamicSettingTabItem: React.FC<Tab> = ({
   );
 };
 
-export default DynamicSettingTabItem;
+export default observer(DynamicSettingTabItem);
