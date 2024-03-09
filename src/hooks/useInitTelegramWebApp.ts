@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useRootStore } from "./useRootStore";
+import useRootStore from "./useRootStore";
 
 const useInitTelegramWebApp = () => {
   const {

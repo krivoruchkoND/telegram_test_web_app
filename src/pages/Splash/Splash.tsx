@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useLocation } from "wouter";
 
 import rockIcon from "@assets/RockGray.svg";
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 
 import classes from "./styles.module.css";
 

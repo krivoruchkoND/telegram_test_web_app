@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import rockVioletIcon from "@assets/RockViolet.svg";
 import CopyButton from "@components/CopyButton";
 

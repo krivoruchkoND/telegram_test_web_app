@@ -3,7 +3,7 @@ import React from "react";
 import RootStore from "@stores/RootStore";
 import { RootStoreContext } from "@contexts/RootStoreContext";
 
-export const useRootStore = () => {
+const useRootStore = () => {
   const context = React.useContext(RootStoreContext);
 
   if (context === undefined || context === null) {
@@ -12,3 +12,5 @@ export const useRootStore = () => {
 
   return context as RootStore;
 };
+
+export default useRootStore;

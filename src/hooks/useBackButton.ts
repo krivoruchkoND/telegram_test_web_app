@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from "react";
 
-import { useRootStore } from "./useRootStore";
+import useRootStore from "./useRootStore";
 
 const useBackButton = (onBack: () => void) => {
   const {

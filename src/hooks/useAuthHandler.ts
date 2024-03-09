@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 
-import { useRootStore } from "./useRootStore";
+import useRootStore from "./useRootStore";
 
 const useAuthHandler = () => {
   const [, setLocation] = useLocation();

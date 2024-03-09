@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import SwapList from "@components/SwapList";
 
 import classes from "./styles.module.css";

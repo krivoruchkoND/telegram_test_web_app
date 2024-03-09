@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Flipper, Flipped } from "react-flip-toolkit";
 import clsx from "clsx";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import arrowIcon from "@assets/SwapPlatformsArrowDown.svg";
 
 import classes from "./styles.module.css";

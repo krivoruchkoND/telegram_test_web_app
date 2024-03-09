@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 import debounce from "debounce";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import preventDefault from "@utils/preventDefault";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";

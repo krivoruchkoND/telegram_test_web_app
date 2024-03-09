@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import DynamicSettingTabItem from "./components/DynamicSettingTabItem";
 import classes from "./styles.module.css";
 

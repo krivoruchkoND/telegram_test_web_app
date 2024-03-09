@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Link } from "wouter";
 import debounce from "debounce";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import { type Tab } from "@consts/settingsTabs";
 import Switch from "@components/Switch";
 import rockGrayIcon from "@assets/RockGray.svg";

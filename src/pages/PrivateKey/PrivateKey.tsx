@@ -3,7 +3,7 @@ import { useLocation, Link } from "wouter";
 
 import CopyButton from "@components/CopyButton";
 import useShowBackButton from "@hooks/useBackButton";
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 
 import classes from "./styles.module.css";
 

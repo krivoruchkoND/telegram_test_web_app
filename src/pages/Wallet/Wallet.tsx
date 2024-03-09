@@ -4,7 +4,7 @@ import { Switch, Route, useParams } from "wouter";
 
 import AccountBalance from "@components/AccountBalance";
 import WalletTransactionList from "@components/WalletTransactionList";
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 
 import classes from "./styles.module.css";
 

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 
 import ChannelListItem from "./ChannelListItem";
 import classes from "../styles.module.css";

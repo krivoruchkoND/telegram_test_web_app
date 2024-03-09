@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import middleTrim from "@utils/middleTrim";
 import copyIcon from "@assets/Copy.svg";

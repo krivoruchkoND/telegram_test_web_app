@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 
 import classes from "../styles.module.css";
 

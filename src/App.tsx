@@ -4,7 +4,7 @@ import { Switch, Router, Route } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 
 import { RootStoreProvider } from "@contexts/RootStoreContext";
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
 import useAuthHandler from "@hooks/useAuthHandler";
 import Wallet from "@pages/Wallet";

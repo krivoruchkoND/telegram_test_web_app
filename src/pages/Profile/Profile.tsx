@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 import { clsx } from "clsx";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import useShowBackButton from "@hooks/useBackButton";
 import middleTrim from "@utils/middleTrim";

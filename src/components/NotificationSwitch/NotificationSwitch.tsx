@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import debounce from "debounce";
 
 import Switch from "@components/Switch";
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 
 const NotificationSwitch = () => {
   const {

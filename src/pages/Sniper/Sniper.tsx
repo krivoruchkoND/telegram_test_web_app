@@ -4,7 +4,7 @@ import { useLocation, Link } from "wouter";
 import debounce from "debounce";
 
 import preventDefault from "@utils/preventDefault";
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import useShowBackButton from "@hooks/useBackButton";
 import PageTitle from "@components/PageTitle";
 import FormItem from "@components/FormItem";

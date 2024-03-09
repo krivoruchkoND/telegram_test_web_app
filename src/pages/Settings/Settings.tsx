@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Switch, Route } from "wouter";
 
-import { useRootStore } from "@hooks/useRootStore";
+import useRootStore from "@hooks/useRootStore";
 import DynamicSettingTabs from "@components/DynamicSettingTabs";
 import NotificationSwitch from "@components/NotificationSwitch";
 import PrivateKey from "@pages/PrivateKey";
