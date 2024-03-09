@@ -2,9 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 24px 16px;
-  border-radius: 32px;
-  background-color: var(--rb-text-color-1);
 
   > .title {
     user-select: none;
@@ -28,10 +25,9 @@
     }
 
     > .text {
-      color: var(--rb-background-color-1);
-      /* background: var(--rb-gradient-color-2);
+      background: var(--rb-gradient-color-2);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; */
+      -webkit-text-fill-color: transparent;
     }
   }
 
@@ -41,17 +37,15 @@
     line-height: 19px;
 
     > .title {
-      color: var(--rb-text-color-3);
-      /* background: var(--rb-gradient-color-1);
+      background: var(--rb-gradient-color-1);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; */
+      -webkit-text-fill-color: transparent;
     }
 
     > .value {
-      color: var(--rb-background-color-1);
-      /* background: var(--rb-gradient-color-2);
+      background: var(--rb-gradient-color-2);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; */
+      -webkit-text-fill-color: transparent;
     }
   }
 

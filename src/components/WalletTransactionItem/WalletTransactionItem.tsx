@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
 import { clsx } from "clsx";
 
 import formatBugNumbers from "@utils/formatBigNumbers";
@@ -51,8 +51,15 @@ const WalletTransactionItem: React.FC<Props> = ({
   shouldRedirectOnClick,
   isOutOfList,
 }) => {
+  const [, setLocation] = useLocation();
   const { value, marketCap, pnl, amount, metadata, id } = transaction;
   const { name, symbol, imageUrl } = metadata;
+
+  const handleRedirect = () => {
+    if (shouldRedirectOnClick) {
+      setLocation(`/transaction/${id}`);
+    }
+  };
 
   const titleContent = (
     <>
@@ -72,17 +79,9 @@ const WalletTransactionItem: React.FC<Props> = ({
     </>
   );
 
-  const title = shouldRedirectOnClick ? (
-    <Link href={`/transaction/${id}`} className={classes.title}>
-      {titleContent}
-    </Link>
-  ) : (
-    <div className={classes.title}>{titleContent}</div>
-  );
-
   const itemContent = (
     <>
-      {title}
+      <div className={classes.title}>{titleContent}</div>
       <div className={classes.info}>
         <div className={classes.column}>
           <div className={classes.title}>Value</div>
@@ -104,7 +103,9 @@ const WalletTransactionItem: React.FC<Props> = ({
       {itemContent}
     </div>
   ) : (
-    <li className={classes.transaction}>{itemContent}</li>
+    <li className={classes.transaction} onClick={handleRedirect}>
+      {itemContent}
+    </li>
   );
 };
 

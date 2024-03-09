@@ -20,7 +20,8 @@ const colors = {
 const handleStyle: React.CSSProperties = {
   height: 20,
   width: 20,
-  marginTop: -8,
+  padding: 8,
+  marginTop: -9,
   backgroundColor: "white",
   border: `3px solid ${colors.green}`,
   borderRadius: 20,
