@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
 import { type Swap } from "@stores/SwapsStore";
 
@@ -23,4 +24,4 @@ const SwapItemsList: React.FC<Props> = ({ title, swaps }) => {
   );
 };
 
-export default SwapItemsList;
+export default observer(SwapItemsList);

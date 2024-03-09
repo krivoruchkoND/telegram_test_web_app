@@ -1,11 +1,12 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
+import clsx from "clsx";
 
 import { type Swap } from "@stores/SwapsStore";
 import middleTrim from "@utils/middleTrim";
 import formatBugNumbers from "@utils/formatBigNumbers";
 
 import classes from "../styles.module.css";
-import clsx from "clsx";
 
 type Props = {
   swap: Swap;
@@ -173,4 +174,4 @@ const SwapItem: React.FC<Props> = ({ swap }) => {
   return null;
 };
 
-export default SwapItem;
+export default observer(SwapItem);

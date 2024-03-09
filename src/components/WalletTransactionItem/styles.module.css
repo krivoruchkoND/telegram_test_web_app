@@ -108,7 +108,7 @@
 }
 
 .skeleton {
-  & > .title {
+  > .title {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -116,7 +116,7 @@
     height: 28px;
   }
 
-  & > .info {
+  > .info {
     display: flex;
     align-items: center;
     justify-content: space-between;
