@@ -29,10 +29,7 @@ const ReferralBlock = () => {
       </div>
       <div className={classes.counter}>
         <span className={classes.title}>$ROCK earned: </span>
-        <span className={classes.value}>
-          {referral.reward}
-          {/* (${referral.dollarReward}) */}
-        </span>
+        <span className={classes.value}>{referral.reward}</span>
       </div>
       <div className={classes.description}>
         <p>
