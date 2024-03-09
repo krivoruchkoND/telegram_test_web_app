@@ -72,7 +72,7 @@ const Slider: React.FC<Props> = ({ value, max, onChange }) => {
         min={0}
         max={100}
         marks={marks}
-        step={0.00001}
+        step={0.0000000001}
         onChange={handleChange}
         defaultValue={0}
       />

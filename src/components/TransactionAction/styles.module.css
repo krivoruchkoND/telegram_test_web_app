@@ -20,4 +20,18 @@
       -webkit-text-fill-color: transparent;
     }
   }
+
+  .label {
+    display: inline-block;
+    user-select: none;
+    margin-bottom: 16px;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+
+    background: var(--rb-gradient-color-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }

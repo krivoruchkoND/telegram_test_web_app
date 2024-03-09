@@ -8,6 +8,12 @@
   margin-bottom: 27px;
   border-bottom: 1px solid var(--rb-background-color-3);
 
+  &.removeOffset {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
   > .title {
     display: flex;
     align-items: center;

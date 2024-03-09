@@ -6,31 +6,68 @@ import useBackButton from "@hooks/useBackButton";
 import useRootStore from "@hooks/useRootStore";
 import WalletTransactionItem from "@components/WalletTransactionItem";
 import TransactionAction from "@components/TransactionAction";
+import FormItem from "@components/FormItem";
 
 import classes from "./styles.module.css";
 
 const Transaction = () => {
   const [, setLocation] = useLocation();
   const { id } = useParams<{ id: string }>();
-
-  const [action, setAction] = useState<"buy" | "sell">("buy");
+  const isBackButtonSupported = useBackButton(() => setLocation("/"));
 
   const {
-    walletStore: { currentTransaction, getToken },
+    walletStore: { currentTransaction, getToken, getBalance, balance },
+    authStore: { isAuthSucceed },
   } = useRootStore();
 
-  useEffect(() => {
-    getToken(id);
-  }, [id]);
+  const [action, setAction] = useState<"buy" | "sell">("buy");
+  const [slippage, setSlippage] = useState(0);
+  const [amount, setAmount] = useState(0);
 
-  const isBackButtonSupported = useBackButton(() => setLocation("/"));
+  useEffect(() => {
+    if (isAuthSucceed) {
+      getToken(id);
+      getBalance();
+    }
+  }, [id, isAuthSucceed]);
+
+  useEffect(() => {
+    setSlippage(0);
+    setAmount(0);
+  }, [action]);
 
   return (
     <section className={classes.transaction}>
       {currentTransaction && (
-        <WalletTransactionItem transaction={currentTransaction} />
+        <WalletTransactionItem transaction={currentTransaction} isOutOfList />
       )}
       <TransactionAction action={action} onChange={setAction} />
+
+      <FormItem
+        id="slippage"
+        value={slippage}
+        onChange={setSlippage}
+        label="Slippage"
+        description="Difference between expected and actual results amounts of token"
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["empty", "percent"]}
+      />
+
+      <FormItem
+        id="amount"
+        value={amount}
+        onChange={setAmount}
+        label="Amount"
+        description={`Balance: ${balance}`}
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["empty", "float"]}
+        sliderProps={{
+          max: balance ?? 0,
+        }}
+      />
+
       {!isBackButtonSupported && <Link href="/">Go back</Link>}
     </section>
   );

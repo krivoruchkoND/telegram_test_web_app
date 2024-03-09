@@ -43,11 +43,13 @@ const PNL: React.FC<PNLProps> = ({ pnl }) => {
 type Props = {
   transaction: Transaction;
   shouldRedirectOnClick?: boolean;
+  isOutOfList?: boolean;
 };
 
 const WalletTransactionItem: React.FC<Props> = ({
   transaction,
   shouldRedirectOnClick,
+  isOutOfList,
 }) => {
   const { value, marketCap, pnl, amount, metadata, id } = transaction;
   const { name, symbol, imageUrl } = metadata;
@@ -78,8 +80,8 @@ const WalletTransactionItem: React.FC<Props> = ({
     <div className={classes.title}>{titleContent}</div>
   );
 
-  return (
-    <li className={classes.transaction}>
+  const itemContent = (
+    <>
       {title}
       <div className={classes.info}>
         <div className={classes.column}>
@@ -94,7 +96,15 @@ const WalletTransactionItem: React.FC<Props> = ({
           </span>
         </div>
       </div>
-    </li>
+    </>
+  );
+
+  return isOutOfList ? (
+    <div className={clsx(classes.transaction, classes.removeOffset)}>
+      {itemContent}
+    </div>
+  ) : (
+    <li className={classes.transaction}>{itemContent}</li>
   );
 };
 

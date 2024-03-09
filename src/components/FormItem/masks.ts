@@ -6,7 +6,7 @@ const floatMask = {
   mask: Number,
   radix: ".",
   mapToRadix: [","],
-  scale: 5,
+  scale: 10,
   thousandsSeparator: " ",
 };
 
