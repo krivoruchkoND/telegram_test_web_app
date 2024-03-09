@@ -6,7 +6,6 @@ import arrowIcon from "@assets/SwapPlatformsArrowDown.svg";
 
 import classes from "./styles.module.css";
 import GenericSettingsStore from "@stores/GenericSettingsStore.ts";
-import Switch from "@components/Switch";
 
 type ArrowProps = {
   direction: "up" | "down";
@@ -72,18 +71,7 @@ const SwapPlatforms: React.FC<Props> = ({ onChange, settings }) => {
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => setIsEditing((isEditing) => !isEditing);
 
-  const {
-    swapPlatforms,
-    allowAutoPlatforms,
-    changeSwapPlatformsOrder,
-    setAllowAutoPlatforms,
-  } = settings;
-
-  const toggleAllowAutoPlatforms = () => {
-    setAllowAutoPlatforms(!allowAutoPlatforms);
-  };
-
-  const isLocked = !isEditing || allowAutoPlatforms;
+  const { swapPlatforms, changeSwapPlatformsOrder } = settings;
 
   if (swapPlatforms.length === 0) {
     return null;
@@ -105,24 +93,15 @@ const SwapPlatforms: React.FC<Props> = ({ onChange, settings }) => {
   return (
     <div className={classes.swapPlatformContainer}>
       <div className={classes.swapPlatformsHeader}>
-        <div className={classes.left}>
-          <h4 className={classes.title}>Swap Platforms</h4>
+        <h4 className={classes.title}>Swap Platforms</h4>
 
-          <button
-            className={classes.editButton}
-            onClick={toggleEditing}
-            disabled={allowAutoPlatforms}
-          >
-            {isEditing ? "Save" : "Edit"}
-          </button>
-        </div>
-
-        <Switch
-          id={"auto"}
-          label={"Auto"}
-          checked={allowAutoPlatforms}
-          onChange={toggleAllowAutoPlatforms}
-        />
+        <button
+          className={classes.editButton}
+          onClick={toggleEditing}
+          type={"button"}
+        >
+          {isEditing ? "Save" : "Edit"}
+        </button>
       </div>
 
       <Flipper flipKey={swapPlatforms.map(({ id }) => id).join("")}>
@@ -134,7 +113,7 @@ const SwapPlatforms: React.FC<Props> = ({ onChange, settings }) => {
               isLast={index === swapPlatforms.length - 1}
               onMoveUp={() => moveUp(index)}
               onMoveDown={() => moveDown(index)}
-              isLocked={isLocked}
+              isLocked={!isEditing}
             />
           </Flipped>
         ))}

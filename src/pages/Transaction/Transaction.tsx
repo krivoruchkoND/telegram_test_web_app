@@ -30,12 +30,15 @@ const Transaction = () => {
   } = useRootStore();
 
   const [action, setAction] = useState<"buy" | "sell">("buy");
-  const [amount, setAmount] = useState(0);
-  const [slippage, setSlippage] = useState(0);
+  const actionPascal = `${action[0].toUpperCase()}${action.slice(1, action.length)}`;
 
   const currentSettings = action === "buy" ? lastBuySettings : lastSellSettings;
 
   const {
+    amount,
+    setAmount,
+    slippage,
+    setSlippage,
     mevProtection,
     setMevProtection,
     isMevProtectionEnabled,
@@ -74,7 +77,7 @@ const Transaction = () => {
 
       <FormItem
         id="amount"
-        value={amount}
+        value={amount ?? 0}
         onChange={setAmount}
         label="Amount"
         description={`Balance: ${balance}`}
@@ -88,7 +91,7 @@ const Transaction = () => {
 
       <FormItem
         id="slippage"
-        value={slippage}
+        value={slippage ?? 0}
         onChange={setSlippage}
         label="Slippage"
         description="Difference between expected and actual results amounts of token"
@@ -97,14 +100,7 @@ const Transaction = () => {
         masks={["empty", "percent"]}
       />
 
-      <TransactionButton>
-        {
-          {
-            buy: "Buy ROCK",
-            sell: "Sell ROCK",
-          }[action]
-        }
-      </TransactionButton>
+      <TransactionButton>{`${actionPascal} ROCK`}</TransactionButton>
 
       <PageTitle title={"Swap settings"} />
 
@@ -123,9 +119,8 @@ const Transaction = () => {
         description="Set an additional bribe amount on top of your priority fee for the Jito validators to place your transaction as soon as possible."
         inputMode="decimal"
         placeholder="Enter value"
-        masks={["decimal", "sol"]}
+        masks={["empty", "decimal", "sol"]}
         switchProps={{
-          subLabel: "Auto",
           checked: isMevProtectionEnabled,
           onChange: setIsMevProtectionEnabled,
         }}
@@ -155,7 +150,7 @@ const Transaction = () => {
         description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
         inputMode="decimal"
         placeholder="Enter value"
-        masks={["float", "sol"]}
+        masks={["empty", "float", "sol"]}
         switchProps={{
           subLabel: "Auto",
           checked: allowAutoComputePrice,

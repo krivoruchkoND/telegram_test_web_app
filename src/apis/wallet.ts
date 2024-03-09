@@ -2,8 +2,9 @@ import camelcaseKeys from "camelcase-keys";
 
 // import { tokensMock, balanceMock } from "@mocks/wallet";
 // import buildMockResponse from "@utils/buildMockResponse";
-
 import baseInstance from "./baseInstance";
+import { balanceMock } from "@mocks/wallet.ts";
+import buildMockResponse from "@utils/buildMockResponse.ts";
 
 export type Token = {
   id: string;
@@ -47,12 +48,9 @@ export const getToken = async (id: string) => {
 };
 
 export const getBalance = async () => {
-  const response = await baseInstance.get<number>(`/wallet/balance/SOL`);
-  return response.data;
+  // const response = await baseInstance.get<number>(`/wallet/balance/SOL`);
+  // return response.data;
 
-  // const responseMock = await buildMockResponse(
-  //   balanceMock,
-  //   "/wallet/balance/SOL",
-  // );
-  // return responseMock.data;
+  const { data } = await buildMockResponse(balanceMock, "/wallet/balance/SOL");
+  return data;
 };

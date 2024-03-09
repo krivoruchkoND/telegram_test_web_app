@@ -39,7 +39,6 @@ class GenericSettingsStore {
   isMevProtectionEnabled = true;
   retryValue: number | null = 1;
   fromToken: string | null = null;
-  allowAutoPlatforms = true;
   swapPlatforms: { title: string; id: string }[] = [
     {
       id: "1",
@@ -93,10 +92,6 @@ class GenericSettingsStore {
 
   setRetryValue = (value: number) => {
     this.retryValue = value;
-  };
-
-  setAllowAutoPlatforms = (value: boolean) => {
-    this.allowAutoPlatforms = value;
   };
 
   changeSwapPlatformsOrder = (startIndex: number, endIndex: number) => {
