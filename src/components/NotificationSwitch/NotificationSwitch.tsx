@@ -5,6 +5,8 @@ import debounce from "debounce";
 import Switch from "@components/Switch";
 import useRootStore from "@hooks/useRootStore";
 
+import classes from "./styles.module.css";
+
 const NotificationSwitch = () => {
   const {
     settingsStore: {
@@ -20,15 +22,17 @@ const NotificationSwitch = () => {
   );
 
   return (
-    <Switch
-      id="notification"
-      label="Notification"
-      checked={isNotificationsEnabled}
-      onChange={(v) => {
-        setIsNotificationsEnabled(v);
-        debouncedUpdateSettings();
-      }}
-    />
+    <div className={classes.container}>
+      <Switch
+        id="notification"
+        label="Notification"
+        checked={isNotificationsEnabled}
+        onChange={(v) => {
+          setIsNotificationsEnabled(v);
+          debouncedUpdateSettings();
+        }}
+      />
+    </div>
   );
 };
 
