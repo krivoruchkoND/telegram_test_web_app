@@ -20,6 +20,12 @@ class SettingsStore {
   lastBuySettings = new GenericSettingsStore();
   lastSellSettings = new GenericSettingsStore();
 
+  isLoading = {
+    getSettings: false,
+    updateSettings: false,
+    getPrivateKey: false,
+  };
+
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
 
@@ -40,6 +46,7 @@ class SettingsStore {
 
   getSettings = async () => {
     try {
+      this.isLoading.getSettings = true;
       const {
         notification,
         buyingInfoAuto,
@@ -61,6 +68,8 @@ class SettingsStore {
       });
     } catch (error) {
       console.error("🚨 SettingsStore getSettings", error);
+    } finally {
+      this.isLoading.getSettings = false;
     }
   };
 
@@ -122,14 +131,18 @@ class SettingsStore {
     };
 
     try {
+      this.isLoading.updateSettings = true;
       await updateSettings(settings);
     } catch (error) {
       console.error("🚨 SettingsStore updateSettings", error);
+    } finally {
+      this.isLoading.updateSettings = false;
     }
   };
 
   getPrivateKey = async () => {
     try {
+      this.isLoading.getPrivateKey = true;
       const privateKey = await getPrivateKey();
 
       runInAction(() => {
@@ -137,6 +150,8 @@ class SettingsStore {
       });
     } catch (error) {
       console.error("🚨 SettingsStore getPrivateKey", error);
+    } finally {
+      this.isLoading.getPrivateKey = false;
     }
   };
 }
