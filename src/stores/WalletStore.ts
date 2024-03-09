@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
-import { getTokens, getBalance } from "@apis/wallet";
+import { getTokens, getToken, getBalance } from "@apis/wallet";
 
 import RootStore from "./RootStore";
 
@@ -15,6 +15,7 @@ class WalletStore {
 
   totalValue: number | null = null;
   transactions: Transaction[] = [];
+  currentTransaction: Transaction | null = null;
   balance: number | null = null;
 
   constructor(rootStore: RootStore) {
@@ -35,7 +36,19 @@ class WalletStore {
         this.transactions = tokens;
       });
     } catch (error) {
-      console.error("WalletStore getTokens", error);
+      console.error("🚨 WalletStore getTokens", error);
+    }
+  };
+
+  getToken = async (id: string) => {
+    try {
+      const token = await getToken(id);
+
+      runInAction(() => {
+        this.currentTransaction = token;
+      });
+    } catch (error) {
+      console.error("🚨 WalletStore getToken", error);
     }
   };
 

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 
 import useRootStore from "@hooks/useRootStore";
 
-import WalletTransactionListItem from "./components/WalletTransactionItem";
+import WalletTransactionListItem from "@components/WalletTransactionItem";
 import classes from "./styles.module.css";
 
 const WalletTransactionList = () => {
@@ -16,6 +16,7 @@ const WalletTransactionList = () => {
         <WalletTransactionListItem
           key={transaction.id}
           transaction={transaction}
+          shouldRedirectOnClick
         />
       ))}
     </ul>

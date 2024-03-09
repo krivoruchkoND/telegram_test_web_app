@@ -6,7 +6,7 @@ import { clsx } from "clsx";
 import formatBugNumbers from "@utils/formatBigNumbers";
 import { Transaction } from "@stores/WalletStore";
 
-import classes from "../styles.module.css";
+import classes from "./styles.module.css";
 
 type PNLProps = { pnl: Transaction["pnl"] };
 
@@ -42,36 +42,49 @@ const PNL: React.FC<PNLProps> = ({ pnl }) => {
 
 type Props = {
   transaction: Transaction;
+  shouldRedirectOnClick?: boolean;
 };
 
-const WalletTransactionItem: React.FC<Props> = ({ transaction }) => {
+const WalletTransactionItem: React.FC<Props> = ({
+  transaction,
+  shouldRedirectOnClick,
+}) => {
   const { value, marketCap, pnl, amount, metadata, id } = transaction;
   const { name, symbol, imageUrl } = metadata;
 
+  const titleContent = (
+    <>
+      <div className={classes.nameContainer}>
+        <div
+          className={clsx(classes.avatar, imageUrl && classes.clearBackground)}
+        >
+          {imageUrl ? (
+            <img src={imageUrl} alt={symbol} />
+          ) : (
+            name[0].toUpperCase()
+          )}
+        </div>
+        <span className={classes.name}>{name}</span>
+      </div>
+      <span className={classes.cap}>${formatBugNumbers(marketCap)}</span>
+    </>
+  );
+
+  const title = shouldRedirectOnClick ? (
+    <Link href={`/transaction/${id}`} className={classes.title}>
+      {titleContent}
+    </Link>
+  ) : (
+    <div className={classes.title}>{titleContent}</div>
+  );
+
   return (
     <li className={classes.transaction}>
-      <Link href={`/transaction/${id}`} className={classes.title}>
-        <div className={classes.nameContainer}>
-          <div
-            className={clsx(
-              classes.avatar,
-              imageUrl && classes.clearBackground,
-            )}
-          >
-            {imageUrl ? (
-              <img src={imageUrl} alt={symbol} />
-            ) : (
-              name[0].toUpperCase()
-            )}
-          </div>
-          <span className={classes.name}>{name}</span>
-        </div>
-        <span className={classes.cap}>${formatBugNumbers(marketCap)}</span>
-      </Link>
+      {title}
       <div className={classes.info}>
         <div className={classes.column}>
           <div className={classes.title}>Value</div>
-          <span>{formatBugNumbers(value)} SOL</span>
+          <span>{formatBugNumbers(value || 0)} SOL</span>
         </div>
         <PNL pnl={pnl} />
         <div className={clsx(classes.column, classes.alignRight)}>

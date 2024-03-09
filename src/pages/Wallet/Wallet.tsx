@@ -1,18 +1,13 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { Switch, Route, useParams } from "wouter";
+import { Switch, Route } from "wouter";
 
 import AccountBalance from "@components/AccountBalance";
 import WalletTransactionList from "@components/WalletTransactionList";
 import useRootStore from "@hooks/useRootStore";
+import Transaction from "@pages/Transaction";
 
 import classes from "./styles.module.css";
-
-const Transaction = () => {
-  const { id } = useParams<{ id: string }>();
-
-  return <div style={{ width: "100%" }}>Transaction {id}</div>;
-};
 
 const Wallet = () => {
   const { authStore, walletStore } = useRootStore();

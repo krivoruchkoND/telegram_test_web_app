@@ -8,7 +8,7 @@ import baseInstance from "./baseInstance";
 export type Token = {
   id: string;
   market_cap: number;
-  value: number;
+  value: number | null;
   amount: number | null;
   pnl: {
     value: number;
