@@ -6,7 +6,7 @@ import RootStore from "./RootStore";
 
 class AuthStore {
   rootStore: RootStore;
-  isAuthSucceed: boolean = false; // ? is it excessive?
+  isAuthSucceed: boolean = true; // false; // ? is it excessive?
   accessToken: string | null = null;
 
   constructor(rootStore: RootStore) {
@@ -22,7 +22,7 @@ class AuthStore {
         this.isAuthSucceed = true;
       });
     } catch (error) {
-      console.error("AuthStore auth error", error);
+      console.error("🚨 AuthStore auth error", error);
     }
   };
 }
