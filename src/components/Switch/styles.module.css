@@ -10,6 +10,8 @@
     font-weight: 600;
     line-height: 19px;
 
+    flex-grow: 1;
+
     background: var(--rb-gradient-color-2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

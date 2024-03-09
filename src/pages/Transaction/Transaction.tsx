@@ -12,6 +12,7 @@ import classes from "./styles.module.css";
 import TransactionButton from "@components/TransactionButton";
 import SwapPlatforms from "@components/SwapPlatforms";
 import PageTitle from "@components/PageTitle";
+import Divider from "@components/Divider";
 
 const handleChangePlatforms = () => {
   /* do nothing */
@@ -29,8 +30,27 @@ const Transaction = () => {
   } = useRootStore();
 
   const [action, setAction] = useState<"buy" | "sell">("buy");
-  const [slippage, setSlippage] = useState(0);
   const [amount, setAmount] = useState(0);
+  const [slippage, setSlippage] = useState(0);
+
+  const currentSettings = action === "buy" ? lastBuySettings : lastSellSettings;
+
+  const {
+    mevProtection,
+    setMevProtection,
+    isMevProtectionEnabled,
+    setIsMevProtectionEnabled,
+    computeLimit,
+    setComputeLimit,
+    setAllowAutoComputeLimit,
+    allowAutoComputeLimit,
+    computePrice,
+    setComputePrice,
+    allowAutoComputePrice,
+    setAllowAutoComputePrice,
+    retryValue,
+    setRetryValue,
+  } = currentSettings;
 
   useEffect(() => {
     if (isAuthSucceed) {
@@ -90,7 +110,68 @@ const Transaction = () => {
 
       <SwapPlatforms
         onChange={handleChangePlatforms}
-        settings={action === "sell" ? lastSellSettings : lastBuySettings}
+        settings={currentSettings}
+      />
+
+      <Divider />
+
+      <FormItem
+        id="mevProtection"
+        value={mevProtection ?? 0}
+        onChange={setMevProtection}
+        label="SMART-MEV PROTECTION"
+        description="Set an additional bribe amount on top of your priority fee for the Jito validators to place your transaction as soon as possible."
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["decimal", "sol"]}
+        switchProps={{
+          subLabel: "Auto",
+          checked: isMevProtectionEnabled,
+          onChange: setIsMevProtectionEnabled,
+        }}
+      />
+
+      <FormItem
+        id="computeLimit"
+        value={computeLimit ?? 0}
+        onChange={setComputeLimit}
+        label="Compute Unit Limit"
+        description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["decimal"]}
+        switchProps={{
+          subLabel: "Auto",
+          checked: allowAutoComputeLimit,
+          onChange: setAllowAutoComputeLimit,
+        }}
+      />
+
+      <FormItem
+        id="computePrice"
+        value={computePrice ?? 0}
+        onChange={setComputePrice}
+        label="Compute Unit Price (priority)"
+        description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["float", "sol"]}
+        switchProps={{
+          subLabel: "Auto",
+          checked: allowAutoComputePrice,
+          onChange: setAllowAutoComputePrice,
+        }}
+      />
+
+      <FormItem
+        id="retryValue"
+        value={retryValue ?? 0}
+        onChange={setRetryValue}
+        label="Retry value"
+        description="Number of retry transaction in node if transaction fail."
+        inputMode="decimal"
+        placeholder="Enter value"
+        masks={["float"]}
       />
 
       {!isBackButtonSupported && <Link href="/">Go back</Link>}

@@ -53,7 +53,7 @@
       font-size: 14px;
       font-weight: 600;
       line-height: 20px;
-      color: var(--rb-text-color-3)
+      color: var(--rb-text-color-3);
     }
   }
 }
