@@ -1,8 +1,6 @@
-import camelcaseKeys from "camelcase-keys";
-
-// import { swapsMock } from "@mocks/swaps";
-// import buildMockResponse from "@/utils/buildMockResponse";
 import baseInstance from "./baseInstance";
+import camelcaseKeys from "camelcase-keys";
+import snakecaseKeys from "snakecase-keys";
 
 type Address = {
   address: string;
@@ -40,23 +38,9 @@ export type CreateTransactionDto = {
 };
 
 export const createSellTransaction = async (dto: CreateTransactionDto) => {
-  await baseInstance.post("/swaps/sell/input", {
-    token_address: dto.tokenAddress,
-    amount: dto.amount,
-    slippage: dto.slippage,
-    compute_unit_limit: dto.computeUnitLimit,
-    compute_unit_price: dto.computeUnitPrice,
-    swap_platforms: dto.swapPlatforms,
-  });
+  await baseInstance.post("/swaps/sell/input", snakecaseKeys(dto));
 };
 
 export const createBuyTransaction = async (dto: CreateTransactionDto) => {
-  await baseInstance.post("/swaps/buy/input", {
-    token_address: dto.tokenAddress,
-    amount: dto.amount,
-    slippage: dto.slippage,
-    compute_unit_limit: dto.computeUnitLimit,
-    compute_unit_price: dto.computeUnitPrice,
-    swap_platforms: dto.swapPlatforms,
-  });
+  await baseInstance.post("/swaps/buy/input", snakecaseKeys(dto));
 };

@@ -1,6 +1,6 @@
 .transaction_button {
   height: 60px;
-  background: var(--rb-text-color-8);
+  background: var(--rb-text-color-1);
   border-radius: 40px;
 
   color: white;

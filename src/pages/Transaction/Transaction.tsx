@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { useParams } from "wouter";
+import { useLocation, useParams } from "wouter";
 import useRootStore from "@hooks/useRootStore";
 import WalletTransactionItem from "@components/WalletTransactionItem";
 import TransactionAction from "@components/TransactionAction";
 import FormItem from "@components/FormItem";
-
-import classes from "./styles.module.css";
 import TransactionButton from "@components/TransactionButton";
 import SwapPlatforms from "@components/SwapPlatforms";
 import PageTitle from "@components/PageTitle";
 import Divider from "@components/Divider";
 import { createBuyTransaction, createSellTransaction } from "@apis/swaps";
+import useBackButton from "@hooks/useBackButton";
+import classes from "./styles.module.css";
 
 const handleChangePlatforms = () => {
   /* do nothing */
@@ -19,6 +19,8 @@ const handleChangePlatforms = () => {
 
 const Transaction = () => {
   const { id } = useParams<{ id: string }>();
+  const [, setLocation] = useLocation();
+  useBackButton(() => setLocation("/"));
 
   const {
     walletStore: { currentTransaction, getToken, getBalance, balance },
