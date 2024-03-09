@@ -131,13 +131,13 @@ class GenericSettingsStore {
       mevProtection,
     } = values || {};
 
-    this.slippage = slippage || null;
-    this.amount = amount || null;
-    this.mevProtection = mevProtection || null;
-    this.computeLimit = computeUnitLimit || null;
-    this.computePrice = computeUnitPrice || null;
-    this.retryValue = repeatTransaction || null;
-    this.fromToken = fromToken || null;
+    this.slippage = slippage ?? null;
+    this.amount = amount ?? null;
+    this.mevProtection = mevProtection ?? null;
+    this.computeLimit = computeUnitLimit ?? null;
+    this.computePrice = computeUnitPrice ?? null;
+    this.retryValue = repeatTransaction ?? null;
+    this.fromToken = fromToken ?? null;
 
     this.allowAutoComputeLimit =
       computeUnitLimit === Number(computeLimitAutoValue);
