@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { observer } from "mobx-react-lite";
-import { useLocation, Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import debounce from "debounce";
 
 import useRootStore from "@hooks/useRootStore";
@@ -58,7 +58,10 @@ const Autobuy = () => {
     <form className={classes.autobuy} onSubmit={preventDefault}>
       <PageTitle title="Autobuy" />
 
-      <SwapPlatforms onChange={debouncedUpdateSettings} />
+      <SwapPlatforms
+        onChange={debouncedUpdateSettings}
+        settings={autoBuySettings}
+      />
 
       {slippage !== null && (
         <FormItem

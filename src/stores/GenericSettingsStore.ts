@@ -17,17 +17,43 @@ export type SettingKeys =
   | "mevProtection";
 
 class GenericSettingsStore {
-  slippage: number | null = null;
-  amount: number | null = null;
-  computeLimit: number | null = null;
+  // slippage: number | null = null;
+  // amount: number | null = null;
+  // computeLimit: number | null = null;
+  // allowAutoComputeLimit = true;
+  // computePrice: number | null = null;
+  // allowAutoComputePrice = true;
+  // mevProtection: number | null = null;
+  // isMevProtectionEnabled = true;
+  // retryValue: number | null = null;
+  // fromToken: string | null = null;
+  // swapPlatforms: { title: string; id: string }[] = [];
+
+  slippage: number | null = 0.3;
+  amount: number | null = 120;
+  computeLimit: number | null = 14000000;
   allowAutoComputeLimit = true;
-  computePrice: number | null = null;
+  computePrice: number | null = 0.005;
   allowAutoComputePrice = true;
-  mevProtection: number | null = null;
+  mevProtection: number | null = 0.1;
   isMevProtectionEnabled = true;
-  retryValue: number | null = null;
+  retryValue: number | null = 1;
   fromToken: string | null = null;
-  swapPlatforms: { title: string; id: string }[] = [];
+  allowAutoPlatforms = true;
+  swapPlatforms: { title: string; id: string }[] = [
+    {
+      id: "1",
+      title: "Jupiter",
+    },
+    {
+      id: "2",
+      title: "Radyum",
+    },
+    {
+      id: "3",
+      title: "Radyum",
+    },
+  ];
 
   constructor() {
     makeAutoObservable(this);
@@ -67,6 +93,10 @@ class GenericSettingsStore {
 
   setRetryValue = (value: number) => {
     this.retryValue = value;
+  };
+
+  setAllowAutoPlatforms = (value: boolean) => {
+    this.allowAutoPlatforms = value;
   };
 
   changeSwapPlatformsOrder = (startIndex: number, endIndex: number) => {

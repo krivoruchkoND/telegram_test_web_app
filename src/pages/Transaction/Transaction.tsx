@@ -10,6 +10,12 @@ import FormItem from "@components/FormItem";
 
 import classes from "./styles.module.css";
 import TransactionButton from "@components/TransactionButton";
+import SwapPlatforms from "@components/SwapPlatforms";
+import PageTitle from "@components/PageTitle";
+
+const handleChangePlatforms = () => {
+  /* do nothing */
+};
 
 const Transaction = () => {
   const [, setLocation] = useLocation();
@@ -19,6 +25,7 @@ const Transaction = () => {
   const {
     walletStore: { currentTransaction, getToken, getBalance, balance },
     authStore: { isAuthSucceed },
+    settingsStore: { lastSellSettings, lastBuySettings },
   } = useRootStore();
 
   const [action, setAction] = useState<"buy" | "sell">("buy");
@@ -78,6 +85,13 @@ const Transaction = () => {
           }[action]
         }
       </TransactionButton>
+
+      <PageTitle title={"Swap settings"} />
+
+      <SwapPlatforms
+        onChange={handleChangePlatforms}
+        settings={action === "sell" ? lastSellSettings : lastBuySettings}
+      />
 
       {!isBackButtonSupported && <Link href="/">Go back</Link>}
     </section>
