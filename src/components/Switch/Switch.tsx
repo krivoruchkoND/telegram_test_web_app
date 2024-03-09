@@ -1,5 +1,7 @@
 import React from "react";
-import RSwitch from "react-switch";
+
+import RSwitch from "@components/ReactSwitch";
+import getCssVariableValue from "@utils/getCssVariableValue";
 
 import classes from "./styles.module.css";
 
@@ -9,13 +11,6 @@ type Props = {
   subLabel?: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
-};
-
-const getCssVariableValue = (variableName: string) => {
-  return window
-    ?.getComputedStyle(document.documentElement)
-    ?.getPropertyValue(variableName)
-    ?.trim();
 };
 
 const Switch: React.FC<Props> = ({
