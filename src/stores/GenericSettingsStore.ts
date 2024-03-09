@@ -5,8 +5,8 @@ import { getSettings } from "@apis/settings";
 
 type SettingValues = Awaited<ReturnType<typeof getSettings>>["buyingInfoAuto"];
 
-const computeLimitAutoValue = "1400000";
-const computePriceAutoValue = "0.000005";
+const computeLimitAutoValue = 1400000;
+const computePriceAutoValue = 0.000005;
 
 export type SettingKeys =
   | "slippage"
@@ -17,42 +17,17 @@ export type SettingKeys =
   | "mevProtection";
 
 class GenericSettingsStore {
-  // slippage: number | null = null;
-  // amount: number | null = null;
-  // computeLimit: number | null = null;
-  // allowAutoComputeLimit = true;
-  // computePrice: number | null = null;
-  // allowAutoComputePrice = true;
-  // mevProtection: number | null = null;
-  // isMevProtectionEnabled = true;
-  // retryValue: number | null = null;
-  // fromToken: string | null = null;
-  // swapPlatforms: { title: string; id: string }[] = [];
-
-  slippage: number | null = 0.3;
-  amount: number | null = 120;
-  computeLimit: number | null = 14000000;
+  slippage: number | null = null;
+  amount: number | null = null;
+  computeLimit: number | null = null;
   allowAutoComputeLimit = true;
-  computePrice: number | null = 0.005;
+  computePrice: number | null = null;
   allowAutoComputePrice = true;
-  mevProtection: number | null = 0.1;
+  mevProtection: number | null = null;
   isMevProtectionEnabled = true;
-  retryValue: number | null = 1;
+  retryValue: number | null = null;
   fromToken: string | null = null;
-  swapPlatforms: { title: string; id: string }[] = [
-    {
-      id: "1",
-      title: "Jupiter",
-    },
-    {
-      id: "2",
-      title: "Radyum",
-    },
-    {
-      id: "3",
-      title: "Radyum",
-    },
-  ];
+  swapPlatforms: { title: string; id: string }[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -72,6 +47,10 @@ class GenericSettingsStore {
 
   setAllowAutoComputeLimit = (value: boolean) => {
     this.allowAutoComputeLimit = value;
+
+    if (value) {
+      this.computeLimit = computeLimitAutoValue;
+    }
   };
 
   setComputePrice = (value: number) => {
@@ -80,6 +59,10 @@ class GenericSettingsStore {
 
   setAllowAutoComputePrice = (value: boolean) => {
     this.allowAutoComputePrice = value;
+
+    if (value) {
+      this.computePrice = computePriceAutoValue;
+    }
   };
 
   setMevProtection = (value: number) => {
@@ -134,10 +117,8 @@ class GenericSettingsStore {
     this.retryValue = repeatTransaction ?? null;
     this.fromToken = fromToken ?? null;
 
-    this.allowAutoComputeLimit =
-      computeUnitLimit === Number(computeLimitAutoValue);
-    this.allowAutoComputePrice =
-      computeUnitPrice === Number(computePriceAutoValue);
+    this.allowAutoComputeLimit = computeUnitLimit === computeLimitAutoValue;
+    this.allowAutoComputePrice = computeUnitPrice === computePriceAutoValue;
     this.isMevProtectionEnabled = mevProtection !== 0;
 
     this.swapPlatforms = swapPlatforms.map((title) => ({
