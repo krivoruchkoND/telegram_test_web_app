@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Link, useLocation, useParams } from "wouter";
-
-import useBackButton from "@hooks/useBackButton";
+import { useParams } from "wouter";
 import useRootStore from "@hooks/useRootStore";
 import WalletTransactionItem from "@components/WalletTransactionItem";
 import TransactionAction from "@components/TransactionAction";
@@ -13,15 +11,14 @@ import TransactionButton from "@components/TransactionButton";
 import SwapPlatforms from "@components/SwapPlatforms";
 import PageTitle from "@components/PageTitle";
 import Divider from "@components/Divider";
+import { createBuyTransaction, createSellTransaction } from "@apis/swaps";
 
 const handleChangePlatforms = () => {
   /* do nothing */
 };
 
 const Transaction = () => {
-  const [, setLocation] = useLocation();
   const { id } = useParams<{ id: string }>();
-  const isBackButtonSupported = useBackButton(() => setLocation("/"));
 
   const {
     walletStore: { currentTransaction, getToken, getBalance, balance },
@@ -33,6 +30,8 @@ const Transaction = () => {
   const actionPascal = `${action[0].toUpperCase()}${action.slice(1, action.length)}`;
 
   const currentSettings = action === "buy" ? lastBuySettings : lastSellSettings;
+  const actionFunction =
+    action === "buy" ? createBuyTransaction : createSellTransaction;
 
   const {
     amount,
@@ -51,9 +50,20 @@ const Transaction = () => {
     setComputePrice,
     allowAutoComputePrice,
     setAllowAutoComputePrice,
+    swapPlatforms,
     retryValue,
     setRetryValue,
   } = currentSettings;
+
+  const handleClick = () =>
+    actionFunction({
+      tokenAddress: currentTransaction?.id ?? "",
+      amount: amount ?? 0,
+      slippage: slippage ?? 0,
+      computeUnitLimit: computeLimit ?? 0,
+      computeUnitPrice: computePrice ?? 0,
+      swapPlatforms: swapPlatforms.map((platform) => platform.title),
+    });
 
   useEffect(() => {
     if (isAuthSucceed) {
@@ -61,11 +71,6 @@ const Transaction = () => {
       getBalance();
     }
   }, [id, isAuthSucceed]);
-
-  useEffect(() => {
-    setSlippage(0);
-    setAmount(0);
-  }, [action]);
 
   return (
     <section className={classes.transaction}>
@@ -80,7 +85,7 @@ const Transaction = () => {
         value={amount ?? 0}
         onChange={setAmount}
         label="Amount"
-        description={`Balance: ${balance}`}
+        description={`Balance: ${balance ?? 0}`}
         inputMode="decimal"
         placeholder="Enter value"
         masks={["empty", "float"]}
@@ -100,7 +105,10 @@ const Transaction = () => {
         masks={["empty", "percent"]}
       />
 
-      <TransactionButton>{`${actionPascal} ROCK`}</TransactionButton>
+      <TransactionButton
+        type={"button"}
+        onClick={handleClick}
+      >{`${actionPascal} ROCK`}</TransactionButton>
 
       <PageTitle title={"Swap settings"} />
 
@@ -168,8 +176,6 @@ const Transaction = () => {
         placeholder="Enter value"
         masks={["float"]}
       />
-
-      {!isBackButtonSupported && <Link href="/">Go back</Link>}
     </section>
   );
 };
