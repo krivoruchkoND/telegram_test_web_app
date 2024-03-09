@@ -20,7 +20,7 @@ const CopyButton: React.FC<Props> = ({ value, trim }) => {
         console.log("Copied!", { value });
       })
       .catch((error) => {
-        console.error("Failed to copy!", error);
+        console.error("🚨 Failed to copy!", error);
       });
   };
 

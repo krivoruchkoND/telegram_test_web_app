@@ -60,7 +60,7 @@ class SettingsStore {
         this.isFetched = true;
       });
     } catch (error) {
-      console.error("SettingsStore getSettings", error);
+      console.error("🚨 SettingsStore getSettings", error);
     }
   };
 
@@ -124,7 +124,7 @@ class SettingsStore {
     try {
       await updateSettings(settings);
     } catch (error) {
-      console.error("SettingsStore updateSettings", error);
+      console.error("🚨 SettingsStore updateSettings", error);
     }
   };
 
@@ -136,7 +136,7 @@ class SettingsStore {
         this.privateKey = privateKey;
       });
     } catch (error) {
-      console.error("SettingsStore getPrivateKey", error);
+      console.error("🚨 SettingsStore getPrivateKey", error);
     }
   };
 }

@@ -32,7 +32,7 @@ class SnipedChannelsStore {
       const { channels } = await getSnipedChannels();
       this.channels = channels;
     } catch (error) {
-      console.error("SnipedChannelsStore getSnipedChannels", error);
+      console.error("🚨 SnipedChannelsStore getSnipedChannels", error);
     }
   };
 
@@ -41,7 +41,7 @@ class SnipedChannelsStore {
       const { channels } = await addSnipedChannel(channelTag);
       this.channels = channels;
     } catch (error) {
-      console.error("SnipedChannelsStore addSnipedChannel", error);
+      console.error("🚨 SnipedChannelsStore addSnipedChannel", error);
     }
   };
 
@@ -50,7 +50,7 @@ class SnipedChannelsStore {
       await removeSnipedChannel(channel);
       await this.getSnipedChannels();
     } catch (error) {
-      console.error("SnipedChannelsStore removeSnipedChannel", error);
+      console.error("🚨 SnipedChannelsStore removeSnipedChannel", error);
     }
   };
 }

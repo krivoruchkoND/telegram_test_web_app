@@ -30,7 +30,7 @@ class SwapsStore {
         this.swaps = combineSwapsByDay(swaps);
       });
     } catch (error) {
-      console.error("SwapsStore getSwaps", error);
+      console.error("🚨 SwapsStore getSwaps", error);
     }
   };
 }

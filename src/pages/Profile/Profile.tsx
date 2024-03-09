@@ -26,7 +26,7 @@ const InfoWithCopyButton: React.FC<{ title: string; value: string }> = ({
         console.log("Copied!", value);
       })
       .catch((error) => {
-        console.error("Failed to copy!", error);
+        console.error("🚨 Failed to copy!", error);
       });
   };
 

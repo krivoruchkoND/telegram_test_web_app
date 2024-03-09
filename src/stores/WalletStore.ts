@@ -47,7 +47,7 @@ class WalletStore {
         this.balance = balance;
       });
     } catch (error) {
-      console.error("WalletStore getBalance", error);
+      console.error("🚨 WalletStore getBalance", error);
     }
   };
 }

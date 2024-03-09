@@ -29,7 +29,7 @@ class ProfileSettingsStore {
         this.referral = referral;
       });
     } catch (error) {
-      console.error("ProfileSettingsStore getProfileSettings", error);
+      console.error("🚨 ProfileSettingsStore getProfileSettings", error);
     }
   };
 }
