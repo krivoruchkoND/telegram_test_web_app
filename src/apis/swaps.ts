@@ -2,7 +2,6 @@ import camelcaseKeys from "camelcase-keys";
 
 // import { swapsMock } from "@mocks/swaps";
 // import buildMockResponse from "@/utils/buildMockResponse";
-
 import baseInstance from "./baseInstance";
 
 type Address = {
@@ -29,4 +28,35 @@ export const getSwaps = async (params: { page: number; size: number }) => {
 
   // const responseMock = await buildMockResponse(swapsMock, "/swaps/all");
   // return camelcaseKeys(responseMock.data, { deep: true });
+};
+
+export type CreateTransactionDto = {
+  tokenAddress: string;
+  amount: number;
+  slippage: number;
+  computeUnitLimit: number;
+  computeUnitPrice: number;
+  swapPlatforms: string[];
+};
+
+export const createSellTransaction = async (dto: CreateTransactionDto) => {
+  await baseInstance.post("/swaps/sell/input", {
+    token_address: dto.tokenAddress,
+    amount: dto.amount,
+    slippage: dto.slippage,
+    compute_unit_limit: dto.computeUnitLimit,
+    compute_unit_price: dto.computeUnitPrice,
+    swap_platforms: dto.swapPlatforms,
+  });
+};
+
+export const createBuyTransaction = async (dto: CreateTransactionDto) => {
+  await baseInstance.post("/swaps/buy/input", {
+    token_address: dto.tokenAddress,
+    amount: dto.amount,
+    slippage: dto.slippage,
+    compute_unit_limit: dto.computeUnitLimit,
+    compute_unit_price: dto.computeUnitPrice,
+    swap_platforms: dto.swapPlatforms,
+  });
 };
