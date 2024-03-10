@@ -1,6 +1,10 @@
-import baseInstance from "./baseInstance";
 import camelcaseKeys from "camelcase-keys";
 import snakecaseKeys from "snakecase-keys";
+
+// import { swapsMock } from "@mocks/swaps";
+// import buildMockResponse from "@/utils/buildMockResponse";
+
+import baseInstance from "./baseInstance";
 
 type Address = {
   address: string;
