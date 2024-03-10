@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useLocation, useParams } from "wouter";
+
+import { createBuyTransaction, createSellTransaction } from "@apis/swaps";
+import useBackButton from "@hooks/useBackButton";
 import useRootStore from "@hooks/useRootStore";
 import WalletTransactionItem from "@components/WalletTransactionItem";
 import TransactionAction from "@components/TransactionAction";
@@ -9,13 +12,8 @@ import TransactionButton from "@components/TransactionButton";
 import SwapPlatforms from "@components/SwapPlatforms";
 import PageTitle from "@components/PageTitle";
 import Divider from "@components/Divider";
-import { createBuyTransaction, createSellTransaction } from "@apis/swaps";
-import useBackButton from "@hooks/useBackButton";
-import classes from "./styles.module.css";
 
-const handleChangePlatforms = () => {
-  /* do nothing */
-};
+import classes from "./styles.module.css";
 
 const Transaction = () => {
   const { id } = useParams<{ id: string }>();
@@ -107,17 +105,13 @@ const Transaction = () => {
         masks={["empty", "percent"]}
       />
 
-      <TransactionButton
-        type={"button"}
-        onClick={handleClick}
-      >{`${actionPascal} ROCK`}</TransactionButton>
+      <TransactionButton type={"button"} onClick={handleClick}>
+        {`${actionPascal} ROCK`}
+      </TransactionButton>
 
       <PageTitle title={"Swap settings"} />
 
-      <SwapPlatforms
-        onChange={handleChangePlatforms}
-        settings={currentSettings}
-      />
+      <SwapPlatforms settings={currentSettings} />
 
       <Divider />
 

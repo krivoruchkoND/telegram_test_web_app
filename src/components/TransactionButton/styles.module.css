@@ -1,9 +1,9 @@
 .transaction_button {
   height: 60px;
-  background: var(--rb-text-color-1);
+  background: var(--rb-text-color-8);
   border-radius: 40px;
 
-  color: white;
+  color: var(--rb-text-color-1);
   font-size: 1rem;
   font-weight: bold;
 

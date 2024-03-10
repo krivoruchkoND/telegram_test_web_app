@@ -63,7 +63,7 @@ const SwapPlatformItem: React.FC<SwapPlatformItemProps> = ({
 };
 
 type Props = {
-  onChange: () => void;
+  onChange?: () => void;
   settings: GenericSettingsStore;
 };
 
@@ -79,7 +79,7 @@ const SwapPlatforms: React.FC<Props> = ({ onChange, settings }) => {
 
   const handleChangeOrder = (startIndex: number, endIndex: number) => {
     changeSwapPlatformsOrder(startIndex, endIndex);
-    onChange();
+    onChange?.();
   };
 
   const moveUp = (index: number) => {
