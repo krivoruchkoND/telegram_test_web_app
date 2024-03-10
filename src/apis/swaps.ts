@@ -1,4 +1,4 @@
-import camelcaseKeys from "camelcase-keys";
+import camelcaseKeys, { CamelCaseKeys } from "camelcase-keys";
 import snakecaseKeys from "snakecase-keys";
 
 // import { swapsMock } from "@mocks/swaps";
@@ -32,19 +32,27 @@ export const getSwaps = async (params: { page: number; size: number }) => {
   // return camelcaseKeys(responseMock.data, { deep: true });
 };
 
-export type CreateTransactionDto = {
-  tokenAddress: string;
+type CreateTransactionDto = {
+  token_address: string;
   amount: number;
   slippage: number;
-  computeUnitLimit: number;
-  computeUnitPrice: number;
-  swapPlatforms: string[];
+  compute_unit_limit: number;
+  compute_unit_price: number;
+  jito_settings: {
+    turn_on: boolean;
+    jito_tip: number;
+  };
+  swap_platforms: string[];
 };
 
-export const createSellTransaction = async (dto: CreateTransactionDto) => {
+export const createSellTransaction = async (
+  dto: CamelCaseKeys<CreateTransactionDto, true>,
+) => {
   await baseInstance.post("/swaps/sell/input", snakecaseKeys(dto));
 };
 
-export const createBuyTransaction = async (dto: CreateTransactionDto) => {
+export const createBuyTransaction = async (
+  dto: CamelCaseKeys<CreateTransactionDto, true>,
+) => {
   await baseInstance.post("/swaps/buy/input", snakecaseKeys(dto));
 };

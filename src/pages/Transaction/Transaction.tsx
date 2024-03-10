@@ -53,8 +53,8 @@ const Transaction = () => {
     allowAutoComputePrice,
     setAllowAutoComputePrice,
     swapPlatforms,
-    retryValue,
-    setRetryValue,
+    // retryValue,
+    // setRetryValue,
     reset,
   } = currentSettings;
 
@@ -66,6 +66,10 @@ const Transaction = () => {
       computeUnitLimit: computeLimit ?? 0,
       computeUnitPrice: computePrice ?? 0,
       swapPlatforms: swapPlatforms.map((platform) => platform.title),
+      jitoSettings: {
+        turnOn: isMevProtectionEnabled,
+        jitoTip: mevProtection ?? 0,
+      },
     });
 
   useEffect(() => {
@@ -147,7 +151,7 @@ const Transaction = () => {
         description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
         inputMode="decimal"
         placeholder="Enter value"
-        masks={["decimal"]}
+        masks={["empty", "decimal"]}
         switchProps={{
           subLabel: "Auto",
           checked: allowAutoComputeLimit,
@@ -171,7 +175,7 @@ const Transaction = () => {
         }}
       />
 
-      <FormItem
+      {/* <FormItem
         id="retryValue"
         value={retryValue ?? 0}
         onChange={setRetryValue}
@@ -180,7 +184,7 @@ const Transaction = () => {
         inputMode="decimal"
         placeholder="Enter value"
         masks={["float"]}
-      />
+      /> */}
     </section>
   );
 };
