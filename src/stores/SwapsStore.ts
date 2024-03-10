@@ -13,6 +13,10 @@ class SwapsStore {
   size: number = 100;
   swaps: { [key: string]: Swap[] } = {};
 
+  isLoading = {
+    getSwaps: false,
+  };
+
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
 
@@ -21,6 +25,7 @@ class SwapsStore {
 
   getSwaps = async () => {
     try {
+      this.isLoading.getSwaps = true;
       const { swaps } = await getSwaps({
         page: this.page,
         size: this.size,
@@ -31,6 +36,8 @@ class SwapsStore {
       });
     } catch (error) {
       console.error("🚨 SwapsStore getSwaps", error);
+    } finally {
+      this.isLoading.getSwaps = false;
     }
   };
 }

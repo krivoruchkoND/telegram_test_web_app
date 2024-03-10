@@ -14,6 +14,10 @@ class ProfileSettingsStore {
     reward: number;
   } | null = null;
 
+  isLoading = {
+    getProfileSettings: false,
+  };
+
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
 
@@ -22,6 +26,7 @@ class ProfileSettingsStore {
 
   getProfileSettings = async () => {
     try {
+      this.isLoading.getProfileSettings = true;
       const { publicAddress, createAt, referral } = await getProfileSettings();
       runInAction(() => {
         this.publicAddress = publicAddress;
@@ -30,6 +35,8 @@ class ProfileSettingsStore {
       });
     } catch (error) {
       console.error("🚨 ProfileSettingsStore getProfileSettings", error);
+    } finally {
+      this.isLoading.getProfileSettings = false;
     }
   };
 }

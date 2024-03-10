@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import useRootStore from "@hooks/useRootStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import middleTrim from "@utils/middleTrim";
+import Spinner from "@components/Spinner";
 import formatNumber from "@utils/formatNumber";
 import copyIcon from "@assets/Copy.svg";
 import coinIcon from "@assets/Coin.svg";
@@ -13,7 +14,7 @@ import classes from "./styles.module.css";
 const AccountBalance = () => {
   const {
     profileSettingsStore: { publicAddress, referral },
-    walletStore: { totalValue },
+    walletStore: { totalValue, isLoading },
   } = useRootStore();
 
   const [, copy] = useCopyToClipboard();
@@ -31,6 +32,14 @@ const AccountBalance = () => {
         console.error("🚨 Failed to copy!", error);
       });
   };
+
+  if (isLoading.getTokens) {
+    return (
+      <section className={classes.account}>
+        <Spinner height={120} width={120} />
+      </section>
+    );
+  }
 
   return (
     <section className={classes.account}>
