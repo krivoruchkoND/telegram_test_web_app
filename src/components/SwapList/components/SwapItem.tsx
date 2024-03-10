@@ -2,7 +2,7 @@ import React from "react";
 
 import { type Swap } from "@stores/SwapsStore";
 import middleTrim from "@utils/middleTrim";
-import formatBugNumbers from "@utils/formatBigNumbers";
+import formatNumber from "@utils/formatNumber";
 
 import classes from "../styles.module.css";
 import clsx from "clsx";
@@ -17,7 +17,7 @@ const withSign = (
   type: "negative" | "positive",
 ) => {
   const amountMod = Math.abs(amount);
-  const formattedAmount = formatBugNumbers(amountMod);
+  const formattedAmount = formatNumber(amountMod, 9, 3);
 
   const resultString =
     type === "negative"
