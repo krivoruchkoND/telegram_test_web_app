@@ -53,6 +53,7 @@ const Transaction = () => {
     swapPlatforms,
     retryValue,
     setRetryValue,
+    reset,
   } = currentSettings;
 
   const handleClick = () =>
@@ -70,6 +71,10 @@ const Transaction = () => {
       getToken(id);
       getBalance();
     }
+
+    return () => {
+      reset();
+    };
   }, [id, isAuthSucceed]);
 
   return (
@@ -115,20 +120,22 @@ const Transaction = () => {
 
       <Divider />
 
-      <FormItem
-        id="mevProtection"
-        value={mevProtection ?? 0}
-        onChange={setMevProtection}
-        label="SMART-MEV PROTECTION"
-        description="Set an additional bribe amount on top of your priority fee for the Jito validators to place your transaction as soon as possible."
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "decimal", "sol"]}
-        switchProps={{
-          checked: isMevProtectionEnabled,
-          onChange: setIsMevProtectionEnabled,
-        }}
-      />
+      {mevProtection !== null && (
+        <FormItem
+          id="mevProtection"
+          value={mevProtection ?? 0}
+          onChange={setMevProtection}
+          label="SMART-MEV PROTECTION"
+          description="Set an additional bribe amount on top of your priority fee for the Jito validators to place your transaction as soon as possible."
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "decimal", "sol"]}
+          switchProps={{
+            checked: isMevProtectionEnabled,
+            onChange: setIsMevProtectionEnabled,
+          }}
+        />
+      )}
 
       <FormItem
         id="computeLimit"
