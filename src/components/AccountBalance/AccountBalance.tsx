@@ -4,6 +4,7 @@ import useRootStore from "@hooks/useRootStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import middleTrim from "@utils/middleTrim";
 import Spinner from "@components/Spinner";
+import formatNumber from "@utils/formatNumber";
 import copyIcon from "@assets/Copy.svg";
 import coinIcon from "@assets/Coin.svg";
 import referIcon from "@assets/ReferArrow.svg";
@@ -55,7 +56,7 @@ const AccountBalance = () => {
       )}
 
       <div className={classes.balance}>
-        {totalValue?.toFixed(5)}
+        {totalValue && formatNumber(totalValue, 9, 3)}
         <div className={classes.icon}>
           <img src={coinIcon} alt="sol_coin" />
         </div>
