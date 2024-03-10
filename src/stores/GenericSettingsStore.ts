@@ -106,12 +106,12 @@ class GenericSettingsStore {
       repeatTransaction,
       fromToken,
       swapPlatforms,
-      mevProtection,
+      jitoSettings,
     } = values || {};
 
     this.slippage = slippage ?? null;
     this.amount = amount ?? null;
-    this.mevProtection = mevProtection ?? null;
+    this.mevProtection = jitoSettings?.jitoTip ?? null;
     this.computeLimit = computeUnitLimit ?? null;
     this.computePrice = computeUnitPrice ?? null;
     this.retryValue = repeatTransaction ?? null;
@@ -119,7 +119,7 @@ class GenericSettingsStore {
 
     this.allowAutoComputeLimit = computeUnitLimit === computeLimitAutoValue;
     this.allowAutoComputePrice = computeUnitPrice === computePriceAutoValue;
-    this.isMevProtectionEnabled = mevProtection !== 0;
+    this.isMevProtectionEnabled = jitoSettings?.turnOn || false;
 
     this.swapPlatforms = swapPlatforms.map((title) => ({
       title,

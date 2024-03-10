@@ -29,6 +29,8 @@ const Transaction = () => {
   const [action, setAction] = useState<"buy" | "sell">("buy");
   const actionPascal = `${action[0].toUpperCase()}${action.slice(1, action.length)}`;
 
+  const currentBalance =
+    action === "buy" ? balance : currentTransaction?.amount ?? 0;
   const currentSettings = action === "buy" ? lastBuySettings : lastSellSettings;
   const actionFunction =
     action === "buy" ? createBuyTransaction : createSellTransaction;
@@ -90,12 +92,12 @@ const Transaction = () => {
         value={amount ?? 0}
         onChange={setAmount}
         label="Amount"
-        description={`Balance: ${balance ?? 0}`}
+        description={`Balance: ${currentBalance ?? 0}`}
         inputMode="decimal"
         placeholder="Enter value"
         masks={["empty", "float"]}
         sliderProps={{
-          max: balance ?? 0,
+          max: currentBalance ?? 0,
         }}
       />
 

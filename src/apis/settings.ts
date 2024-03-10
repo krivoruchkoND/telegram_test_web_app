@@ -18,9 +18,12 @@ type SettingParams = {
   swap_platforms: string[];
   compute_unit_limit: number;
   compute_unit_price: number;
-  turn_off?: boolean;
+  turn_on?: boolean;
   amount?: number;
-  mev_protection?: number;
+  jito_settings?: {
+    turn_on: boolean;
+    jito_tip: number;
+  };
 };
 
 export type Settings = {

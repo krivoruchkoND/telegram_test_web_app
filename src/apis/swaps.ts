@@ -42,17 +42,9 @@ export type CreateTransactionDto = {
 };
 
 export const createSellTransaction = async (dto: CreateTransactionDto) => {
-  await baseInstance.post("/swaps/sell/input", snakecaseKeys(dto), {
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-    },
-  });
+  await baseInstance.post("/swaps/sell/input", snakecaseKeys(dto));
 };
 
 export const createBuyTransaction = async (dto: CreateTransactionDto) => {
-  await baseInstance.post("/swaps/buy/input", snakecaseKeys(dto), {
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-    },
-  });
+  await baseInstance.post("/swaps/buy/input", snakecaseKeys(dto));
 };
