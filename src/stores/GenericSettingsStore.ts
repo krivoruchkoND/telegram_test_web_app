@@ -126,20 +126,6 @@ class GenericSettingsStore {
       id: nanoid(8),
     }));
   };
-
-  reset = () => {
-    this.slippage = null;
-    this.amount = null;
-    this.computeLimit = null;
-    this.allowAutoComputeLimit = true;
-    this.computePrice = null;
-    this.allowAutoComputePrice = true;
-    this.mevProtection = null;
-    this.isMevProtectionEnabled = true;
-    this.retryValue = null;
-    this.fromToken = null;
-    this.swapPlatforms = [];
-  };
 }
 
 export default GenericSettingsStore;

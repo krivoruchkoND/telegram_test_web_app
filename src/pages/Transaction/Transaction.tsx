@@ -21,7 +21,13 @@ const Transaction = () => {
   useBackButton(() => setLocation("/"));
 
   const {
-    walletStore: { currentTransaction, getToken, getBalance, balance },
+    walletStore: {
+      currentTransaction,
+      resetCurrentTransaction,
+      getToken,
+      getBalance,
+      balance,
+    },
     authStore: { isAuthSucceed },
     settingsStore: { lastSellSettings, lastBuySettings },
   } = useRootStore();
@@ -55,7 +61,6 @@ const Transaction = () => {
     swapPlatforms,
     // retryValue,
     // setRetryValue,
-    reset,
   } = currentSettings;
 
   const handleClick = () =>
@@ -79,7 +84,7 @@ const Transaction = () => {
     }
 
     return () => {
-      reset();
+      resetCurrentTransaction();
     };
   }, [id, isAuthSucceed]);
 

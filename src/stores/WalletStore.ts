@@ -78,6 +78,10 @@ class WalletStore {
       this.isLoading.getBalance = false;
     }
   };
+
+  resetCurrentTransaction = () => {
+    this.currentTransaction = null;
+  };
 }
 
 export default WalletStore;
