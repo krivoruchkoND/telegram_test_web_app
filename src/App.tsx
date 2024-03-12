@@ -15,6 +15,9 @@ import Splash from "@pages/Splash";
 
 import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.min.css";
 
 const App = observer(() => {
   const {
@@ -32,21 +35,36 @@ const App = observer(() => {
   }, [isAuthSucceed]);
 
   return (
-    <main className={classes.container}>
-      <div className={classes.header}>
-        <Navigation />
-      </div>
-      <div className={classes.content}>
-        <Switch>
-          <Route path="/" component={Splash} />
-          <Route path="/wallet" component={Wallet} nest />
-          <Route path="/settings" component={Settings} nest />
-          <Route path="/swaps" component={Swaps} />
-          <Route path="/trades" component={Trades} />
-          <Route>Unknown Route</Route>
-        </Switch>
-      </div>
-    </main>
+    <>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+
+      <main className={classes.container}>
+        <div className={classes.header}>
+          <Navigation />
+        </div>
+        <div className={classes.content}>
+          <Switch>
+            <Route path="/" component={Splash} />
+            <Route path="/wallet" component={Wallet} nest />
+            <Route path="/settings" component={Settings} nest />
+            <Route path="/swaps" component={Swaps} />
+            <Route path="/trades" component={Trades} />
+            <Route>Unknown Route</Route>
+          </Switch>
+        </div>
+      </main>
+    </>
   );
 });
 
