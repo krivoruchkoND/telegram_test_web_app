@@ -1,37 +1,41 @@
 .container {
-	position: relative;
+  position: relative;
 
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-	max-width: 430px;
-	max-height: 100dvh;
+  max-width: 430px;
+  max-height: 100dvh;
 
-	margin: 0 auto;
-	margin-bottom: 32px;
+  margin: 0 auto;
+  margin-bottom: 32px;
 
-	> .header {
-		padding: 0 28px;
-	}
+  > .header {
+    padding: 0 28px;
+  }
 
-	> .content {
-		flex: auto;
-		overflow: auto;
-		
-		padding: 0 28px;
+  > .content {
+    flex: auto;
+    overflow: auto;
 
-		&::-webkit-scrollbar {
-			display: none;
-		}
-	}
+    padding: 0 28px;
 
-	@media screen and (max-width: 429px) {
-		.header {
-			padding: 0 16px;
-		}
-		
-		.content {
-			padding: 0 16px;
-		}
-	}
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 429px) {
+    .header {
+      padding: 0 16px;
+    }
+
+    .content {
+      padding: 0 16px;
+    }
+  }
+}
+
+.toast {
+  background: transparent !important;
 }

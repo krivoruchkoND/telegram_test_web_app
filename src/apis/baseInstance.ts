@@ -1,5 +1,12 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toastError } from "@utils/toast";
+
+export type BackendError = {
+  detail: {
+    name: string;
+    message: string;
+  };
+};
 
 const baseInstance = axios.create({
   baseURL: "https://rockbotstaging.com/api",
@@ -8,8 +15,10 @@ const baseInstance = axios.create({
 baseInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message = error.response?.detail ?? error.message;
-    toast.error(message);
+    const response = error?.response as BackendError | undefined;
+    const title = response?.detail.name;
+    const message: string = response?.detail.message ?? error.message;
+    toastError({ title, message });
   },
 );
 
