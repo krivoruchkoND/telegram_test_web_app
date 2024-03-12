@@ -9,10 +9,8 @@ type Props = {
 const ToastError: FC<Props> = ({ title = "Unknown error", message }) => {
   return (
     <div className={classes.toastError}>
-      <div className={classes.toastCorner} />
-
       <h6 className={classes.toastTitle}>{`ERROR: ${title}`}</h6>
-      <p className={classes.toastMessage}>{message}</p>
+      {message && <p className={classes.toastMessage}>{message}</p>}
     </div>
   );
 };

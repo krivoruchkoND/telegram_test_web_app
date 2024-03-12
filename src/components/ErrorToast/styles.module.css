@@ -5,33 +5,22 @@
 
   padding: 20px;
 
-  background: #f9c4c4;
-  color: #343434;
-
+  background: var(--rb-background-color-7);
+  color: var(--rb-text-color-9);
   border-radius: 20px;
 
-  position: relative;
-
-  > .toastCorner {
-    top: 0;
-    left: 0;
-    z-index: -1;
-    position: absolute;
-    background: #ff7801;
-
-    width: 32px;
-    height: 32px;
-  }
 
   > .toastTitle {
     margin: 0;
     font-weight: 600;
     font-size: 16px;
+    line-height: 19px;
   }
 
   > .toastMessage {
     margin: 0;
     font-weight: 500;
     font-size: 14px;
+    line-height: 17px;
   }
 }
