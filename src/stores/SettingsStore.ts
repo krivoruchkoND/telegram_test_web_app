@@ -20,6 +20,12 @@ class SettingsStore {
   lastBuySettings = new GenericSettingsStore();
   lastSellSettings = new GenericSettingsStore();
 
+  isLoading = {
+    getSettings: false,
+    updateSettings: false,
+    getPrivateKey: false,
+  };
+
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
 
@@ -40,6 +46,7 @@ class SettingsStore {
 
   getSettings = async () => {
     try {
+      this.isLoading.getSettings = true;
       const {
         notification,
         buyingInfoAuto,
@@ -55,12 +62,14 @@ class SettingsStore {
 
       runInAction(() => {
         this.isNotificationsEnabled = notification;
-        this.isAutoBuyEnabled = !buyingInfoAuto.turnOff;
-        this.isSniperEnabled = !buyingInfoSniper.turnOff;
+        this.isAutoBuyEnabled = buyingInfoAuto.turnOn || false;
+        this.isSniperEnabled = buyingInfoSniper.turnOn || false;
         this.isFetched = true;
       });
     } catch (error) {
       console.error("🚨 SettingsStore getSettings", error);
+    } finally {
+      this.isLoading.getSettings = false;
     }
   };
 
@@ -82,26 +91,32 @@ class SettingsStore {
     const settings: Parameters<typeof updateSettings>[0] = {
       notification: isNotificationsEnabled,
       buyingInfoAuto: {
-        turnOff: !isAutoBuyEnabled,
+        turnOn: isAutoBuyEnabled,
         slippage: Number(autoBuySettings.slippage),
         amount: Number(autoBuySettings.amount),
         computeUnitLimit: Number(autoBuySettings.computeLimit),
         computeUnitPrice: Number(autoBuySettings.computePrice),
         repeatTransaction: Number(autoBuySettings.retryValue),
-        mevProtection: Number(autoBuySettings.mevProtection),
         fromToken: autoBuySettings.fromToken ?? "",
         swapPlatforms: autoBuySettings.swapPlatforms.map(({ title }) => title),
+        jitoSettings: {
+          turnOn: autoBuySettings.isMevProtectionEnabled,
+          jitoTip: Number(autoBuySettings.mevProtection),
+        },
       },
       buyingInfoSniper: {
-        turnOff: !isSniperEnabled,
+        turnOn: isSniperEnabled,
         slippage: Number(sniperSettings.slippage),
         amount: Number(sniperSettings.amount),
         computeUnitLimit: Number(sniperSettings.computeLimit),
         computeUnitPrice: Number(sniperSettings.computePrice),
         repeatTransaction: Number(sniperSettings.retryValue),
-        mevProtection: Number(sniperSettings.mevProtection),
         fromToken: sniperSettings.fromToken ?? "",
         swapPlatforms: sniperSettings.swapPlatforms.map(({ title }) => title),
+        jitoSettings: {
+          turnOn: sniperSettings.isMevProtectionEnabled,
+          jitoTip: Number(sniperSettings.mevProtection),
+        },
       },
       lastBuyInfo: {
         repeatTransaction: Number(lastBuySettings.retryValue),
@@ -110,6 +125,10 @@ class SettingsStore {
         swapPlatforms: lastBuySettings.swapPlatforms.map(({ title }) => title),
         computeUnitLimit: Number(lastBuySettings.computeLimit),
         computeUnitPrice: Number(lastBuySettings.computePrice),
+        jitoSettings: {
+          turnOn: lastBuySettings.isMevProtectionEnabled,
+          jitoTip: Number(lastBuySettings.mevProtection),
+        },
       },
       lastSellInfo: {
         repeatTransaction: Number(lastSellSettings.retryValue),
@@ -118,18 +137,26 @@ class SettingsStore {
         swapPlatforms: lastSellSettings.swapPlatforms.map(({ title }) => title),
         computeUnitLimit: Number(lastSellSettings.computeLimit),
         computeUnitPrice: Number(lastSellSettings.computePrice),
+        jitoSettings: {
+          turnOn: lastSellSettings.isMevProtectionEnabled,
+          jitoTip: Number(lastSellSettings.mevProtection),
+        },
       },
     };
 
     try {
+      this.isLoading.updateSettings = true;
       await updateSettings(settings);
     } catch (error) {
       console.error("🚨 SettingsStore updateSettings", error);
+    } finally {
+      this.isLoading.updateSettings = false;
     }
   };
 
   getPrivateKey = async () => {
     try {
+      this.isLoading.getPrivateKey = true;
       const privateKey = await getPrivateKey();
 
       runInAction(() => {
@@ -137,6 +164,8 @@ class SettingsStore {
       });
     } catch (error) {
       console.error("🚨 SettingsStore getPrivateKey", error);
+    } finally {
+      this.isLoading.getPrivateKey = false;
     }
   };
 }

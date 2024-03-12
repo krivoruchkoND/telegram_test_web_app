@@ -18,6 +18,7 @@ const Settings = () => {
     authStore: { isAuthSucceed },
     settingsStore: { getSettings, getPrivateKey },
     snipedChannelsStore: { getSnipedChannels },
+    profileSettingsStore: { getProfileSettings },
   } = useRootStore();
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const Settings = () => {
       getPrivateKey();
       getSnipedChannels();
       getBalance();
+      getProfileSettings();
     }
   }, [isAuthSucceed]);
 

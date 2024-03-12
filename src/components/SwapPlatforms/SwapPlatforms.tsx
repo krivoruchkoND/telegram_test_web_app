@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Flipper, Flipped } from "react-flip-toolkit";
+import { Flipped, Flipper } from "react-flip-toolkit";
 import clsx from "clsx";
-
-import useRootStore from "@hooks/useRootStore";
 import arrowIcon from "@assets/SwapPlatformsArrowDown.svg";
 
 import classes from "./styles.module.css";
+import GenericSettingsStore from "@stores/GenericSettingsStore.ts";
 
 type ArrowProps = {
   direction: "up" | "down";
@@ -35,6 +34,7 @@ type SwapPlatformItemProps = {
   isLast: boolean;
   onMoveUp: () => void;
   onMoveDown: () => void;
+  isLocked: boolean;
 };
 
 const SwapPlatformItem: React.FC<SwapPlatformItemProps> = ({
@@ -43,28 +43,35 @@ const SwapPlatformItem: React.FC<SwapPlatformItemProps> = ({
   isLast,
   onMoveUp,
   onMoveDown,
+  isLocked,
   ...flipperProps
 }) => {
   return (
-    <div className={classes.swapPlatformItem} {...flipperProps}>
+    <div
+      className={clsx(classes.swapPlatformItem, isLocked && classes.locked)}
+      {...flipperProps}
+    >
       <div className={classes.title}>{title}</div>
       <div className={classes.arrows}>
-        {!isLast && <Arrow direction="down" onClick={onMoveDown} />}
-        {!isFirst && <Arrow direction="up" onClick={onMoveUp} />}
+        {!isLast && !isLocked && (
+          <Arrow direction="down" onClick={onMoveDown} />
+        )}
+        {!isFirst && !isLocked && <Arrow direction="up" onClick={onMoveUp} />}
       </div>
     </div>
   );
 };
 
 type Props = {
-  onChange: () => void;
+  onChange?: () => void;
+  settings: GenericSettingsStore;
 };
 
-const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
-  const {
-    settingsStore: { autoBuySettings },
-  } = useRootStore();
-  const { swapPlatforms, changeSwapPlatformsOrder } = autoBuySettings;
+const SwapPlatforms: React.FC<Props> = ({ onChange, settings }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const toggleEditing = () => setIsEditing((isEditing) => !isEditing);
+
+  const { swapPlatforms, changeSwapPlatformsOrder } = settings;
 
   if (swapPlatforms.length === 0) {
     return null;
@@ -72,7 +79,7 @@ const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
 
   const handleChangeOrder = (startIndex: number, endIndex: number) => {
     changeSwapPlatformsOrder(startIndex, endIndex);
-    onChange();
+    onChange?.();
   };
 
   const moveUp = (index: number) => {
@@ -85,7 +92,18 @@ const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
 
   return (
     <div className={classes.swapPlatformContainer}>
-      <div className={classes.title}>Swap Platforms</div>
+      <div className={classes.swapPlatformsHeader}>
+        <h4 className={classes.title}>Swap Platforms</h4>
+
+        <button
+          className={classes.editButton}
+          onClick={toggleEditing}
+          type={"button"}
+        >
+          {isEditing ? "Save" : "Edit"}
+        </button>
+      </div>
+
       <Flipper flipKey={swapPlatforms.map(({ id }) => id).join("")}>
         {swapPlatforms.map(({ id, title }, index) => (
           <Flipped key={id} flipId={id}>
@@ -95,10 +113,12 @@ const SwapPlatforms: React.FC<Props> = ({ onChange }) => {
               isLast={index === swapPlatforms.length - 1}
               onMoveUp={() => moveUp(index)}
               onMoveDown={() => moveDown(index)}
+              isLocked={!isEditing}
             />
           </Flipped>
         ))}
       </Flipper>
+
       <div className={classes.description}>Choosing a platform for swap</div>
     </div>
   );

@@ -9,7 +9,7 @@ import {
 export const settingsAllMock: Settings = {
   notification: true,
   buying_info_auto: {
-    turn_off: true,
+    turn_on: true,
     repeat_transaction: 0,
     amount: 0.5,
     slippage: 0.3,
@@ -22,10 +22,13 @@ export const settingsAllMock: Settings = {
       "test_platform",
       "another_test_platform",
     ],
-    mev_protection: 0.1,
+    jito_settings: {
+      turn_on: false,
+      jito_tip: 0.0001,
+    },
   },
   buying_info_sniper: {
-    turn_off: false,
+    turn_on: false,
     repeat_transaction: 0,
     amount: 0.5,
     slippage: 0.3,
@@ -38,7 +41,10 @@ export const settingsAllMock: Settings = {
       "test_platform",
       "another_test_platform",
     ],
-    mev_protection: 0.5,
+    jito_settings: {
+      turn_on: false,
+      jito_tip: 0.0001,
+    },
   },
   last_buy_info: {
     repeat_transaction: 0,
@@ -47,6 +53,10 @@ export const settingsAllMock: Settings = {
     swap_platforms: ["jupiter", "radyum"],
     compute_unit_limit: 1400000,
     compute_unit_price: 5000,
+    jito_settings: {
+      turn_on: false,
+      jito_tip: 0.0001,
+    },
   },
   last_sell_info: {
     repeat_transaction: 0,
@@ -55,6 +65,10 @@ export const settingsAllMock: Settings = {
     swap_platforms: ["jupiter", "radyum"],
     compute_unit_limit: 1400000,
     compute_unit_price: 5000,
+    jito_settings: {
+      turn_on: false,
+      jito_tip: 0.0001,
+    },
   },
 };
 

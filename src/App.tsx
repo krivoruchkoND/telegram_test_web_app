@@ -23,6 +23,7 @@ const App = observer(() => {
   const {
     authStore: { isAuthSucceed },
     profileSettingsStore: { getProfileSettings },
+    settingsStore: { getSettings },
   } = useRootStore();
 
   useInitTelegramWebApp();
@@ -30,6 +31,7 @@ const App = observer(() => {
 
   useEffect(() => {
     if (isAuthSucceed) {
+      getSettings();
       getProfileSettings();
     }
   }, [isAuthSucceed]);

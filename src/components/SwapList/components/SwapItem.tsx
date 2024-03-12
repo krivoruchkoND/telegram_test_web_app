@@ -1,29 +1,34 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
+import clsx from "clsx";
 
 import { type Swap } from "@stores/SwapsStore";
 import middleTrim from "@utils/middleTrim";
-import formatBugNumbers from "@utils/formatBigNumbers";
+import formatNumber from "@utils/formatNumber";
 
 import classes from "../styles.module.css";
-import clsx from "clsx";
 
 type Props = {
   swap: Swap;
 };
 
-const withSign = (amount: number, currency?: string, highlight = false) => {
+const withSign = (
+  amount: number,
+  currency: string = "UNKNOWN",
+  type: "negative" | "positive",
+) => {
   const amountMod = Math.abs(amount);
-  const formattedAmount = formatBugNumbers(amountMod);
+  const formattedAmount = formatNumber(amountMod, 9, 3);
 
   const resultString =
-    amount > 0
-      ? `+${formattedAmount} ${currency}`
-      : `${formattedAmount} ${currency}`;
+    type === "negative"
+      ? `-${formattedAmount} ${currency}`
+      : `+${formattedAmount} ${currency}`;
 
   return (
     <span
       className={clsx(
-        highlight && amount > 0 ? classes.positive : classes.negative,
+        type === "negative" ? classes.negative : classes.positive,
       )}
     >
       {resultString}
@@ -76,88 +81,91 @@ const Avatars: React.FC<{
 };
 
 const SwapItem: React.FC<Props> = ({ swap }) => {
+  const { id, type, fromAddress, toAddress } = swap;
+
   const handleRedirect = () => {
-    if (swap.id) {
-      window?.open(`https://solscan.io/tx/${swap.id}`, "_blank");
+    if (id) {
+      window?.open(`https://solscan.io/tx/${id}`, "_blank");
     }
   };
 
-  if (swap.type === "swapped") {
+  if (type === "swapped") {
     return (
       <div className={classes.swap} onClick={handleRedirect}>
         <div className={classes.flex}>
           <Avatars
             firstImageInfo={{
-              name: swap.fromAddress.name || "Unknown",
-              imgUrl: swap.fromAddress.imageUrl,
+              name: fromAddress.name || "Unknown",
+              imgUrl: fromAddress.imageUrl,
             }}
             secondImageInfo={{
-              name: swap.toAddress.name || "Unknown",
-              imgUrl: swap.toAddress.imageUrl,
+              name: toAddress.name || "Unknown",
+              imgUrl: toAddress.imageUrl,
             }}
           />
           <div className={classes.titleCol}>
             <div className={classes.title}>Swapped</div>
             <div className={classes.description}>
-              {swap.fromAddress.symbol} {"->"} {swap.toAddress.symbol}
+              {fromAddress.symbol || "Unknown"} {"->"}{" "}
+              {toAddress.symbol || "Unknown"}
             </div>
           </div>
         </div>
         <div className={classes.resultCol}>
           <div className={classes.raw}>
-            {withSign(swap.fromAddress.amount, swap.fromAddress.symbol)}
+            {withSign(fromAddress.amount, fromAddress.symbol, "negative")}
           </div>
           <div className={classes.raw}>
-            {withSign(swap.toAddress.amount, swap.toAddress.symbol, true)}
+            {withSign(toAddress.amount, toAddress.symbol, "positive")}
           </div>
         </div>
       </div>
     );
   }
 
-  if (swap.type === "send") {
+  if (type === "send") {
     return (
       <div className={classes.swap} onClick={handleRedirect}>
         <div className={classes.flex}>
           <Avatars
             firstImageInfo={{
-              name: swap.toAddress.symbol || "Unknown",
-              imgUrl: swap.toAddress.imageUrl,
+              name: toAddress.name || "Unknown",
+              imgUrl: toAddress.imageUrl,
             }}
           />
           <div className={classes.titleCol}>
             <div className={classes.title}>Sent</div>
             <div className={classes.description}>
-              To: {middleTrim(swap.toAddress.address, 3, 3)}
+              To: {middleTrim(toAddress.address, 3, 3)}
             </div>
           </div>
         </div>
         <div className={classes.resultCol}>
-          {withSign(swap.toAddress.amount, swap.toAddress.symbol, true)}
+          {withSign(toAddress.amount, toAddress.symbol, "negative")}
         </div>
       </div>
     );
   }
 
-  if (swap.type === "received") {
+  if (type === "received") {
     return (
       <div className={classes.swap} onClick={handleRedirect}>
         <div className={classes.flex}>
           <Avatars
             firstImageInfo={{
-              name: swap.fromAddress.name || "Unknown",
-              imgUrl: swap.fromAddress.imageUrl,
+              name: fromAddress.name || "Unknown",
+              imgUrl: fromAddress.imageUrl,
             }}
           />
           <div className={classes.titleCol}>
             <div className={classes.title}>Received</div>
             <div className={classes.description}>
-              From: {middleTrim(swap.fromAddress.address, 3, 3)}
+              From: {middleTrim(fromAddress.address, 3, 3)}
             </div>
           </div>
         </div>
         <div className={classes.resultCol}>
-          {withSign(swap.fromAddress.amount, swap.fromAddress.symbol, true)}
+          {withSign(fromAddress.amount, fromAddress.symbol, "positive")}
         </div>
       </div>
     );
@@ -166,4 +174,4 @@ const SwapItem: React.FC<Props> = ({ swap }) => {
   return null;
 };
 
-export default SwapItem;
+export default observer(SwapItem);

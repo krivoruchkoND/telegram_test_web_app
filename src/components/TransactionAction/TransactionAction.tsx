@@ -42,8 +42,8 @@ const TransactionAction: React.FC<Props> = ({ action, onChange }) => {
           checked={checked}
           offColor={getCssVariableValue("--rb-background-color-5")}
           onColor={getCssVariableValue("--rb-background-color-5")}
-          offHandleColor={getCssVariableValue("--rb-background-color-6")}
-          onHandleColor={getCssVariableValue("--rb-background-color-6")}
+          offHandleColor={getCssVariableValue("--rb-text-color-8")}
+          onHandleColor={getCssVariableValue("--rb-text-color-8")}
           boxShadow={getCssVariableValue("--rb-box-shadow-1") || undefined}
           uncheckedIcon={<div className={clsx(classes.handle)}>Sell</div>}
           checkedIcon={<div className={clsx(classes.handle)}>Buy</div>}

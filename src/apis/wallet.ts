@@ -23,21 +23,21 @@ export type Token = {
 };
 
 export const getTokens = async (params: { page: number; size: number }) => {
-  const response = await baseInstance.get<{
+  const { data } = await baseInstance.get<{
     total_value: number;
     tokens: Token[];
   }>(`/wallet/tokens`, {
     params,
   });
-  return camelcaseKeys(response.data, { deep: true });
+  return camelcaseKeys(data, { deep: true });
 
   // const responseMock = await buildMockResponse(tokensMock, "/wallet/tokens");
   // return camelcaseKeys(responseMock.data, { deep: true });
 };
 
 export const getToken = async (id: string) => {
-  const response = await baseInstance.get<Token>(`/wallet/token/${id}`);
-  return camelcaseKeys(response.data, { deep: true });
+  const { data } = await baseInstance.get<Token>(`/wallet/token/${id}`);
+  return camelcaseKeys(data, { deep: true });
 
   // const responseMock = await buildMockResponse(
   //   tokensMock.tokens[0],
@@ -47,8 +47,8 @@ export const getToken = async (id: string) => {
 };
 
 export const getBalance = async () => {
-  const response = await baseInstance.get<number>(`/wallet/balance/SOL`);
-  return response.data;
+  const { data } = await baseInstance.get<number>(`/wallet/balance/SOL`);
+  return data;
 
   // const responseMock = await buildMockResponse(
   //   balanceMock,

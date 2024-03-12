@@ -3,6 +3,8 @@ import { observer } from "mobx-react-lite";
 import useRootStore from "@hooks/useRootStore";
 import useCopyToClipboard from "@hooks/useCopyToClipboard";
 import middleTrim from "@utils/middleTrim";
+import Spinner from "@components/Spinner";
+import formatNumber from "@utils/formatNumber";
 import copyIcon from "@assets/Copy.svg";
 import coinIcon from "@assets/Coin.svg";
 import referIcon from "@assets/ReferArrow.svg";
@@ -12,7 +14,7 @@ import classes from "./styles.module.css";
 const AccountBalance = () => {
   const {
     profileSettingsStore: { publicAddress, referral },
-    walletStore: { totalValue },
+    walletStore: { totalValue, isLoading },
   } = useRootStore();
 
   const [, copy] = useCopyToClipboard();
@@ -31,6 +33,14 @@ const AccountBalance = () => {
       });
   };
 
+  if (isLoading.getTokens) {
+    return (
+      <section className={classes.account}>
+        <Spinner height={120} width={120} />
+      </section>
+    );
+  }
+
   return (
     <section className={classes.account}>
       {publicAddress && (
@@ -46,7 +56,7 @@ const AccountBalance = () => {
       )}
 
       <div className={classes.balance}>
-        {totalValue?.toFixed(5)}
+        {totalValue && formatNumber(totalValue, 9, 3)}
         <div className={classes.icon}>
           <img src={coinIcon} alt="sol_coin" />
         </div>

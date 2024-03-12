@@ -18,6 +18,12 @@ class WalletStore {
   currentTransaction: Transaction | null = null;
   balance: number | null = null;
 
+  isLoading = {
+    getTokens: false,
+    getToken: false,
+    getBalance: false,
+  };
+
   constructor(rootStore: RootStore) {
     makeAutoObservable(this);
 
@@ -26,6 +32,7 @@ class WalletStore {
 
   getTokens = async () => {
     try {
+      this.isLoading.getTokens = true;
       const { totalValue, tokens } = await getTokens({
         page: this.page,
         size: this.size,
@@ -37,11 +44,14 @@ class WalletStore {
       });
     } catch (error) {
       console.error("🚨 WalletStore getTokens", error);
+    } finally {
+      this.isLoading.getTokens = false;
     }
   };
 
   getToken = async (id: string) => {
     try {
+      this.isLoading.getToken = true;
       const token = await getToken(id);
 
       runInAction(() => {
@@ -49,11 +59,14 @@ class WalletStore {
       });
     } catch (error) {
       console.error("🚨 WalletStore getToken", error);
+    } finally {
+      this.isLoading.getToken = false;
     }
   };
 
   getBalance = async () => {
     try {
+      this.isLoading.getBalance = true;
       const balance = await getBalance();
 
       runInAction(() => {
@@ -61,7 +74,13 @@ class WalletStore {
       });
     } catch (error) {
       console.error("🚨 WalletStore getBalance", error);
+    } finally {
+      this.isLoading.getBalance = false;
     }
+  };
+
+  resetCurrentTransaction = () => {
+    this.currentTransaction = null;
   };
 }
 

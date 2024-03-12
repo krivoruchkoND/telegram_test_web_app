@@ -5,8 +5,8 @@ import { getSettings } from "@apis/settings";
 
 type SettingValues = Awaited<ReturnType<typeof getSettings>>["buyingInfoAuto"];
 
-const computeLimitAutoValue = "1400000";
-const computePriceAutoValue = "0.000005";
+const computeLimitAutoValue = 1400000;
+const computePriceAutoValue = 0.000005;
 
 export type SettingKeys =
   | "slippage"
@@ -47,6 +47,10 @@ class GenericSettingsStore {
 
   setAllowAutoComputeLimit = (value: boolean) => {
     this.allowAutoComputeLimit = value;
+
+    if (value) {
+      this.computeLimit = computeLimitAutoValue;
+    }
   };
 
   setComputePrice = (value: number) => {
@@ -55,6 +59,10 @@ class GenericSettingsStore {
 
   setAllowAutoComputePrice = (value: boolean) => {
     this.allowAutoComputePrice = value;
+
+    if (value) {
+      this.computePrice = computePriceAutoValue;
+    }
   };
 
   setMevProtection = (value: number) => {
@@ -98,22 +106,20 @@ class GenericSettingsStore {
       repeatTransaction,
       fromToken,
       swapPlatforms,
-      mevProtection,
+      jitoSettings,
     } = values || {};
 
-    this.slippage = slippage || null;
-    this.amount = amount || null;
-    this.mevProtection = mevProtection || null;
-    this.computeLimit = computeUnitLimit || null;
-    this.computePrice = computeUnitPrice || null;
-    this.retryValue = repeatTransaction || null;
-    this.fromToken = fromToken || null;
+    this.slippage = slippage ?? null;
+    this.amount = amount ?? null;
+    this.mevProtection = jitoSettings?.jitoTip ?? null;
+    this.computeLimit = computeUnitLimit ?? null;
+    this.computePrice = computeUnitPrice ?? null;
+    this.retryValue = repeatTransaction ?? null;
+    this.fromToken = fromToken ?? null;
 
-    this.allowAutoComputeLimit =
-      computeUnitLimit === Number(computeLimitAutoValue);
-    this.allowAutoComputePrice =
-      computeUnitPrice === Number(computePriceAutoValue);
-    this.isMevProtectionEnabled = mevProtection !== 0;
+    this.allowAutoComputeLimit = computeUnitLimit === computeLimitAutoValue;
+    this.allowAutoComputePrice = computeUnitPrice === computePriceAutoValue;
+    this.isMevProtectionEnabled = jitoSettings?.turnOn || false;
 
     this.swapPlatforms = swapPlatforms.map((title) => ({
       title,
