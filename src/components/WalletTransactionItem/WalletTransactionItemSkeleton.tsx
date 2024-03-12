@@ -1,11 +1,23 @@
+import React from "react";
+
 import Skeleton from "@components/Skeleton";
 
 import classes from "./styles.module.css";
 import clsx from "clsx";
 
-const WalletTransactionItemSkeleton = () => {
+type Props = {
+  removeOffset?: boolean;
+};
+
+const WalletTransactionItemSkeleton: React.FC<Props> = ({ removeOffset }) => {
   return (
-    <div className={clsx(classes.transaction, classes.skeleton)}>
+    <div
+      className={clsx(
+        classes.transaction,
+        classes.skeleton,
+        removeOffset && classes.removeOffset,
+      )}
+    >
       <div className={classes.title}>
         <Skeleton width="50%" height="100%" />
         <Skeleton width="35%" height="100%" />

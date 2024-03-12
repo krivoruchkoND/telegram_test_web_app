@@ -8,6 +8,8 @@ import { Transaction } from "@stores/WalletStore";
 
 import classes from "./styles.module.css";
 
+const dash = "—";
+
 type PNLProps = { pnl: Transaction["pnl"] };
 
 const PNL: React.FC<PNLProps> = ({ pnl }) => {
@@ -15,7 +17,7 @@ const PNL: React.FC<PNLProps> = ({ pnl }) => {
     return (
       <div className={clsx(classes.column, classes.alignCenter)}>
         <div className={classes.title}>Trade PNL</div>
-        <span>Unknown</span>
+        <span>{dash}</span>
       </div>
     );
   }
@@ -75,7 +77,9 @@ const WalletTransactionItem: React.FC<Props> = ({
         </div>
         <span className={classes.name}>{name}</span>
       </div>
-      <span className={classes.cap}>${formatNumber(marketCap, 3, 2)}</span>
+      <span className={classes.cap}>
+        {marketCap !== null ? `$${formatNumber(marketCap, 3, 2)}` : dash}
+      </span>
     </>
   );
 
@@ -85,13 +89,15 @@ const WalletTransactionItem: React.FC<Props> = ({
       <div className={classes.info}>
         <div className={classes.column}>
           <div className={classes.title}>Value</div>
-          <span>{formatNumber(value ?? 0, 3, 2)} SOL</span>
+          <span>
+            {value !== null ? `${formatNumber(value, 3, 2)} SOL` : dash}
+          </span>
         </div>
         <PNL pnl={pnl} />
         <div className={clsx(classes.column, classes.alignRight)}>
           <div className={classes.title}>Amount</div>
           <span>
-            {amount ? `${formatNumber(amount, 3, 1)} ${symbol}` : "Unknown"}
+            {amount !== null ? `${formatNumber(amount, 3, 1)} ${symbol}` : dash}
           </span>
         </div>
       </div>

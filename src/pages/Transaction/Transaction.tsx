@@ -5,7 +5,9 @@ import { useLocation, useParams } from "wouter";
 import { createBuyTransaction, createSellTransaction } from "@apis/swaps";
 import useBackButton from "@hooks/useBackButton";
 import useRootStore from "@hooks/useRootStore";
-import WalletTransactionItem from "@components/WalletTransactionItem";
+import WalletTransactionItem, {
+  Skeleton,
+} from "@components/WalletTransactionItem";
 import TransactionAction from "@components/TransactionAction";
 import FormItem from "@components/FormItem";
 import TransactionButton from "@components/TransactionButton";
@@ -27,6 +29,7 @@ const Transaction = () => {
       getToken,
       getBalance,
       balance,
+      isLoading,
     },
     authStore: { isAuthSucceed },
     settingsStore: { lastSellSettings, lastBuySettings },
@@ -90,6 +93,7 @@ const Transaction = () => {
 
   return (
     <section className={classes.transaction}>
+      {isLoading.getToken && <Skeleton removeOffset />}
       {currentTransaction && (
         <WalletTransactionItem transaction={currentTransaction} isOutOfList />
       )}
