@@ -9,6 +9,7 @@ import { Transaction } from "@stores/WalletStore";
 import classes from "./styles.module.css";
 
 const dash = "—";
+const solanaId = "So11111111111111111111111111111111111111112";
 
 type PNLProps = { pnl: Transaction["pnl"] };
 
@@ -23,7 +24,7 @@ const PNL: React.FC<PNLProps> = ({ pnl }) => {
   }
 
   const isNegative = pnl.value < 0;
-  const prefix = pnl.value > 0 ? "" : "+";
+  const prefix = isNegative ? "" : "+";
 
   return (
     <div className={clsx(classes.column, classes.alignCenter)}>
@@ -54,11 +55,11 @@ const WalletTransactionItem: React.FC<Props> = ({
   isOutOfList,
 }) => {
   const [, setLocation] = useLocation();
-  const { value, marketCap, pnl, amount, metadata, id } = transaction;
+  const { id, value, marketCap, pnl, amount, metadata } = transaction;
   const { name, symbol, imageUrl } = metadata;
 
   const handleRedirect = () => {
-    if (shouldRedirectOnClick) {
+    if (id !== solanaId && shouldRedirectOnClick) {
       setLocation(`/transaction/${id}`);
     }
   };

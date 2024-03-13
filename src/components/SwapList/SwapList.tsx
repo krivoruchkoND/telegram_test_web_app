@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 
 import useRootStore from "@hooks/useRootStore";
+import RockWithMessage from "@components/RockWithMessage";
 
 import SwapItemsList from "./components/SwapItemsList";
 import SwapItemsListSkeleton from "./components/SwapItemsListSkeleton";
@@ -11,13 +12,19 @@ const SwapList = () => {
     swapsStore: { swaps, isLoading },
   } = useRootStore();
 
+  const swapsByData = Object.entries(swaps);
+
+  if (!isLoading.getSwaps && swapsByData.length === 0) {
+    return <RockWithMessage message="No transactions" />;
+  }
+
   return (
     <ul className={classes.swaps}>
       {isLoading.getSwaps
         ? new Array(5)
             .fill(null)
             .map((_, i) => <SwapItemsListSkeleton key={i} />)
-        : Object.entries(swaps).map(([date, swaps]) => (
+        : swapsByData.map(([date, swaps]) => (
             <SwapItemsList
               key={date}
               title={Intl.DateTimeFormat("en-US", {

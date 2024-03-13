@@ -36,7 +36,9 @@ const AccountBalance = () => {
   if (isLoading.getTokens) {
     return (
       <section className={classes.account}>
-        <Spinner height={120} width={120} />
+        <div className={classes.preloader}>
+          <Spinner height={58} width={58} borderWidth={5} />
+        </div>
       </section>
     );
   }

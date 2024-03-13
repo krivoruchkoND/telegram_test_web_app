@@ -33,7 +33,7 @@ const Navigation = () => {
         </div>
         <NavigationItem
           href="/swaps"
-          title="Swaps"
+          title="Transactions"
           icon={arrowsIcon}
           activeIcon={arrowsActiveIcon}
         />

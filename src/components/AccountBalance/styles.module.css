@@ -92,4 +92,12 @@
       }
     }
   }
+
+  > .preloader { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    padding-bottom: 22px;
+  }
 }

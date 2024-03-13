@@ -126,7 +126,7 @@ const Transaction = () => {
       />
 
       <TransactionButton type={"button"} onClick={handleClick}>
-        {`${actionPascal} ROCK`}
+        {`${actionPascal} ${currentTransaction?.metadata.symbol || ""}`}
       </TransactionButton>
 
       <PageTitle title={"Swap settings"} />
