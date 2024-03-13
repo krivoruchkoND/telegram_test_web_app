@@ -39,3 +39,7 @@
 .toast {
   background: transparent !important;
 }
+
+.toastContainer {
+  padding: 12px 16px !important;
+}

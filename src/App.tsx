@@ -57,6 +57,7 @@ const App = observer(() => {
       <ToastContainer
         position={"bottom-center"}
         toastClassName={classes.toast}
+        className={classes.toastContainer}
         closeButton={false}
         autoClose={2000}
         hideProgressBar
