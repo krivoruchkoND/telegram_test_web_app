@@ -38,6 +38,20 @@
           background: var(--rb-gradient-color-2);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
+
+          > .status {
+            .error {
+              color: var(--rb-text-color-5);
+            }
+
+            .pending {
+
+            }
+
+            .success {
+              color: var(--rb-text-color-4);
+            }
+          }
         }
 
         > .description {
