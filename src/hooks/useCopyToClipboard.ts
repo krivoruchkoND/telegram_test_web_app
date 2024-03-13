@@ -30,6 +30,7 @@ function useCopyToClipboard(): [CopiedValue, CopyFn] {
   const copy: CopyFn = useCallback(async (text) => {
     if (!navigator?.clipboard) {
       console.warn("Clipboard not supported");
+      alert(`Clipboard not supported. Copy value manually: ${text}`);
       return false;
     }
 
@@ -40,6 +41,7 @@ function useCopyToClipboard(): [CopiedValue, CopyFn] {
       return true;
     } catch (error) {
       console.warn("Copy failed", error);
+      alert(`Copy failed. Copy value manually: ${text}`);
       setCopiedText(null);
       return false;
     }
