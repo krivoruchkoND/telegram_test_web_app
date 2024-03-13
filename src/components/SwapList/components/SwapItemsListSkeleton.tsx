@@ -10,7 +10,7 @@ const SwapItemsListSkeleton = () => {
         <div className={classes.date}>
           <Skeleton height={17} width={100} />
         </div>
-        {new Array(3).fill(null).map((_, i) => (
+        {new Array(5).fill(null).map((_, i) => (
           <SwapItemSkeleton key={i} />
         ))}
       </div>

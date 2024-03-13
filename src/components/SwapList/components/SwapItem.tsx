@@ -80,8 +80,29 @@ const Avatars: React.FC<{
   );
 };
 
+const Status: React.FC<{ status: Swap["status"] }> = ({ status }) => {
+  if (!status) {
+    return null;
+  }
+
+  const className = clsx(
+    classes.status,
+    status === "error" && classes.error,
+    status === "pending" && classes.pending,
+    status === "successful" && classes.success,
+  );
+
+  const label = {
+    error: "Error",
+    pending: "Pending",
+    successful: "Success",
+  }[status];
+
+  return <span className={className}>{label}</span>;
+};
+
 const SwapItem: React.FC<Props> = ({ swap }) => {
-  const { id, type, fromAddress, toAddress } = swap;
+  const { id, type, fromAddress, toAddress, status } = swap;
 
   const handleRedirect = () => {
     if (id) {
@@ -104,7 +125,9 @@ const SwapItem: React.FC<Props> = ({ swap }) => {
             }}
           />
           <div className={classes.titleCol}>
-            <div className={classes.title}>Swapped</div>
+            <div className={classes.title}>
+              Swapped <Status status={status} />
+            </div>
             <div className={classes.description}>
               {fromAddress.symbol || "Unknown"} {"->"}{" "}
               {toAddress.symbol || "Unknown"}
@@ -134,7 +157,9 @@ const SwapItem: React.FC<Props> = ({ swap }) => {
             }}
           />
           <div className={classes.titleCol}>
-            <div className={classes.title}>Sent</div>
+            <div className={classes.title}>
+              Sent <Status status={status} />
+            </div>
             <div className={classes.description}>
               To: {middleTrim(toAddress.address, 3, 3)}
             </div>
@@ -158,7 +183,9 @@ const SwapItem: React.FC<Props> = ({ swap }) => {
             }}
           />
           <div className={classes.titleCol}>
-            <div className={classes.title}>Received</div>
+            <div className={classes.title}>
+              Received <Status status={status} />
+            </div>
             <div className={classes.description}>
               From: {middleTrim(fromAddress.address, 3, 3)}
             </div>

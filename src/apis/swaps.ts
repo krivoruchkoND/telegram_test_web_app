@@ -20,6 +20,7 @@ export type Swap = {
   datetime: string;
   from_address: Address;
   to_address: Address;
+  status?: "pending" | "error" | "successful";
 };
 
 export const getSwaps = async (params: { page: number; size: number }) => {

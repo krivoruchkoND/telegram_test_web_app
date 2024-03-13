@@ -19,13 +19,13 @@ const WalletTransactionItemSkeleton: React.FC<Props> = ({ removeOffset }) => {
       )}
     >
       <div className={classes.title}>
-        <Skeleton width="50%" height="100%" />
-        <Skeleton width="35%" height="100%" />
+        <Skeleton height="100%" />
+        <Skeleton height="100%" />
       </div>
       <div className={classes.info}>
-        <Skeleton width="30%" height="100%" />
-        <Skeleton width="40%" height="100%" />
-        <Skeleton width="25%" height="100%" />
+        <Skeleton height="100%" />
+        <Skeleton height="100%" />
+        <Skeleton height="100%" />
       </div>
     </div>
   );
