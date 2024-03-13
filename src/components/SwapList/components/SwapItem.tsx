@@ -184,8 +184,7 @@ const SwapItem: React.FC<Props> = ({ swap }) => {
           />
           <div className={classes.titleCol}>
             <div className={classes.title}>
-              Received
-              <Status status={status} />
+              Received <Status status={status} />
             </div>
             <div className={classes.description}>
               From: {middleTrim(fromAddress.address, 3, 3)}

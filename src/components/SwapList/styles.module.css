@@ -40,16 +40,22 @@
           -webkit-text-fill-color: transparent;
 
           > .status {
-            .error {
+            background: initial;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+
+            &.error {
               color: var(--rb-text-color-5);
             }
 
-            .pending {
-
+            &.pending {
+              color: var(--rb-text-color-3);
             }
 
-            .success {
+            &.success {
               color: var(--rb-text-color-4);
+
+              
             }
           }
         }
