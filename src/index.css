@@ -18,25 +18,26 @@
   --tg-viewport-stable-height: 100vh; */
 
   --rb-gradient-color-1: linear-gradient(180deg, #828282 0%, #454545 100%);
-  --rb-gradient-color-2: linear-gradient(180deg, #F0F0F0 0%, #949494 100%);
-  --rb-gradient-color-3: linear-gradient(180deg, #1B1B1B 0%, #111111 100%);
+  --rb-gradient-color-2: linear-gradient(180deg, #f0f0f0 0%, #949494 100%);
+  --rb-gradient-color-3: linear-gradient(180deg, #1b1b1b 0%, #111111 100%);
   --rb-background-color-1: #191919;
   --rb-background-color-2: #000;
   --rb-background-color-3: #131313;
-  --rb-background-color-4: #6BDF7E;
-  --rb-background-color-5: #1C1C1F;
-  --rb-background-color-6: #2B2B2B;
+  --rb-background-color-4: #6bdf7e;
+  --rb-background-color-5: #1c1c1f;
+  --rb-background-color-6: #2b2b2b;
   --rb-background-color-7: #f9c4c4;
-  --rb-text-color-1: #FFF;
+  --rb-background-color-8: #d6f5e0;
+  --rb-text-color-1: #fff;
   --rb-text-color-2: #585858;
   --rb-text-color-3: #808088;
-  --rb-text-color-4: #7AFF90;
-  --rb-text-color-5: #FF7A7A;
-  --rb-text-color-6: #C4C4C4;
+  --rb-text-color-4: #7aff90;
+  --rb-text-color-5: #ff7a7a;
+  --rb-text-color-6: #c4c4c4;
   --rb-text-color-7: #616161;
-  --rb-text-color-8: #25A750;
+  --rb-text-color-8: #25a750;
   --rb-text-color-9: #343434;
-  --rb-box-shadow-1: 0px 3px 1px 0px #0000000F, 0px 3px 8px 0px #00000026;
+  --rb-box-shadow-1: 0px 3px 1px 0px #0000000f, 0px 3px 8px 0px #00000026;
 }
 
 html {
@@ -55,9 +56,9 @@ body {
 }
 
 pre {
-  white-space: pre-wrap;       /* Since CSS 2.1 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  white-space: pre-wrap; /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }

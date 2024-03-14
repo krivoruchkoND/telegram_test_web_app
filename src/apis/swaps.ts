@@ -3,8 +3,8 @@ import snakecaseKeys from "snakecase-keys";
 
 // import { swapsMock } from "@mocks/swaps";
 // import buildMockResponse from "@/utils/buildMockResponse";
-
-import baseInstance from "./baseInstance";
+import baseInstance, { BackendError } from "./baseInstance";
+import { toast } from "@/utils/toast";
 
 type Address = {
   address: string;
@@ -46,14 +46,80 @@ type CreateTransactionDto = {
   swap_platforms: string[];
 };
 
+export type CreateTransactionResponse = {
+  signature: string;
+  url_scanner: string;
+  create_at: string;
+};
+
+export type TransactionDto = {
+  signature: string;
+  urlScanner: string;
+  createAt: Date;
+};
+
 export const createSellTransaction = async (
   dto: CamelCaseKeys<CreateTransactionDto, true>,
-) => {
-  await baseInstance.post("/swaps/sell/input", snakecaseKeys(dto));
+): Promise<TransactionDto> => {
+  try {
+    const { data } = await baseInstance.post<CreateTransactionResponse>(
+      "/swaps/sell/input",
+      snakecaseKeys(dto),
+    );
+
+    toast({
+      title: "Transaction send",
+      message:
+        "Click to see transaction.\n" +
+        "Your transaction sent in blockchain, also you can check status in transactions page.",
+      type: "success",
+      link: `/transactions/${data.signature}`,
+    });
+
+    return {
+      signature: data.signature,
+      urlScanner: data.url_scanner,
+      createAt: new Date(data.create_at),
+    };
+  } catch (error) {
+    const response = (error as Error & { response?: BackendError })?.response;
+    const title = response?.detail.name;
+    const message = response?.detail.message ?? (error as Error).message;
+    toast({ title, message, type: "error" });
+
+    throw error;
+  }
 };
 
 export const createBuyTransaction = async (
   dto: CamelCaseKeys<CreateTransactionDto, true>,
-) => {
-  await baseInstance.post("/swaps/buy/input", snakecaseKeys(dto));
+): Promise<TransactionDto> => {
+  try {
+    const { data } = await baseInstance.post<CreateTransactionResponse>(
+      "/swaps/buy/input",
+      snakecaseKeys(dto),
+    );
+
+    toast({
+      title: "Transaction send",
+      message:
+        "Click to see transaction.\n" +
+        "Your transaction sent in blockchain, also you can check status in transactions page.",
+      type: "success",
+      link: `/transactions/${data.signature}`,
+    });
+
+    return {
+      signature: data.signature,
+      urlScanner: data.url_scanner,
+      createAt: new Date(data.create_at),
+    };
+  } catch (error) {
+    const response = (error as Error & { response?: BackendError })?.response;
+    const title = response?.detail.name;
+    const message = response?.detail.message ?? (error as Error).message;
+    toast({ title, message, type: "error" });
+
+    throw error;
+  }
 };

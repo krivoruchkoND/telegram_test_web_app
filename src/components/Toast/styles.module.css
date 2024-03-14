@@ -1,14 +1,15 @@
-.toastError {
+.toastCard {
   display: flex;
   flex-direction: column;
   gap: 8px;
 
+  border: none;
+  outline: none;
+
   padding: 20px;
 
-  background: var(--rb-background-color-7);
   color: var(--rb-text-color-9);
   border-radius: 20px;
-
 
   > .toastTitle {
     margin: 0;
@@ -23,4 +24,12 @@
     font-size: 14px;
     line-height: 17px;
   }
+}
+
+.error {
+  background: var(--rb-background-color-7);
+}
+
+.success {
+  background: var(--rb-background-color-8);
 }
