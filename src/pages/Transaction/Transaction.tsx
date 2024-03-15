@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+/* eslint-disable sonarjs/cognitive-complexity */
+import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import { useLocation, useParams } from "wouter";
 
 import { createBuyTransaction, createSellTransaction } from "@apis/swaps";
 import useBackButton from "@hooks/useBackButton";
 import useRootStore from "@hooks/useRootStore";
+import useScrollIntoView from "@hooks/useScrollIntoView";
 import WalletTransactionItem, {
   Skeleton,
 } from "@components/WalletTransactionItem";
@@ -17,10 +19,59 @@ import Divider from "@components/Divider";
 
 import classes from "./styles.module.css";
 
+type TotalProps = {
+  tokenValue: number | null;
+  tokenAmount: number | null;
+  currentAmount: number | null;
+  symbol: string;
+  action: "buy" | "sell";
+};
+
+const Total: React.FC<TotalProps> = ({
+  tokenValue,
+  tokenAmount,
+  currentAmount,
+  symbol,
+  action,
+}) => {
+  if (tokenValue === null || tokenAmount === null || currentAmount === null) {
+    return null;
+  }
+
+  const pricePerToken = tokenValue / tokenAmount;
+  let total = 0;
+  try {
+    total =
+      action === "buy"
+        ? currentAmount / pricePerToken
+        : currentAmount * pricePerToken;
+  } catch (error) {
+    console.log("Error in total calculation", error, {
+      pricePerToken,
+      tokenValue,
+      tokenAmount,
+      currentAmount,
+    });
+    return null;
+  }
+
+  return (
+    <>
+      <Divider />
+      <div className={classes.total}>
+        <div>Total ({symbol})</div>
+        <div>{total}</div>
+      </div>
+    </>
+  );
+};
+
 const Transaction = () => {
+  const ref = useRef<HTMLDivElement>(null);
   const { id } = useParams<{ id: string }>();
   const [, setLocation] = useLocation();
   useBackButton(() => setLocation("/"));
+  useScrollIntoView(ref);
 
   const {
     walletStore: {
@@ -37,12 +88,16 @@ const Transaction = () => {
 
   const [action, setAction] = useState<"buy" | "sell">("buy");
   const actionPascal = `${action[0].toUpperCase()}${action.slice(1, action.length)}`;
+  const isBuying = action === "buy";
 
-  const currentBalance =
-    action === "buy" ? balance : currentTransaction?.amount ?? 0;
-  const currentSettings = action === "buy" ? lastBuySettings : lastSellSettings;
-  const actionFunction =
-    action === "buy" ? createBuyTransaction : createSellTransaction;
+  const currentBalance = (isBuying ? balance : currentTransaction?.amount) ?? 0;
+  const currentSettings = isBuying ? lastBuySettings : lastSellSettings;
+  const currentSymbol = isBuying
+    ? "SOL"
+    : currentTransaction?.metadata.symbol || "";
+  const actionFunction = isBuying
+    ? createBuyTransaction
+    : createSellTransaction;
 
   const {
     amount,
@@ -62,8 +117,6 @@ const Transaction = () => {
     allowAutoComputePrice,
     setAllowAutoComputePrice,
     swapPlatforms,
-    // retryValue,
-    // setRetryValue,
   } = currentSettings;
 
   const handleClick = () =>
@@ -93,6 +146,7 @@ const Transaction = () => {
 
   return (
     <section className={classes.transaction}>
+      <div ref={ref} />
       {isLoading.getToken && <Skeleton removeOffset />}
       {currentTransaction && (
         <WalletTransactionItem transaction={currentTransaction} isOutOfList />
@@ -104,13 +158,13 @@ const Transaction = () => {
         id="amount"
         value={amount ?? 0}
         onChange={setAmount}
-        label="Amount"
-        description={`Balance: ${currentBalance ?? 0}`}
+        label={`Amount (${currentSymbol})`}
+        description={`Balance: ${currentBalance} ${currentSymbol}`}
         inputMode="decimal"
         placeholder="Enter value"
         masks={["empty", "float"]}
         sliderProps={{
-          max: currentBalance ?? 0,
+          max: currentBalance,
         }}
       />
 
@@ -123,6 +177,14 @@ const Transaction = () => {
         inputMode="decimal"
         placeholder="Enter value"
         masks={["empty", "percent"]}
+      />
+
+      <Total
+        tokenValue={currentTransaction?.value || null}
+        tokenAmount={currentTransaction?.amount || null}
+        currentAmount={amount}
+        symbol={isBuying ? currentTransaction?.metadata.symbol || "" : "SOL"}
+        action={action}
       />
 
       <TransactionButton type={"button"} onClick={handleClick}>
@@ -183,17 +245,6 @@ const Transaction = () => {
           onChange: setAllowAutoComputePrice,
         }}
       />
-
-      {/* <FormItem
-        id="retryValue"
-        value={retryValue ?? 0}
-        onChange={setRetryValue}
-        label="Retry value"
-        description="Number of retry transaction in node if transaction fail."
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["float"]}
-      /> */}
     </section>
   );
 };
