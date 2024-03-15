@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import ToastCard from "@components/Toast";
+import classes from "@components/Toast/styles.module.css";
 
 export const showNotification = (
   props: React.ComponentProps<typeof ToastCard>,
@@ -12,12 +13,13 @@ export const showNotification = (
 export const NotificationContainer = () => {
   return (
     <ToastContainer
-      position="top-right"
-      autoClose={5000}
+      position={"bottom-center"}
+      toastClassName={classes.toast}
+      className={classes.toastContainer}
+      closeButton={false}
+      autoClose={3000}
       hideProgressBar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
+      newestOnTop
       pauseOnFocusLoss
       draggable
       pauseOnHover

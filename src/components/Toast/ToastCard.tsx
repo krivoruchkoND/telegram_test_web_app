@@ -22,6 +22,8 @@ const ToastCard: FC<Props> = ({
     }
   };
 
+  const prefix = type === "error" ? "Error" : "Success";
+
   return (
     <button
       onClick={handleRedirect}
@@ -32,7 +34,7 @@ const ToastCard: FC<Props> = ({
         type === "success" && classes.success,
       )}
     >
-      <h6 className={classes.toastTitle}>{`ERROR: ${title}`}</h6>
+      <h6 className={classes.toastTitle}>{`${prefix}: ${title}`}</h6>
       {message && <p className={classes.toastMessage}>{message}</p>}
     </button>
   );
