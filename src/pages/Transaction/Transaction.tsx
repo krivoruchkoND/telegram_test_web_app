@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import { useLocation, useParams } from "wouter";
 
-import { createBuyTransaction, createSellTransaction } from "@apis/swaps";
 import useBackButton from "@hooks/useBackButton";
 import useRootStore from "@hooks/useRootStore";
 import useScrollIntoView from "@hooks/useScrollIntoView";
@@ -74,6 +73,7 @@ const Transaction = () => {
   useScrollIntoView(ref);
 
   const {
+    swapsStore: { createTransaction },
     walletStore: {
       currentTransaction,
       resetCurrentTransaction,
@@ -95,9 +95,6 @@ const Transaction = () => {
   const currentSymbol = isBuying
     ? "SOL"
     : currentTransaction?.metadata.symbol || "";
-  const actionFunction = isBuying
-    ? createBuyTransaction
-    : createSellTransaction;
 
   const {
     amount,
@@ -120,7 +117,7 @@ const Transaction = () => {
   } = currentSettings;
 
   const handleClick = () =>
-    actionFunction({
+    createTransaction(action, {
       tokenAddress: currentTransaction?.id ?? "",
       amount: amount ?? 0,
       slippage: slippage ?? 0,

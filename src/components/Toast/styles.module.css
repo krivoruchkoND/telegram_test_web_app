@@ -1,0 +1,44 @@
+.toastCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  padding: 20px;
+
+  color: var(--rb-text-color-9);
+  border-radius: 20px;
+
+  > .toastTitle {
+    margin: 0;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  > .toastMessage {
+    margin: 0;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+.error {
+  background: var(--rb-background-color-7);
+}
+
+.success {
+  background: var(--rb-background-color-8);
+}
+
+.toast {
+  background: transparent !important;
+}
+
+.toastContainer {
+  padding: 12px 16px !important;
+}

@@ -3,7 +3,6 @@ import snakecaseKeys from "snakecase-keys";
 
 // import { swapsMock } from "@mocks/swaps";
 // import buildMockResponse from "@/utils/buildMockResponse";
-
 import baseInstance from "./baseInstance";
 
 type Address = {
@@ -46,14 +45,20 @@ type CreateTransactionDto = {
   swap_platforms: string[];
 };
 
-export const createSellTransaction = async (
-  dto: CamelCaseKeys<CreateTransactionDto, true>,
-) => {
-  await baseInstance.post("/swaps/sell/input", snakecaseKeys(dto));
+export type CreateTransactionResponse = {
+  signature: string;
+  url_scanner: string;
+  create_at: string;
 };
 
-export const createBuyTransaction = async (
-  dto: CamelCaseKeys<CreateTransactionDto, true>,
+export const createTransaction = async (
+  type: "sell" | "buy",
+  transaction: CamelCaseKeys<CreateTransactionDto, true>,
 ) => {
-  await baseInstance.post("/swaps/buy/input", snakecaseKeys(dto));
+  const { data } = await baseInstance.post<CreateTransactionResponse>(
+    `/swaps/${type}/input`,
+    snakecaseKeys(transaction),
+  );
+
+  return camelcaseKeys(data, { deep: true });
 };

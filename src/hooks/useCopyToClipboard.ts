@@ -1,6 +1,8 @@
 // src: https://usehooks-ts.com/react-hook/use-copy-to-clipboard
 import { useCallback, useState } from "react";
 
+import { showNotification } from "@utils/notificationManager";
+
 type CopiedValue = string | null;
 type CopyFn = (text: string) => Promise<boolean>; // Return success
 
@@ -38,12 +40,16 @@ function useCopyToClipboard(): [CopiedValue, CopyFn] {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedText(text);
+      showNotification({
+        type: "success",
+        title: "Copied to clipboard",
+      });
       return true;
     } catch (error) {
       console.warn("Copy failed", error);
       alert(`Copy failed. Copy value manually: ${text}`);
       setCopiedText(null);
-      return false;
+      throw error;
     }
   }, []);
 

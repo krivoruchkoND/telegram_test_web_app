@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { Switch, Router, Route } from "wouter";
+import { Route, Router, Switch } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
 
 import { RootStoreProvider } from "@contexts/RootStoreContext";
@@ -12,6 +12,7 @@ import Settings from "@pages/Settings";
 import Swaps from "@pages/Swaps";
 import Trades from "@pages/Trades";
 import Splash from "@pages/Splash";
+import { NotificationContainer } from "./utils/notificationManager";
 
 import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
@@ -34,21 +35,25 @@ const App = observer(() => {
   }, [isAuthSucceed]);
 
   return (
-    <main className={classes.container}>
-      <div className={classes.header}>
-        <Navigation />
-      </div>
-      <div className={classes.content}>
-        <Switch>
-          <Route path="/" component={Splash} />
-          <Route path="/wallet" component={Wallet} nest />
-          <Route path="/settings" component={Settings} nest />
-          <Route path="/swaps" component={Swaps} />
-          <Route path="/trades" component={Trades} />
-          <Route>Unknown Route</Route>
-        </Switch>
-      </div>
-    </main>
+    <>
+      <main className={classes.container}>
+        <div className={classes.header}>
+          <Navigation />
+        </div>
+        <div className={classes.content}>
+          <Switch>
+            <Route path="/" component={Splash} />
+            <Route path="/wallet" component={Wallet} nest />
+            <Route path="/settings" component={Settings} nest />
+            <Route path="/swaps" component={Swaps} />
+            <Route path="/trades" component={Trades} />
+            <Route>Unknown Route</Route>
+          </Switch>
+        </div>
+      </main>
+
+      <NotificationContainer />
+    </>
   );
 });
 

@@ -1,5 +1,12 @@
 import axios from "axios";
 
+export type DetailedError = {
+  detail: {
+    name: string;
+    message: string;
+  };
+};
+
 const baseInstance = axios.create({
   baseURL: "https://rockbotstaging.com/api",
 });
