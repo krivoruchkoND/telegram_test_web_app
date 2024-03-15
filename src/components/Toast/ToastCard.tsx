@@ -5,7 +5,7 @@ import classes from "./styles.module.css";
 
 type Props = {
   title?: string;
-  message: string;
+  message?: string;
   type: "error" | "success";
   link?: string;
 };
