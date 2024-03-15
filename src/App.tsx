@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Route, Router, Switch } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
-import { ToastContainer } from "react-toastify";
 
 import { RootStoreProvider } from "@contexts/RootStoreContext";
 import useRootStore from "@hooks/useRootStore";
@@ -13,11 +12,10 @@ import Settings from "@pages/Settings";
 import Swaps from "@pages/Swaps";
 import Trades from "@pages/Trades";
 import Splash from "@pages/Splash";
+import { NotificationContainer } from "./utils/notificationManager";
 
 import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
-
-import "react-toastify/dist/ReactToastify.min.css";
 
 const App = observer(() => {
   const {
@@ -54,18 +52,7 @@ const App = observer(() => {
         </div>
       </main>
 
-      <ToastContainer
-        position={"bottom-center"}
-        toastClassName={classes.toast}
-        className={classes.toastContainer}
-        closeButton={false}
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <NotificationContainer />
     </>
   );
 });

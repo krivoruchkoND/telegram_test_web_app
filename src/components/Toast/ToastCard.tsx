@@ -1,7 +1,7 @@
 import { FC } from "react";
-import classes from "./styles.module.css";
 import clsx from "clsx";
-import { useLocation } from "wouter";
+
+import classes from "./styles.module.css";
 
 type Props = {
   title?: string;
@@ -16,17 +16,15 @@ const ToastCard: FC<Props> = ({
   type,
   link,
 }) => {
-  const [, setLocation] = useLocation();
-
-  const handleClick = () => {
+  const handleRedirect = () => {
     if (link) {
-      setLocation(link);
+      window?.open(link, "_blank");
     }
   };
 
   return (
     <button
-      onClick={handleClick}
+      onClick={handleRedirect}
       disabled={!link}
       className={clsx(
         classes.toastCard,

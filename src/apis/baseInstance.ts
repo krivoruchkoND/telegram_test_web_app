@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export type BackendError = {
+export type DetailedError = {
   detail: {
     name: string;
     message: string;
