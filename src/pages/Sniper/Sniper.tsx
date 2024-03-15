@@ -79,7 +79,7 @@ const Snipper = () => {
             id="amount"
             value={amount}
             onChange={(v) => onChangeHandler(v, setAmount)}
-            label="Amount"
+            label="Amount (SOL)"
             description={`Balance: ${balance}`}
             inputMode="decimal"
             placeholder="Enter value"

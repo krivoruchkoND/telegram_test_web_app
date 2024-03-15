@@ -8,7 +8,7 @@ const isDetailedError = (
   return (
     isAxiosError(error) &&
     error.response !== undefined &&
-    "detail" in error.response
+    "detail" in error.response.data
   );
 };
 
