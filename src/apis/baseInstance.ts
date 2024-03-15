@@ -8,7 +8,7 @@ export type DetailedError = {
 };
 
 const baseInstance = axios.create({
-  baseURL: "https://rockbotstaging.com/api",
+  baseURL: "https://prod.rockbotstaging.com",
 });
 
 export const updateBearer = (bearerToken: string) => {
