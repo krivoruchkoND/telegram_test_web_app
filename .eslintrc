@@ -40,7 +40,10 @@
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "error",
     "init-declarations": "off",
-    "@typescript-eslint/init-declarations": "error"
+    "@typescript-eslint/init-declarations": "error",
+    "@typescript-eslint/ban-ts-comment": ["error", 
+      { "ts-ignore": "allow-with-description" }
+    ]
   },
   "globals": {
     "Telegram": "readonly"
