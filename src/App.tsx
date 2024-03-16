@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import { Route, Router, Switch } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
@@ -7,17 +7,19 @@ import { RootStoreProvider } from "@contexts/RootStoreContext";
 import useRootStore from "@hooks/useRootStore";
 import useInitTelegramWebApp from "@hooks/useInitTelegramWebApp";
 import useAuthHandler from "@hooks/useAuthHandler";
+import useScrollFix from "@/hooks/useScrollFix";
 import Wallet from "@pages/Wallet";
 import Settings from "@pages/Settings";
 import Swaps from "@pages/Swaps";
 import Trades from "@pages/Trades";
 import Splash from "@pages/Splash";
-import { NotificationContainer } from "./utils/notificationManager";
+import { NotificationContainer } from "@utils/notificationManager";
 
 import Navigation from "./components/Navigation";
 import classes from "./App.module.css";
 
 const App = observer(() => {
+  const contentRef = useRef<HTMLDivElement>(null);
   const {
     authStore: { isAuthSucceed },
     profileSettingsStore: { getProfileSettings },
@@ -26,6 +28,7 @@ const App = observer(() => {
 
   useInitTelegramWebApp();
   useAuthHandler();
+  useScrollFix(contentRef);
 
   useEffect(() => {
     if (isAuthSucceed) {
@@ -40,7 +43,7 @@ const App = observer(() => {
         <div className={classes.header}>
           <Navigation />
         </div>
-        <div className={classes.content}>
+        <div ref={contentRef} className={classes.content}>
           <Switch>
             <Route path="/" component={Splash} />
             <Route path="/wallet" component={Wallet} nest />
@@ -57,8 +60,8 @@ const App = observer(() => {
   );
 });
 
-// hook useAuthHandler needs to be called inside a Router
-// wrapping AppWithRouter into observer causes weird behavior
+// hook useAuthHandler needs to be called inside a Router;
+// wrapping AppWithRouter into observer causes weird behavior;
 const AppWithRouter = () => (
   <RootStoreProvider>
     <Router hook={useHashLocation}>

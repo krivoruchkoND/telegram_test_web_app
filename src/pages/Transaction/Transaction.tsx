@@ -94,7 +94,7 @@ const Transaction = () => {
   const currentSettings = isBuying ? lastBuySettings : lastSellSettings;
   const currentSymbol = isBuying
     ? "SOL"
-    : currentTransaction?.metadata.symbol || "";
+    : currentTransaction?.metadata.symbol ?? "";
 
   const {
     amount,
