@@ -37,8 +37,8 @@ const Autobuy = () => {
     setComputePrice,
     allowAutoComputePrice,
     setAllowAutoComputePrice,
-    retryValue,
-    setRetryValue,
+    // retryValue,
+    // setRetryValue,
 
     setComputeLimitToDefault,
     setComputePriceToDefault,
@@ -159,7 +159,7 @@ const Autobuy = () => {
         />
       )}
 
-      {retryValue !== null && (
+      {/* {retryValue !== null && (
         <FormItem
           id="retryValue"
           value={retryValue}
@@ -170,7 +170,7 @@ const Autobuy = () => {
           placeholder="Enter value"
           masks={["empty", "decimal"]}
         />
-      )}
+      )} */}
 
       {!isBackButtonSupported && <Link href="/">Go back</Link>}
     </form>

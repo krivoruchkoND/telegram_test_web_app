@@ -37,8 +37,8 @@ const Snipper = () => {
     setComputePrice,
     allowAutoComputePrice,
     setAllowAutoComputePrice,
-    retryValue,
-    setRetryValue,
+    // retryValue,
+    // setRetryValue,
 
     setComputeLimitToDefault,
     setComputePriceToDefault,
@@ -157,7 +157,7 @@ const Snipper = () => {
           />
         )}
 
-        {retryValue !== null && (
+        {/* {retryValue !== null && (
           <FormItem
             id="retryValue"
             value={retryValue}
@@ -168,7 +168,7 @@ const Snipper = () => {
             placeholder="Enter value"
             masks={["empty", "decimal"]}
           />
-        )}
+        )} */}
 
         {!isBackButtonSupported && <Link href="/">Go back</Link>}
       </form>

@@ -142,107 +142,109 @@ const Transaction = () => {
   }, [id, isAuthSucceed]);
 
   return (
-    <section className={classes.transaction}>
+    <>
       <div ref={ref} />
-      {isLoading.getToken && <Skeleton removeOffset />}
-      {currentTransaction && (
-        <WalletTransactionItem transaction={currentTransaction} isOutOfList />
-      )}
+      <section className={classes.transaction}>
+        {isLoading.getToken && <Skeleton removeOffset />}
+        {currentTransaction && (
+          <WalletTransactionItem transaction={currentTransaction} isOutOfList />
+        )}
 
-      <TransactionAction action={action} onChange={setAction} />
+        <TransactionAction action={action} onChange={setAction} />
 
-      <FormItem
-        id="amount"
-        value={amount ?? 0}
-        onChange={setAmount}
-        label={`Amount (${currentSymbol})`}
-        description={`Balance: ${currentBalance} ${currentSymbol}`}
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "float"]}
-        sliderProps={{
-          max: currentBalance,
-        }}
-      />
-
-      <FormItem
-        id="slippage"
-        value={slippage ?? 0}
-        onChange={setSlippage}
-        label="Slippage"
-        description="Difference between expected and actual results amounts of token"
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "percent"]}
-      />
-
-      <Total
-        tokenValue={currentTransaction?.value || null}
-        tokenAmount={currentTransaction?.amount || null}
-        currentAmount={amount}
-        symbol={isBuying ? currentTransaction?.metadata.symbol || "" : "SOL"}
-        action={action}
-      />
-
-      <TransactionButton type={"button"} onClick={handleClick}>
-        {`${actionPascal} ${currentTransaction?.metadata.symbol || ""}`}
-      </TransactionButton>
-
-      <PageTitle title={"Swap settings"} />
-
-      <SwapPlatforms settings={currentSettings} />
-
-      <Divider />
-
-      {mevProtection !== null && (
         <FormItem
-          id="mevProtection"
-          value={mevProtection ?? 0}
-          onChange={setMevProtection}
-          label="SMART-MEV PROTECTION"
-          description="Set an additional bribe amount on top of your priority fee for the Jito validators to place your transaction as soon as possible."
+          id="amount"
+          value={amount ?? 0}
+          onChange={setAmount}
+          label={`Amount (${currentSymbol})`}
+          description={`Balance: ${currentBalance} ${currentSymbol}`}
           inputMode="decimal"
           placeholder="Enter value"
-          masks={["empty", "decimal", "sol"]}
-          switchProps={{
-            checked: isMevProtectionEnabled,
-            onChange: setIsMevProtectionEnabled,
+          masks={["empty", "float"]}
+          sliderProps={{
+            max: currentBalance,
           }}
         />
-      )}
 
-      <FormItem
-        id="computeLimit"
-        value={computeLimit ?? 0}
-        onChange={setComputeLimit}
-        label="Compute Unit Limit"
-        description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "decimal"]}
-        switchProps={{
-          subLabel: "Auto",
-          checked: allowAutoComputeLimit,
-          onChange: setAllowAutoComputeLimit,
-        }}
-      />
+        <FormItem
+          id="slippage"
+          value={slippage ?? 0}
+          onChange={setSlippage}
+          label="Slippage"
+          description="Difference between expected and actual results amounts of token"
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "percent"]}
+        />
 
-      <FormItem
-        id="computePrice"
-        value={computePrice ?? 0}
-        onChange={setComputePrice}
-        label="Compute Unit Price (priority)"
-        description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
-        inputMode="decimal"
-        placeholder="Enter value"
-        masks={["empty", "float", "sol"]}
-        switchProps={{
-          subLabel: "Auto",
-          checked: allowAutoComputePrice,
-          onChange: setAllowAutoComputePrice,
-        }}
-      />
-    </section>
+        <Total
+          tokenValue={currentTransaction?.value || null}
+          tokenAmount={currentTransaction?.amount || null}
+          currentAmount={amount}
+          symbol={isBuying ? currentTransaction?.metadata.symbol || "" : "SOL"}
+          action={action}
+        />
+
+        <TransactionButton type={"button"} onClick={handleClick}>
+          {`${actionPascal} ${currentTransaction?.metadata.symbol || ""}`}
+        </TransactionButton>
+
+        <PageTitle title={"Swap settings"} />
+
+        <SwapPlatforms settings={currentSettings} />
+
+        <Divider />
+
+        {mevProtection !== null && (
+          <FormItem
+            id="mevProtection"
+            value={mevProtection ?? 0}
+            onChange={setMevProtection}
+            label="SMART-MEV PROTECTION"
+            description="Set an additional bribe amount on top of your priority fee for the Jito validators to place your transaction as soon as possible."
+            inputMode="decimal"
+            placeholder="Enter value"
+            masks={["empty", "decimal", "sol"]}
+            switchProps={{
+              checked: isMevProtectionEnabled,
+              onChange: setIsMevProtectionEnabled,
+            }}
+          />
+        )}
+
+        <FormItem
+          id="computeLimit"
+          value={computeLimit ?? 0}
+          onChange={setComputeLimit}
+          label="Compute Unit Limit"
+          description="The compute budget roughly determines how much a computing machine can consume for your transaction. Will not affect the success rate of your transaction since it still executes the same code, but if there are not enough funds the transaction will fail."
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "decimal"]}
+          switchProps={{
+            subLabel: "Auto",
+            checked: allowAutoComputeLimit,
+            onChange: setAllowAutoComputeLimit,
+          }}
+        />
+
+        <FormItem
+          id="computePrice"
+          value={computePrice ?? 0}
+          onChange={setComputePrice}
+          label="Compute Unit Price (priority)"
+          description="Increasing the transaction fee increases its priority, but it only competes within the same slot, without guaranteeing inclusion in others."
+          inputMode="decimal"
+          placeholder="Enter value"
+          masks={["empty", "float", "sol"]}
+          switchProps={{
+            subLabel: "Auto",
+            checked: allowAutoComputePrice,
+            onChange: setAllowAutoComputePrice,
+          }}
+        />
+      </section>
+    </>
   );
 };
 

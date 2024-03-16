@@ -36,10 +36,7 @@ const ReferralBlock = () => {
           Rewards are updated at least every 24 hours and rewards are
           automatically deposited to your ROCK balance.
         </p>
-        <p>
-          Refer your friends and earn 30% of their fees in the first month. 20%
-          in the second and 10% forever!
-        </p>
+        <p>Refer your friends and earn 30% of their fees.</p>
       </div>
       {referral?.url && <CopyButton value={referral.url} />}
     </div>
