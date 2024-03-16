@@ -31,8 +31,11 @@ function useCopyToClipboard(): [CopiedValue, CopyFn] {
 
   const copy: CopyFn = useCallback(async (text) => {
     if (!navigator?.clipboard) {
-      console.warn("Clipboard not supported");
-      alert(`Clipboard not supported. Copy value manually: ${text}`);
+      console.warn("Clipboard is not supported");
+      prompt(
+        `Clipboard is not supported. Copy to clipboard: Ctrl+C, Enter`,
+        text,
+      );
       return false;
     }
 
@@ -47,7 +50,10 @@ function useCopyToClipboard(): [CopiedValue, CopyFn] {
       return true;
     } catch (error) {
       console.warn("Copy failed", error);
-      alert(`Copy failed. Copy value manually: ${text}`);
+      prompt(
+        `Clipboard is not supported. Copy to clipboard: Ctrl+C, Enter`,
+        text,
+      );
       setCopiedText(null);
       throw error;
     }
