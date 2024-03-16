@@ -1,3 +1,4 @@
+// src: https://github.com/deptyped/vue-telegram/issues/11#issuecomment-1999265843
 import { RefObject, useEffect } from "react";
 
 const useScrollFix = (ref: RefObject<HTMLElement>) => {
