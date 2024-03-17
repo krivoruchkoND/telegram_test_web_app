@@ -1,5 +1,8 @@
 import axios from "axios";
 
+const baseUrl = "https://prod.rockbotstaging.com"; // https://rockbotstaging.com for stage env
+const apiUrl = `${baseUrl}/api`;
+
 export type DetailedError = {
   detail: {
     name: string;
@@ -8,7 +11,7 @@ export type DetailedError = {
 };
 
 const baseInstance = axios.create({
-  baseURL: "https://prod.rockbotstaging.com/api",
+  baseURL: apiUrl,
 });
 
 export const updateBearer = (bearerToken: string) => {
