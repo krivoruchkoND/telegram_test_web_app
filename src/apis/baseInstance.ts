@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://prod.rockbotstaging.com"; // https://rockbotstaging.com for stage env
+const baseUrl = "https://rockbotstaging.com"; // "https://prod.rockbotstaging.com"; for prod env
 const apiUrl = `${baseUrl}/api`;
 
 export type DetailedError = {
