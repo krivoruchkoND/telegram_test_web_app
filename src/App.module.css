@@ -26,6 +26,7 @@
     overflow: auto;
 
     padding: 0 28px;
+    margin-bottom: 48px;
 
     &::-webkit-scrollbar {
       display: none;
