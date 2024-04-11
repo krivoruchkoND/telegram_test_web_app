@@ -13,7 +13,7 @@ export const showNotification = (
 export const NotificationContainer = () => {
   return (
     <ToastContainer
-      position={"bottom-center"}
+      position={"top-center"}
       toastClassName={classes.toast}
       className={classes.toastContainer}
       closeButton={false}

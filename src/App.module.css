@@ -6,11 +6,18 @@
 
   max-width: 430px;
   max-height: 100dvh;
+  height: 100%;
 
   margin: 0 auto;
   margin-bottom: 32px;
 
+
   > .header {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    left: 0;
     padding: 0 28px;
   }
 
@@ -19,6 +26,7 @@
     overflow: auto;
 
     padding: 0 28px;
+    margin-bottom: 48px;
 
     &::-webkit-scrollbar {
       display: none;
