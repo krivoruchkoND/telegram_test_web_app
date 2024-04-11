@@ -64,4 +64,28 @@
       }
     }
   }
+
+  > .button {
+    cursor: pointer;
+
+    padding: 19px 20px;
+    background-color: var(--rb-background-color-1);
+    border-radius: 20px;
+    border: none;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+
+    > .text {
+      background: var(--rb-gradient-color-2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      background-color: var(--rb-background-color-6);
+    }
+  }
 }
