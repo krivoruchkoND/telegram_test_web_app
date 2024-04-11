@@ -13,7 +13,8 @@ import classes from "./styles.module.css";
 
 const AccountBalance = () => {
   const {
-    profileSettingsStore: { publicAddress, referral },
+    profileSettingsStore: { publicAddress },
+    referralStore: { referral },
     walletStore: { totalValue, isLoading },
   } = useRootStore();
 

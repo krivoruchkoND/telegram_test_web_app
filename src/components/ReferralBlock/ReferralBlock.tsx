@@ -8,7 +8,7 @@ import classes from "./styles.module.css";
 
 const ReferralBlock = () => {
   const {
-    profileSettingsStore: { referral },
+    referralStore: { referral },
   } = useRootStore();
 
   if (!referral) {
@@ -28,8 +28,12 @@ const ReferralBlock = () => {
         <span className={classes.value}>{referral.inviteesCount}</span>
       </div>
       <div className={classes.counter}>
-        <span className={classes.title}>$ROCK earned: </span>
+        <span className={classes.title}>$ROCK available for claim: </span>
         <span className={classes.value}>{referral.reward}</span>
+      </div>
+      <div className={classes.counter}>
+        <span className={classes.title}>Total $ROCK claimed: </span>
+        <span className={classes.value}>{referral.totalClaimedReward}</span>
       </div>
       <div className={classes.description}>
         <p>

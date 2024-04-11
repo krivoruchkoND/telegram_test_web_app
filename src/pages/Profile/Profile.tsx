@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { useLocation, Link } from "wouter";
 import { clsx } from "clsx";
@@ -52,7 +52,15 @@ const Profile = () => {
 
   const {
     profileSettingsStore: { publicAddress, createAt },
+    referralStore: { getReferral },
+    authStore: { isAuthSucceed },
   } = useRootStore();
+
+  useEffect(() => {
+    if (isAuthSucceed) {
+      getReferral();
+    }
+  }, [isAuthSucceed]);
 
   return (
     <div className={classes.profile}>

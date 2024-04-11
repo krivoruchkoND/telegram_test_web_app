@@ -7,6 +7,7 @@ import SwapsStore from "./SwapsStore";
 import TelegramWebAppStore from "./TelegramWebAppStore";
 import SettingsStore from "./SettingsStore";
 import SnipedChannelsStore from "./SnipedChannelsStore";
+import ReferralStore from "./ReferralStore";
 
 class RootStore {
   authStore: AuthStore;
@@ -16,6 +17,7 @@ class RootStore {
   telegramWebAppStore: TelegramWebAppStore;
   settingsStore: SettingsStore;
   snipedChannelsStore: SnipedChannelsStore;
+  referralStore: ReferralStore;
 
   constructor() {
     makeAutoObservable(this);
@@ -27,6 +29,7 @@ class RootStore {
     this.telegramWebAppStore = new TelegramWebAppStore(this);
     this.settingsStore = new SettingsStore(this);
     this.snipedChannelsStore = new SnipedChannelsStore(this);
+    this.referralStore = new ReferralStore(this);
   }
 }
 

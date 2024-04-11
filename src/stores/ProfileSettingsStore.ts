@@ -8,11 +8,6 @@ class ProfileSettingsStore {
   rootStore: RootStore;
   publicAddress: string | null = null;
   createAt: string | null = null;
-  referral: {
-    url: string | null;
-    inviteesCount: number;
-    reward: number;
-  } | null = null;
 
   isLoading = {
     getProfileSettings: false,
@@ -27,11 +22,10 @@ class ProfileSettingsStore {
   getProfileSettings = async () => {
     try {
       this.isLoading.getProfileSettings = true;
-      const { publicAddress, createAt, referral } = await getProfileSettings();
+      const { publicAddress, createAt } = await getProfileSettings();
       runInAction(() => {
         this.publicAddress = publicAddress;
         this.createAt = createAt;
-        this.referral = referral;
       });
     } catch (error) {
       console.error("🚨 ProfileSettingsStore getProfileSettings", error);
