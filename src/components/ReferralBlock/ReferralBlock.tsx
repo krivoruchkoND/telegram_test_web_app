@@ -9,7 +9,7 @@ import classes from "./styles.module.css";
 
 const ReferralBlock = () => {
   const {
-    referralStore: { referral, isLoading },
+    referralStore: { referral, isLoading, claimReferralReward },
   } = useRootStore();
 
   if (!referral) {
@@ -50,6 +50,7 @@ const ReferralBlock = () => {
           isLoading.claimReferralReward && classes.disabled,
         )}
         disabled={isLoading.claimReferralReward}
+        onClick={claimReferralReward}
       >
         <span className={classes.text}>Get an award</span>
       </button>
