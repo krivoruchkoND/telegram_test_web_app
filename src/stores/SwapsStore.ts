@@ -61,7 +61,7 @@ class SwapsStore {
     } catch (error) {
       console.error("🚨 SwapsStore createTransaction", error);
 
-      if (isDetailedError(error) && error.response?.data.detail) {
+      if (isDetailedError(error) && error.response?.data?.detail) {
         const { name, message } = error.response.data.detail;
         showNotification({
           type: "error",
