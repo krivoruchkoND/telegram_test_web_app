@@ -71,7 +71,6 @@ class ReferralStore {
         return;
       }
 
-
       showNotification({
         type: "error",
         title: "Oops!",
