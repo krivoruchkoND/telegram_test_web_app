@@ -24,6 +24,7 @@ const App = observer(() => {
     authStore: { isAuthSucceed },
     profileSettingsStore: { getProfileSettings },
     settingsStore: { getSettings },
+    referralStore: { getReferral },
   } = useRootStore();
 
   useInitTelegramWebApp();
@@ -34,6 +35,7 @@ const App = observer(() => {
     if (isAuthSucceed) {
       getSettings();
       getProfileSettings();
+      getReferral();
     }
   }, [isAuthSucceed]);
 
