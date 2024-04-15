@@ -16,6 +16,7 @@ type ReferralReward = {
     create_at: string;
   };
   referral_data: Referral;
+  message: string;
 };
 
 export const getReferral = async () => {

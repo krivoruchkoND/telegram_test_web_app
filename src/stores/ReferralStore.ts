@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 import { getReferral, claimReferralReward } from "@apis/referral";
+import { showNotification } from "@utils/notificationManager";
+import isDetailedError from "@utils/isDetailedError";
 
 import RootStore from "./RootStore";
 
@@ -42,7 +44,14 @@ class ReferralStore {
   claimReferralReward = async () => {
     try {
       this.isLoading.claimReferralReward = true;
-      const { referralData, transaction } = await claimReferralReward();
+      const { referralData, transaction, message } = await claimReferralReward();
+
+      showNotification({
+        type: "success",
+        title: "Reward claimed",
+        message: `Click to see transaction.\n${message}`,
+        link: `https://solscan.io/tx/${transaction.signature}`,
+      });
 
       runInAction(() => {
         this.rewardTransaction = transaction;
@@ -50,6 +59,24 @@ class ReferralStore {
       });
     } catch (error) {
       console.error("🚨 ReferralStore claimReferralReward", error);
+
+      if (isDetailedError(error) && error.response?.data?.detail) {
+        const { message } = error.response.data.detail;
+        showNotification({
+          type: "error",
+          title: "Error while claiming reward",
+          message,
+        });
+
+        return;
+      }
+
+
+      showNotification({
+        type: "error",
+        title: "Oops!",
+        message: "Error while claiming reward",
+      });
     } finally {
       this.isLoading.claimReferralReward = false;
     }
