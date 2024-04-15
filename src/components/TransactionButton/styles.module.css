@@ -1,4 +1,6 @@
 .transaction_button {
+  cursor: pointer;
+
   height: 60px;
   background: var(--rb-text-color-8);
   border-radius: 40px;

@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import { clsx } from "clsx";
 
 import useRootStore from "@hooks/useRootStore";
 import rockVioletIcon from "@assets/RockViolet.svg";
@@ -8,7 +9,7 @@ import classes from "./styles.module.css";
 
 const ReferralBlock = () => {
   const {
-    referralStore: { referral },
+    referralStore: { referral, isLoading },
   } = useRootStore();
 
   if (!referral) {
@@ -43,6 +44,15 @@ const ReferralBlock = () => {
         <p>Refer your friends and earn 30% of their fees.</p>
       </div>
       {referral?.url && <CopyButton value={referral.url} />}
+      <button
+        className={clsx(
+          classes.button,
+          isLoading.claimReferralReward && classes.disabled,
+        )}
+        disabled={isLoading.claimReferralReward}
+      >
+        <span className={classes.text}>Get an award</span>
+      </button>
     </div>
   );
 };
